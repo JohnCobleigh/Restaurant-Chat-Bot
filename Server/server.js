@@ -1,10 +1,12 @@
+require('dotenv').config()
+
 const express = require('express')
 const app = express()
 
+// route
 app.get("/api", (req,res)  =>{
     res.json({"users": ["userOne", "userTwo", "userThree"]})
 })
 
-//Server runs on port 5000
-//Client runs on port 3000
-app.listen(5000, () => { console.log("Server started on port 5000")})
+// Listen for requests
+app.listen(process.env.PORT, () => { console.log("Server started on port", process.env.PORT)})
