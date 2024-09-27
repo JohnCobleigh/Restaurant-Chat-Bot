@@ -35,9 +35,16 @@ function Chatbot() {
   const [reply, setReply] = useState('');
 
   const sendMessage = async () => {
-    const response = await axios.post('http://localhost:5001', { message });
-    setReply(response.data.reply);
+    try {
+      // console.log("TEST1");
+      const response = await axios.post('http://localhost:5000', { message }, {timeout: 5000});
+      // console.log("TEST2");
+      setReply(response.data.reply);
+    } catch (error) {
+      console.error("Error while sending message:", error);
+    }
   };
+  
 
   return (
     <div>
