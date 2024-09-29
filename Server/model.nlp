@@ -74,27 +74,27 @@
             "intent": "pizza.order",
             "domain": "default"
           },
-          "me,pizza,show,the": {
-            "intent": "pizza.show.all",
+          "%item%,me,show,the": {
+            "intent": "item.show.all",
             "domain": "default"
           },
-          "choic,do,have,pizza,what,you": {
-            "intent": "pizza.show.all",
+          "%item%,choic,do,have,what,you": {
+            "intent": "item.show.all",
             "domain": "default"
           },
-          "all,list,pizza,the": {
-            "intent": "pizza.show.all",
+          "%item%,all,list,the": {
+            "intent": "item.show.all",
             "domain": "default"
           },
-          "do,have,pizza,what,you": {
-            "intent": "pizza.show.all",
+          "%item%,do,have,what,you": {
+            "intent": "item.show.all",
             "domain": "default"
           }
         },
         "intentDict": {
           "menu.ask": "default",
           "pizza.order": "default",
-          "pizza.show.all": "default"
+          "item.show.all": "default"
         },
         "sentences": [
           {
@@ -149,23 +149,23 @@
           },
           {
             "domain": "default",
-            "utterance": "Show me the pizzas",
-            "intent": "pizza.show.all"
+            "utterance": "Show me the %item%",
+            "intent": "item.show.all"
           },
           {
             "domain": "default",
-            "utterance": "What pizza choices do you have",
-            "intent": "pizza.show.all"
+            "utterance": "What %item% choices do you have",
+            "intent": "item.show.all"
           },
           {
             "domain": "default",
-            "utterance": "List all the pizzas",
-            "intent": "pizza.show.all"
+            "utterance": "List all the %item%",
+            "intent": "item.show.all"
           },
           {
             "domain": "default",
-            "utterance": "What pizzas do you have",
-            "intent": "pizza.show.all"
+            "utterance": "What %item% do you have",
+            "intent": "item.show.all"
           }
         ],
         "domains": {
@@ -210,7 +210,7 @@
               "%ingredient%": 1,
               "to": 1,
               "my": 1,
-              "pizza": 1,
+              "%item%": 1,
               "choic": 1,
               "list": 1,
               "all": 1
@@ -218,7 +218,7 @@
             "intents": {
               "menu.ask": 1,
               "pizza.order": 1,
-              "pizza.show.all": 1
+              "item.show.all": 1
             },
             "intentFeatures": {
               "menu.ask": {
@@ -257,11 +257,11 @@
                 "to": 1,
                 "my": 1
               },
-              "pizza.show.all": {
+              "item.show.all": {
                 "show": 1,
                 "me": 1,
                 "the": 1,
-                "pizza": 1,
+                "%item%": 1,
                 "what": 1,
                 "choic": 1,
                 "do": 1,
@@ -274,7 +274,7 @@
             "featuresToIntent": {
               "what": [
                 "menu.ask",
-                "pizza.show.all"
+                "item.show.all"
               ],
               "is": [
                 "menu.ask"
@@ -285,7 +285,7 @@
               ],
               "the": [
                 "menu.ask",
-                "pizza.show.all"
+                "item.show.all"
               ],
               "menu": [
                 "menu.ask"
@@ -295,25 +295,25 @@
               ],
               "do": [
                 "menu.ask",
-                "pizza.show.all"
+                "item.show.all"
               ],
               "you": [
                 "menu.ask",
                 "pizza.order",
-                "pizza.show.all"
+                "item.show.all"
               ],
               "have": [
                 "menu.ask",
-                "pizza.show.all"
+                "item.show.all"
               ],
               "show": [
                 "menu.ask",
-                "pizza.show.all"
+                "item.show.all"
               ],
               "me": [
                 "menu.ask",
                 "pizza.order",
-                "pizza.show.all"
+                "item.show.all"
               ],
               "give": [
                 "menu.ask",
@@ -367,17 +367,17 @@
               "my": [
                 "pizza.order"
               ],
-              "pizza": [
-                "pizza.show.all"
+              "%item%": [
+                "item.show.all"
               ],
               "choic": [
-                "pizza.show.all"
+                "item.show.all"
               ],
               "list": [
-                "pizza.show.all"
+                "item.show.all"
               ],
               "all": [
-                "pizza.show.all"
+                "item.show.all"
               ]
             },
             "neuralNetwork": {
@@ -421,7 +421,7 @@
                 "%ingredient%",
                 "to",
                 "my",
-                "pizza",
+                "%item%",
                 "choic",
                 "list",
                 "all"
@@ -429,7 +429,7 @@
               "intents": [
                 "menu.ask",
                 "pizza.order",
-                "pizza.show.all"
+                "item.show.all"
               ],
               "perceptrons": [
                 [
@@ -587,19 +587,19 @@
       ],
       [
         "en",
-        "Show me the pizzas"
+        "Show me the %item%"
       ],
       [
         "en",
-        "What pizza choices do you have"
+        "What %item% choices do you have"
       ],
       [
         "en",
-        "List all the pizzas"
+        "List all the %item%"
       ],
       [
         "en",
-        "What pizzas do you have"
+        "What %item% do you have"
       ]
     ]
   },
@@ -611,6 +611,101 @@
     },
     "rules": {
       "en": {
+        "item": {
+          "name": "item",
+          "type": "enum",
+          "rules": [
+            {
+              "option": "plate",
+              "texts": [
+                "plate",
+                "plates",
+                "entree",
+                "entrees"
+              ]
+            },
+            {
+              "option": "pizza",
+              "texts": [
+                "pizza",
+                "pizzas",
+                "pie",
+                "pies"
+              ]
+            },
+            {
+              "option": "pasta",
+              "texts": [
+                "pasta",
+                "pastas"
+              ]
+            },
+            {
+              "option": "salad",
+              "texts": [
+                "salad",
+                "salads"
+              ]
+            },
+            {
+              "option": "starter",
+              "texts": [
+                "starter",
+                "starters",
+                "appetizer",
+                "appetizers",
+                "app",
+                "apps"
+              ]
+            },
+            {
+              "option": "sangria",
+              "texts": [
+                "sangria",
+                "sangrias"
+              ]
+            },
+            {
+              "option": "mocktail",
+              "texts": [
+                "mocktail",
+                "mocktails",
+                "no alcohol",
+                "non alcoholic"
+              ]
+            },
+            {
+              "option": "cocktail",
+              "texts": [
+                "cocktail",
+                "cocktails"
+              ]
+            },
+            {
+              "option": "martini",
+              "texts": [
+                "martini",
+                "martinis"
+              ]
+            },
+            {
+              "option": "margarita",
+              "texts": [
+                "margarita",
+                "margaritas"
+              ]
+            },
+            {
+              "option": "dessert",
+              "texts": [
+                "dessert",
+                "desserts",
+                "sweet treat",
+                "sweet treats"
+              ]
+            }
+          ]
+        },
         "ingredients": {
           "name": "ingredients",
           "type": "enum",
@@ -760,6 +855,14 @@
       "ingredient": {
         "intent": "pizza.order",
         "entity": "ingredient",
+        "mandatory": false,
+        "locales": {}
+      }
+    },
+    "item.show.all": {
+      "item": {
+        "intent": "item.show.all",
+        "entity": "item",
         "mandatory": false,
         "locales": {}
       }

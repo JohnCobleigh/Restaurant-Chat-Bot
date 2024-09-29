@@ -1,32 +1,3 @@
-/*import React, {useEffect, useState} from 'react'
-
-function App(){
-
-  const [backendData, setBackendData] = useState([{}])
-
-  useEffect(() => {
-    fetch("/api").then(
-      response => response.json()
-    ).then(
-      data =>{
-        setBackendData(data.users)
-      }
-    )
-  }, [])
-
-  return(
-    <div>
-
-    </div>
-  )
-}
-
-//HALLO
-// hey
-
-export default App
-*/
-
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -36,9 +7,10 @@ function Chatbot() {
 
   const sendMessage = async () => {
     try {
-      // console.log("TEST1");
-      const response = await axios.post('http://localhost:5000', { message }, {timeout: 5000});
-      // console.log("TEST2");
+      //console.log("Sending message: ", message);
+      const response = await axios.post('http://localhost:5001', { message }, {timeout: 5000});
+      //console.log("Received response: ", response.data);
+
       setReply(response.data.reply);
     } catch (error) {
       console.error("Error while sending message:", error);
