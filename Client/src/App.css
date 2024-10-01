@@ -1,0 +1,102 @@
+/* Main chatbot container */
+/* 1500 width 1000 height */
+/* fff7e1 for container, fdd835 for header and button. fbc02d for hover, ffffff for message background*/
+
+.chatbot-container {
+  width: 100vw;
+  height: 100vh;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff9de;
+  border-radius: 0px;
+  font-family: Arial, sans-serif;
+}
+
+/* Chatbot header */
+.chatbot-header {
+  background-color: #fff4b2;
+  width: 98%;
+  color: #333;
+  padding: 15px;
+  text-align: center;
+  font-weight: bold;
+  /*border-radius: 15px 15px 0 0;*/
+  font-size: 22px;
+}
+
+/* Messages container */
+.chatbot-messages {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  flex-grow: 1;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* Individual message styling */
+.chat-message {
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 15px;
+  padding: 20px;
+  border-radius: 20px;
+  max-width: 50%;
+  word-wrap: break-word;
+  font-size: 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border: 1px solid #d1d1d1;
+}
+
+/* User messages aligned to the right */
+.chat-message.user {
+  align-self: flex-end;
+  background-color: #ffffff;
+  color: #333;
+}
+
+/* Bot messages aligned to the left */
+.chat-message.bot {
+  align-self: flex-start;
+  background-color: #ffffff;
+  color: #333;
+}
+
+/* Input field and send button */
+.chatbot-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  width: 50%;
+  border-top: 1px solid #cccccc60;
+}
+
+.chatbot-input input {
+  flex-grow: 1;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  margin-right: 15px;
+  font-size: 15px;
+}
+
+/* Button's color */
+.chatbot-input button {
+  background-color: #fff4b2;
+  color: #333; /*Enter*/
+  padding: 15px;
+  border: none;
+  border-radius: 20px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+/* Color change when hover */
+.chatbot-input button:hover {
+  background-color: #fedb83;
+}
