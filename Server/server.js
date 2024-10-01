@@ -1,7 +1,6 @@
 //Main
 require('dotenv').config();
 
-
 const { NlpManager } = require('node-nlp');
 const express = require('express');
 const app = express();
@@ -11,7 +10,7 @@ const training = require('./training.js')
 const { MainPlate, Margarita, Martini, Mocktail, Pasta, Pizza, Salad, Sangria, Cocktail, Starter } = require('./models/item.js')
 
 app.use(cors({
-    origin: 'http://localhost:3000'
+    origin: 'http://localhost:5173/'
 }));
 
 // Connecting to database, MUST specify database name
@@ -42,7 +41,7 @@ app.post('/', async(req, res) => {
         return res.json({reply: 'I dont understand what you want'})
     }
      
-    // leaving this reference, but removable
+    // leaving this for reference, but removable
     /*if(intent === 'pizza.show.all'){
         const pizzas = await Pizza.find({}).exec(); // finds all documents in "pizzas"
         console.log("Pizzas: ", pizzas);
