@@ -23,7 +23,7 @@ function Chatbot() {
       setMessages([...newMessages, { sender: 'bot', text: botResponse }]); // Update state with the bot's reply
     }, 1000); // 1-second delay*/
     
-    // http://localhost:5001/
+    // http://localhost:5000/
     axios.post('/api/', { message: userInput })
       .then(response => {
         const botResponse = response.data.reply;  // Backend response
