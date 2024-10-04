@@ -55,23 +55,27 @@
             "domain": "default"
           },
           "%ingredients%,%modify%,%order%,give,me": {
-            "intent": "pizza.order",
+            "intent": "order",
             "domain": "default"
           },
           "%ingredients%,%modify%,%order%,a,and,i,want": {
-            "intent": "pizza.order",
+            "intent": "order",
             "domain": "default"
           },
           "%ingredients%,%modify%,%order%,a,and,me,order": {
-            "intent": "pizza.order",
+            "intent": "order",
             "domain": "default"
           },
           "%ingredients%,%modify%,%order%,a,and,get,it,let,me,on": {
-            "intent": "pizza.order",
+            "intent": "order",
             "domain": "default"
           },
           "%ingredient%,%modify%,%order%,a,add,can,my,order,to,you": {
-            "intent": "pizza.order",
+            "intent": "order",
+            "domain": "default"
+          },
+          "%order%,a,can,get,i": {
+            "intent": "order",
             "domain": "default"
           },
           "%item%,me,show,the": {
@@ -93,7 +97,7 @@
         },
         "intentDict": {
           "menu.ask": "default",
-          "pizza.order": "default",
+          "order": "default",
           "item.show.all": "default"
         },
         "sentences": [
@@ -125,27 +129,32 @@
           {
             "domain": "default",
             "utterance": "Give me %order% %modify% %ingredients%",
-            "intent": "pizza.order"
+            "intent": "order"
           },
           {
             "domain": "default",
             "utterance": "i want a %order%, %modify% %ingredients%, %ingredients%, and %ingredients%",
-            "intent": "pizza.order"
+            "intent": "order"
           },
           {
             "domain": "default",
             "utterance": "order me a %order% %modify% %ingredients% and %ingredients%",
-            "intent": "pizza.order"
+            "intent": "order"
           },
           {
             "domain": "default",
             "utterance": "let me get a %order%, and %modify% %ingredients% on it",
-            "intent": "pizza.order"
+            "intent": "order"
           },
           {
             "domain": "default",
             "utterance": "can you add a %order% %modify% %ingredient% to my order",
-            "intent": "pizza.order"
+            "intent": "order"
+          },
+          {
+            "domain": "default",
+            "utterance": "can i get a %order%",
+            "intent": "order"
           },
           {
             "domain": "default",
@@ -217,7 +226,7 @@
             },
             "intents": {
               "menu.ask": 1,
-              "pizza.order": 1,
+              "order": 1,
               "item.show.all": 1
             },
             "intentFeatures": {
@@ -235,7 +244,7 @@
                 "me": 1,
                 "give": 1
               },
-              "pizza.order": {
+              "order": {
                 "give": 1,
                 "me": 1,
                 "%order%": 1,
@@ -281,7 +290,7 @@
               ],
               "on": [
                 "menu.ask",
-                "pizza.order"
+                "order"
               ],
               "the": [
                 "menu.ask",
@@ -299,7 +308,7 @@
               ],
               "you": [
                 "menu.ask",
-                "pizza.order",
+                "order",
                 "item.show.all"
               ],
               "have": [
@@ -312,60 +321,60 @@
               ],
               "me": [
                 "menu.ask",
-                "pizza.order",
+                "order",
                 "item.show.all"
               ],
               "give": [
                 "menu.ask",
-                "pizza.order"
+                "order"
               ],
               "%order%": [
-                "pizza.order"
+                "order"
               ],
               "%modify%": [
-                "pizza.order"
+                "order"
               ],
               "%ingredients%": [
-                "pizza.order"
+                "order"
               ],
               "i": [
-                "pizza.order"
+                "order"
               ],
               "want": [
-                "pizza.order"
+                "order"
               ],
               "a": [
-                "pizza.order"
+                "order"
               ],
               "and": [
-                "pizza.order"
+                "order"
               ],
               "order": [
-                "pizza.order"
+                "order"
               ],
               "let": [
-                "pizza.order"
+                "order"
               ],
               "get": [
-                "pizza.order"
+                "order"
               ],
               "it": [
-                "pizza.order"
+                "order"
               ],
               "can": [
-                "pizza.order"
+                "order"
               ],
               "add": [
-                "pizza.order"
+                "order"
               ],
               "%ingredient%": [
-                "pizza.order"
+                "order"
               ],
               "to": [
-                "pizza.order"
+                "order"
               ],
               "my": [
-                "pizza.order"
+                "order"
               ],
               "%item%": [
                 "item.show.all"
@@ -428,114 +437,114 @@
               ],
               "intents": [
                 "menu.ask",
-                "pizza.order",
+                "order",
                 "item.show.all"
               ],
               "perceptrons": [
                 [
-                  2.231560468673706,
-                  0.03735530376434326,
-                  0.5590581297874451,
-                  3.3526532649993896,
-                  6.505064010620117,
-                  6.183472156524658,
-                  1.4056456089019775,
-                  1.3516392707824707,
-                  1.4056456089019775,
-                  1.0600166320800781,
-                  1.7198740243911743,
-                  1.1153829097747803,
-                  -1.5228270292282104,
-                  -1.5228270292282104,
-                  -1.4688202142715454,
+                  2.229893207550049,
+                  0.038151610642671585,
+                  0.5685837864875793,
+                  3.351595401763916,
+                  6.505875587463379,
+                  6.173732280731201,
+                  1.4074102640151978,
+                  1.3573870658874512,
+                  1.4074102640151978,
+                  1.0552479028701782,
+                  1.7294905185699463,
+                  1.116621971130371,
+                  -1.5398564338684082,
+                  -1.5119059085845947,
+                  -1.4618825912475586,
+                  -0.12656261026859283,
                   -0.06050359830260277,
-                  -0.06050359830260277,
-                  -0.5797659158706665,
-                  -0.4542120397090912,
-                  -0.20620420575141907,
-                  -0.17407265305519104,
-                  -0.17407265305519104,
-                  -0.17407265305519104,
-                  -0.039509065449237823,
-                  -0.039509065449237823,
-                  -0.039509065449237823,
-                  -0.039509065449237823,
-                  -0.039509065449237823,
-                  -7.933375835418701,
-                  -1.5658292770385742,
-                  -0.4176604747772217,
-                  -0.4176604747772217,
-                  1.6154612600509497
+                  -0.6042245030403137,
+                  -0.4477039873600006,
+                  -0.1678931713104248,
+                  -0.16756460070610046,
+                  -0.2446044236421585,
+                  -0.16756460070610046,
+                  -0.064451664686203,
+                  -0.02501162327826023,
+                  -0.02501162327826023,
+                  -0.02501162327826023,
+                  -0.02501162327826023,
+                  -7.924107074737549,
+                  -1.562168002128601,
+                  -0.41781893372535706,
+                  -0.41781893372535706,
+                  1.60708167350993
                 ],
                 [
-                  -0.5043802857398987,
-                  -0.05062313750386238,
-                  -0.028007425367832184,
-                  -1.8636953830718994,
-                  -1.4989274740219116,
-                  -0.12402651458978653,
-                  -0.35549142956733704,
-                  0.39834243059158325,
-                  -0.35549142956733704,
-                  -0.4033632278442383,
-                  0.8826438188552856,
-                  1.6662298440933228,
-                  3.889296293258667,
-                  3.889296293258667,
-                  3.1142969131469727,
-                  0.6035032272338867,
-                  0.6035032272338867,
-                  1.0654186010360718,
-                  0.2905135750770569,
-                  0.34317758679389954,
-                  0.11863300949335098,
-                  0.11863300949335098,
-                  0.11863300949335098,
-                  0.7750002145767212,
-                  0.7750002145767212,
-                  0.7750002145767212,
-                  0.7750002145767212,
-                  0.7750002145767212,
-                  -0.5209357142448425,
-                  -0.06934056431055069,
-                  -0.04520297795534134,
-                  -0.04520297795534134,
-                  0.8238882292404485
+                  -0.5482818484306335,
+                  -0.058411069214344025,
+                  -0.5838485360145569,
+                  -2.1700563430786133,
+                  -1.7754945755004883,
+                  -0.11543631553649902,
+                  -0.3739757239818573,
+                  -0.21568413078784943,
+                  -0.3739757239818573,
+                  -0.4229026138782501,
+                  1.0420931577682495,
+                  1.7127315998077393,
+                  5.004734039306641,
+                  2.7426986694335938,
+                  2.5475034713745117,
+                  1.8728443384170532,
+                  -0.3878852427005768,
+                  1.8822821378707886,
+                  -0.5747745037078857,
+                  0.42476320266723633,
+                  -0.4143918752670288,
+                  1.8471217155456543,
+                  -0.4143918752670288,
+                  2.4572248458862305,
+                  0.19557753205299377,
+                  0.19557753205299377,
+                  0.19557753205299377,
+                  0.19557753205299377,
+                  -0.5823273658752441,
+                  -0.07974990457296371,
+                  -0.054023660719394684,
+                  -0.054023660719394684,
+                  1.2107715599200515
                 ],
                 [
-                  -0.030330687761306763,
-                  -0.6107489466667175,
-                  -1.0741007328033447,
-                  1.0725432634353638,
-                  -4.087231636047363,
-                  -3.7777323722839355,
-                  1.0954265594482422,
-                  0.8587080836296082,
-                  1.0954265594482422,
-                  1.4418388605117798,
-                  0.8077236413955688,
-                  -0.559525728225708,
-                  -0.47002553939819336,
-                  -0.47002553939819336,
-                  -0.24116021394729614,
+                  -0.032450396567583084,
+                  -0.6103736162185669,
+                  -1.0734946727752686,
+                  1.0750573873519897,
+                  -4.080729007720947,
+                  -3.771005392074585,
+                  1.092562198638916,
+                  0.8640204668045044,
+                  1.092562198638916,
+                  1.4378437995910645,
+                  0.813112735748291,
+                  -0.5573387145996094,
+                  -0.48112931847572327,
+                  -0.45099225640296936,
+                  -0.22993311285972595,
+                  -0.07364865392446518,
                   -0.03257683292031288,
-                  -0.03257683292031288,
-                  -0.28457704186439514,
-                  -0.0910826176404953,
-                  -0.22145941853523254,
+                  -0.33315059542655945,
+                  -0.0872558206319809,
+                  -0.21163144707679749,
                   0,
+                  -0.01663919724524021,
                   0,
-                  0,
-                  -0.15697523951530457,
-                  -0.15697523951530457,
-                  -0.15697523951530457,
-                  -0.15697523951530457,
-                  -0.15697523951530457,
-                  10.04328727722168,
-                  0.7077000141143799,
-                  1.201294183731079,
-                  1.201294183731079,
-                  0.8432628283449681
+                  -0.21975724399089813,
+                  -0.15288744866847992,
+                  -0.15288744866847992,
+                  -0.15288744866847992,
+                  -0.15288744866847992,
+                  10.030734062194824,
+                  0.7385103702545166,
+                  1.20939302444458,
+                  1.20939302444458,
+                  0.8421151297575435
                 ]
               ]
             }
@@ -584,6 +593,10 @@
       [
         "en",
         "can you add a %order% %modify% %ingredient% to my order"
+      ],
+      [
+        "en",
+        "can i get a %order%"
       ],
       [
         "en",
@@ -706,6 +719,123 @@
             }
           ]
         },
+        "order": {
+          "name": "order",
+          "type": "enum",
+          "rules": [
+            {
+              "option": "pizza",
+              "texts": [
+                "Original BBQ Chicken Pizza",
+                "California Club",
+                "Wild Mushroom",
+                "Thai Chicken",
+                "Mushroom Pepperoni Sausage",
+                "California Veggie",
+                "Hawaiian",
+                "Neapolitan Burrata",
+                "The Works",
+                "Five Cheese + Fresh Tomato",
+                "Margherita",
+                "Pepperoni",
+                "Sicilian",
+                "Spicy Chipotle Chicken",
+                "Carne Asada"
+              ]
+            },
+            {
+              "option": "pasta",
+              "texts": [
+                "Jambalaya Linguini Fini",
+                "Chicken Tequila Fettuccine",
+                "Garlic Cream Fettuccine",
+                "Shrimp Scampi Zucchini",
+                "Tomato Basil Spaghetti",
+                "Kung Pao Spaghetti",
+                "Bolognese Spaghetti"
+              ]
+            },
+            {
+              "option": "margarita",
+              "texts": [
+                "Fresh Agave Lime Margarita",
+                "Skinny & Spicy ‘Rita",
+                "Strawberry Lime Margarita",
+                "Golden Cadillac ‘Rita",
+                "Platinum Margarita"
+              ]
+            },
+            {
+              "option": "martini",
+              "texts": [
+                "French Martini",
+                "Blueberry Lemon Drop Martini",
+                "Cosmopolitan Martini",
+                "Espresso Martini"
+              ]
+            },
+            {
+              "option": "mocktail",
+              "texts": [
+                "Sparkling Berry-Lemon",
+                "Fresh Strawberry Mango Cooler",
+                "Cucumber Reviver",
+                "Pacific Thyme"
+              ]
+            },
+            {
+              "option": "salads",
+              "texts": [
+                "California Cobb",
+                "Thai Crunch",
+                "Banh Mi Power Bowl",
+                "Classic Caesar",
+                "The Original BBQ Chicken Chopped Salad",
+                "Italian Chopped"
+              ]
+            },
+            {
+              "option": "sangrias",
+              "texts": [
+                "Sangria Flight",
+                "Red-Berry Sangria",
+                "Sparkling Mango Sangria",
+                "Strawberry Rosé Sangria"
+              ]
+            },
+            {
+              "option": "cocktails",
+              "texts": [
+                "CPK Old Fashioned",
+                "Sparkling Mojito",
+                "California Colada",
+                "Tropical Mule",
+                "Bourbon Peach Smash",
+                "Endless Sunshine"
+              ]
+            },
+            {
+              "option": "starter",
+              "texts": [
+                "Dynamite Shrimp",
+                "Mexican Street Corn",
+                "Spinach Artichoke Dip",
+                "White Corn Guacamole + Chips",
+                "Avocado Club Egg Rolls",
+                "Szechwan Chicken Dumplings"
+              ]
+            },
+            {
+              "option": "deserts",
+              "texts": [
+                "Butter Cake",
+                "Red Velvet Cake",
+                "Key Lime Pie",
+                "Belgian Chocolate Soufflé Cake"
+              ]
+            }
+          ]
+        },
         "ingredients": {
           "name": "ingredients",
           "type": "enum",
@@ -778,31 +908,6 @@
               ]
             }
           ]
-        },
-        "order": {
-          "name": "order",
-          "type": "enum",
-          "rules": [
-            {
-              "option": "pizza",
-              "texts": [
-                "pizza",
-                "California Club pizza",
-                "Margerita pizza",
-                "pepperoni Pizza"
-              ]
-            },
-            {
-              "option": "pasta",
-              "texts": [
-                "spagetti",
-                "angel hair pasta",
-                "lasagna",
-                "fettucine alfredo",
-                "pasta"
-              ]
-            }
-          ]
         }
       }
     }
@@ -818,9 +923,9 @@
             "answer": "Here is the menu: "
           }
         ],
-        "pizza.order": [
+        "order": [
           {
-            "answer": "Your {{ order }} is ordered"
+            "answer": ""
           }
         ]
       }
@@ -833,27 +938,27 @@
     "actions": {}
   },
   "slotManager": {
-    "pizza.order": {
+    "order": {
       "order": {
-        "intent": "pizza.order",
+        "intent": "order",
         "entity": "order",
         "mandatory": false,
         "locales": {}
       },
       "modify": {
-        "intent": "pizza.order",
+        "intent": "order",
         "entity": "modify",
         "mandatory": false,
         "locales": {}
       },
       "ingredients": {
-        "intent": "pizza.order",
+        "intent": "order",
         "entity": "ingredients",
         "mandatory": false,
         "locales": {}
       },
       "ingredient": {
-        "intent": "pizza.order",
+        "intent": "order",
         "entity": "ingredient",
         "mandatory": false,
         "locales": {}
