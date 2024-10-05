@@ -1,5 +1,5 @@
-import { useState } from 'react'; // Importing React and useState hook for managing state
 import axios from 'axios';
+import { useState } from 'react'; // Importing React and useState hook for managing state
 import './App.css'; // Importing the CSS file for styling
 
 // The main Chatbot component
@@ -37,6 +37,13 @@ function Chatbot() {
     // Clear the input field after sending the message
     setUserInput('');
   };
+  // Function to handle key down events
+  const handleKeyDown = (e) => {
+    if(e.key === 'Enter') {
+      e.preventDefault();
+      handleSend();//call handleSend function
+    }
+  };
 
   return (
     <div className="chatbot-container">
@@ -58,6 +65,7 @@ function Chatbot() {
           type="text"
           value={userInput} // Bind the input field to the userInput state
           onChange={(e) => setUserInput(e.target.value)} // Update state with new input value
+          onKeyDown={handleKeyDown}
           placeholder="Place an order or ask me about the menu!" // Prompt text for the input
         />
         <button onClick={handleSend}>Enter</button> {/* Send button triggers the handleSend function */}
