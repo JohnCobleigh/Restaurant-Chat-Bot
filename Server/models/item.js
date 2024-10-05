@@ -21,6 +21,7 @@ const Salad = mongoose.models.Salad || mongoose.model('Salad', itemSchema, 'sala
 const Sangria = mongoose.models.Sangria || mongoose.model('Sangria', itemSchema, 'sangrias');
 const Cocktail = mongoose.models.Cocktail || mongoose.model('Cocktail', itemSchema, 'signature_cocktails');
 const Starter = mongoose.models.Starter || mongoose.model('Starter', itemSchema, 'starters');
+// const Dessert = mongoose.models.Dessert || mongoose.model('Dessert', itemSchema, 'sweet_treats');
 
 // Need to update sweet_treats collection in MongoDB with ingredients array
 // const Dessert = mongoose.models.Dessert || mongoose.model('Dessert', itemSchema, 'sweet_treats');
