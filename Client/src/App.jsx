@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState } from 'react'; // Importing React and useState hook for managing state
+import { useState, useEffect } from 'react'; // Importing React and useState hook for managing state
 import './App.css'; // Importing the CSS file for styling
 
 // The main Chatbot component
@@ -7,6 +7,13 @@ function Chatbot() {
   // useState hook to manage the list of messages and the user's input
   const [messages, setMessages] = useState([]); // Stores the history of chat messages
   const [userInput, setUserInput] = useState(''); // Stores the current input from the user
+
+  useEffect(() => {
+    setTimeout(() => {
+      const initialBotMessage = "Hi, I'm CPK-Bot. What can I get for you?"; // Bot's response
+      setMessages([{ sender: 'bot', text: initialBotMessage }]); // Update state with the bot's reply
+    }, 1000); // 1-second delay
+  }, []); // Empty dependency array ensures this runs only once on mount
 
   // Function to handle sending a message
   const handleSend = () => {
@@ -16,14 +23,8 @@ function Chatbot() {
     // Add the user's message to the chat history
     const newMessages = [...messages, { sender: 'user', text: userInput }];
     setMessages(newMessages); // Update state with the new message
-
-    // Simulate a bot response after a short delay
-    /*setTimeout(() => {
-      const botResponse = `Hi, I'm CPK-Bot. What can I get for you?`; // Bot's response
-      setMessages([...newMessages, { sender: 'bot', text: botResponse }]); // Update state with the bot's reply
-    }, 1000); // 1-second delay*/
     
-    // http://localhost:5000/
+    // http://localhost:5001/  (need to use 5001 here to work locally on both Mac & Windows)
     axios.post('/api/', { message: userInput })
       .then(response => {
         const botResponse = response.data.reply;  // Backend response
@@ -37,6 +38,7 @@ function Chatbot() {
     // Clear the input field after sending the message
     setUserInput('');
   };
+  
   // Function to handle key down events
   const handleKeyDown = (e) => {
     if(e.key === 'Enter') {

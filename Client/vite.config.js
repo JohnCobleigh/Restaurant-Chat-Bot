@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:5000', // Your backend server
+        target: 'http://localhost:5001', // Your backend server (need to use 5001 here to work locally on both Mac & Windows)
         changeOrigin: true, // Ensures proper headers are set
         rewrite: (path) => path.replace(/^\/api/, '') // Removes '/api' from the URL when proxying
       }
