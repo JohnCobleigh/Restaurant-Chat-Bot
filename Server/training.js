@@ -4,7 +4,7 @@ const { Pizza } = require("./models");
 const { 
     validPizzas, validPastas, validMargaritas, 
     ValidMartinis, validMocktails, validSalads, validSangrias, 
-    validCocktails, validStarters, validDeserts 
+    validCocktails, validStarters, validDesserts 
 } = require("./validOrders");
 const orderVerification = require("./orderVerification");
 
@@ -18,13 +18,17 @@ module.exports = (manager) => {
     manager.addDocument('en', 'Whats on the menu', 'menu.ask');
     manager.addDocument('en', 'Give me the menu', 'menu.ask');
 
-
     manager.addDocument('en', 'Give me %order% %modify% %ingredients%', 'order');
     manager.addDocument('en', 'i want a %order%, %modify% %ingredients%, %ingredients%, and %ingredients%', 'order');
     manager.addDocument('en', 'order me a %order% %modify% %ingredients% and %ingredients%', 'order');
     manager.addDocument('en', 'let me get a %order%, and %modify% %ingredients% on it', 'order');
     manager.addDocument('en', 'can you add a %order% %modify% %ingredient% to my order', 'order');
-    manager.addDocument('en', 'can i get a %order%', 'order')
+    manager.addDocument('en', 'can i get a %order%', 'order');
+
+    manager.addDocument('en', 'that is all i want to order', 'finalOrder')
+    manager.addDocument('en', 'that will be it', 'finalOrder')
+    manager.addDocument('en', 'i would like to checkout', 'finalOrder')
+    manager.addDocument('en', 'let me checkout', 'finalOrder')
 
     // leaving for reference
     /*manager.addDocument('en', 'Show me the pizzas', 'pizza.show.all')
@@ -65,7 +69,7 @@ module.exports = (manager) => {
     manager.addNamedEntityText('order', 'sangrias', ['en'], validSangrias)
     manager.addNamedEntityText('order', 'cocktails', ['en'], validCocktails)
     manager.addNamedEntityText('order', 'starter', ['en'], validStarters)
-    manager.addNamedEntityText('order', 'deserts', ['en'], validDeserts)
+    manager.addNamedEntityText('order', 'desserts', ['en'], validDesserts)
 
 
 
@@ -92,14 +96,7 @@ module.exports = (manager) => {
     manager.addAnswer('en', 'order', '');
     
     
-
-
-
-    // manager.addAnswer('en', 'pizza.show.all', 'Here are our pizzas: ')
-    // manager.addAnswer('en', 'pasta.show.all', 'Here are our pastas: ')
-
-    
-    manager.train().then(async() => {
+     manager.train().then(async() => {
         manager.save();
     });
 };

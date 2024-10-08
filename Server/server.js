@@ -7,16 +7,14 @@ const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const training = require('./training.js')
-const {checkOrder, displayPartialMenu} = require('./orderVerification')
+const {checkOrder, displayPartialMenu, checkout} = require('./orderVerification')
 const { MainPlate, Margarita, Martini, Mocktail, Pasta, Pizza, Salad, Sangria, Cocktail, Starter, Dessert } = require('./models/item.js')
+const { Order } = require('./models/order.js')
 const { 
     validPizzas, validPastas, validMargaritas, 
     ValidMartinis, validMocktails, validSalads, validSangrias, 
-    validCocktails, validStarters, validDeserts 
+    validCocktails, validStarters, validDesserts 
 } = require("./validOrders");
-
-var order = []
-
 
 const itemCollectionMap = {
     pizza: Pizza,
@@ -65,8 +63,6 @@ app.post('/', async(req, res) => {
         return res.json({reply: 'I dont understand what you want'})
     }
      
-
-
     // console.log(response)
     // console.log(Pizza.name)
     // console.log(validPizzas)
@@ -75,23 +71,26 @@ app.post('/', async(req, res) => {
     if(intent === 'item.show.all'){
        
         const answer = await displayPartialMenu(entities, itemCollectionMap)
-        return res.json({ reply: answer})
+        return res.json({ reply: answer })
 
     }
+    // Adding to order
     else if(intent === 'order'){
-
         // console.log("TESTSETS")
         // console.log(response)
         
         const output =  await checkOrder(response, itemCollectionMap)
 
-
-
         // console.log(output)
         res.json({ reply: output });
-
     }
-    else{
+    // Finalizing order
+    else if (intent === 'finalOrder'){
+        const output = await checkout()
+
+        return res.json({reply: output})
+    }
+    else {
         const answer = response.answer;
         res.json({ reply: answer });
     }

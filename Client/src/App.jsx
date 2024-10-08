@@ -38,7 +38,7 @@ function Chatbot() {
     // Clear the input field after sending the message
     setUserInput('');
   };
-  
+
   // Function to handle key down events
   const handleKeyDown = (e) => {
     if(e.key === 'Enter') {
@@ -56,7 +56,12 @@ function Chatbot() {
       <div className="chatbot-messages">
         {messages.map((msg, index) => (
           <div key={index} className={`chat-message ${msg.sender}`}>
-            {msg.text}
+            {/*{msg.text}*/}
+            {msg.sender === 'bot' ? (
+              <div dangerouslySetInnerHTML={{ __html: msg.text }} />
+            ) : (
+              msg.text // User messages as plain text
+            )}
           </div>
         ))}
       </div>

@@ -1,9 +1,10 @@
 const { model } = require("mongoose");
+const { Order } = require('./models/order.js')
 
-
-
-
-
+let order = []
+let calories = []
+let modifiers = []
+let prices = []
 
 async function checkOrder(response, itemCollectionMap){
 
@@ -12,52 +13,61 @@ async function checkOrder(response, itemCollectionMap){
     const option = optionEntity.option;
     const sourceText = optionEntity.sourceText
     const collection = itemCollectionMap[option.toLowerCase()]
-    // console.log(optionEntity)
-    // console.log(option)
-    // console.log(entities)
 
+    // generally checking if the type of item that the user mentioned even exists
+    const itemEntity = entities.find(e => e.entity === 'item');
+    const item = itemEntity.option;
     if (!collection){
         return res.json({ reply: `We do not serve any ${item}s.`})
     }
 
-    const items = await collection.find({}).exec()
+    // search for specific food or drink in collection
+    const plate = await collection.findOne({ name: { $regex: new RegExp(`^${sourceText}$`, "i") } }).exec()
 
-        // console.log(items)
-    
-        //Searches through the inputs and determines if it matches a pizza in the database
-        for (const element of items){
-            const name = element.name
-            const type = element.option
+    // looking for ingredients to add/remove from food
+    const ingredients = checkIngredients(entities)
+    var modify = checkModify(entities)
+            
+    if (modify == 'positive'){
+        modify = 'with'
+    }
+    else if(modify == 'negative'){
+        modify = 'without'
+    }
+    else{
+        modify = ''
+    }
+    var output = `Ordering a ${sourceText} ${option} ${modify} ${ingredients.join(', ')}`
 
-            // console.log(name)
-            // console.log(entities)
-            // console.log(type)
-        
-            if (name == sourceText){ 
-                const ingredients = checkIngredients(entities)
-                var modify = checkModify(entities)
-                // console.log("Success")
-                // console.log(element)
-                
-                if (modify == 'positive'){
-                    modify = 'with'
-                }
-                else if(modify == 'negative'){
-                    modify = 'without'
-                }
-                else{
-                    modify = ''
-                }
-                var output = `Ordering a ${sourceText} ${option} ${modify} ${ingredients.join(', ')}`
+    // order schema info
+    order.push(plate.name)
+    calories.push(plate.calories)
+    modifiers.push(modify.concat(" ", ingredients))
+    prices.push(plate.price)
 
-                console.log(output)
-                return output;
-            }
-        };
+    console.log(order)
 
-    
+    console.log(output)
+    return output;
 }
 
+async function checkout(){
+    // created new document to store in MongoDB using Mongoose schema
+    const receipt = new Order({names: order, calories: calories, modifiers: modifiers, prices: prices})
+    await receipt.save();
+
+    // reset order-related arrays
+    order.length = 0;
+    calories.length = 0;
+    modifiers.length = 0;
+    prices.length = 0;  
+
+    const receiptDetails = receipt.names.map((name, index) => {
+        return `\u2022 ${name} [cal.${receipt.calories[index]}] [Modifier: ${receipt.modifiers[index]}] [$${receipt.prices[index]}]`;
+    }).join('<br><br>');
+
+    return `Here is what you ordered today:<br><br>${receiptDetails}`;
+}
 
 function checkIngredients(entities){
 
@@ -94,32 +104,33 @@ async function displayPartialMenu(entities, itemCollectionMap){
 
     const itemEntity = entities.find(e => e.entity === 'item');
         
-        if (!itemEntity) {
-            return res.json({ reply: "Sorry, I couldn't understand which item you're looking for." });
-        }
+    if (!itemEntity) {
+        return res.json({ reply: "Sorry, I couldn't understand which item you're looking for." });
+    }
 
-        const item = itemEntity.option;
+    const item = itemEntity.option;
 
-        // matching item recognized in input to schema imported from item.js
-        const collection = itemCollectionMap[item.toLowerCase()]
+    // matching item recognized in input to schema imported from item.js
+    const collection = itemCollectionMap[item.toLowerCase()]
 
-        //Looks to see if the collection exists in the database
-        if (!collection){
-            return res.json({ reply: `We do not serve any ${item}s.`})
-        }
+    //Looks to see if the collection exists in the database
+    if (!collection){
+        return res.json({ reply: `We do not serve any ${item}s.`})
+    }
 
-        const items = await collection.find({}).exec(); // finds all documents for a specific item
+    const items = await collection.find({}).exec(); // finds all documents for a specific item
     
-        //Checks to see if the database has items in the collection
-        if (items.length === 0) {
-            return res.json({ reply: `No ${item}s found.` });
-        }
+    //Checks to see if the database has items in the collection
+    if (items.length === 0) {
+        return res.json({ reply: `No ${item}s found.` });
+    }
     
-        const itemNames = items.map(i => i.name).join(', ');
+    // create array of item names and prices
+    //const itemNames = items.map(i => i.name).join(', ');
+    const itemNames = items.map(i => `\u2022 ${i.name} [cal.${i.calories}] [$${i.price}]`).join('<br><br>');
 
-
-        return `Here are our ${item}s: ${itemNames}`
+    return `Here are our ${item}s: <br><br> ${itemNames}`
 }
 
 
-module.exports = {checkOrder, checkIngredients, checkModify, displayPartialMenu}
+module.exports = {checkOrder, checkIngredients, checkModify, displayPartialMenu, checkout}

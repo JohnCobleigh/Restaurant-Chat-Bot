@@ -48,7 +48,7 @@ const validStarters = [
     'White Corn Guacamole + Chips', 'Avocado Club Egg Rolls', 'Szechwan Chicken Dumplings'
 ]
 
-const validDeserts = [
+const validDesserts = [
     'Butter Cake', 'Red Velvet Cake', 
     'Key Lime Pie', 'Belgian Chocolate Soufflé Cake'
 ]
@@ -60,5 +60,5 @@ module.exports = {
     validPizzas, validPastas, validMargaritas, 
     ValidMartinis, validMocktails, validSalads, 
     validSangrias, validCocktails, validStarters, 
-    validDeserts
+    validDesserts
 }
