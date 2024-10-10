@@ -15,11 +15,11 @@ async function checkOrder(response, itemCollectionMap){
     const collection = itemCollectionMap[option.toLowerCase()]     // matching item type to Mongoose schema (see item.js and server.js)
 
     // (debugging stuff)
-    console.log(entities)
-    console.log(optionEntity)
-    console.log(option)         // item type (i.e. pizza, pasta, etc.)
-    console.log(sourceText)     // item name (i.e Thai Chicken)
-    console.log(collection)     // Mongoose schema (i.e. { Pizza })
+    // console.log(entities)
+    // console.log(optionEntity)
+    // console.log(option)         // item type (i.e. pizza, pasta, etc.)
+    // console.log(sourceText)     // item name (i.e Thai Chicken)
+    // console.log(collection)     // Mongoose schema (i.e. { Pizza })
 
     // code below does NOT allow user to leave out item type in order prompt
     // ex. "can i order a Thai Chicken" breaks server but works properly if commented out
@@ -59,9 +59,9 @@ async function checkOrder(response, itemCollectionMap){
     modifiers.push(modify.concat(" ", ingredients))
     prices.push(plate.price)
 
-    console.log(order)
+    // console.log(order)
 
-    console.log(output)
+    // console.log(output)
     return output;
 }
 
