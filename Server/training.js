@@ -9,15 +9,21 @@ const {
 const orderVerification = require("./orderVerification");
 
 
-
-
 module.exports = (manager) => {
+    // Asking for general menu info
     manager.addDocument('en', 'What is on the menu?', 'menu.ask');
     manager.addDocument('en', 'What items do you have?', 'menu.ask');
     manager.addDocument('en', 'Show me the menu', 'menu.ask');
     manager.addDocument('en', 'Whats on the menu', 'menu.ask');
     manager.addDocument('en', 'Give me the menu', 'menu.ask');
 
+    // Asking for list of item names from a specified section
+    manager.addDocument('en', 'Show me the %item%', 'item.show.all')
+    manager.addDocument('en', 'What %item% choices do you have', 'item.show.all')
+    manager.addDocument('en', 'List all the %item%', 'item.show.all')
+    manager.addDocument('en', 'What %item% do you have', 'item.show.all')
+
+    // Adding an item to an order
     manager.addDocument('en', 'Give me %order% %modify% %ingredients%', 'order');
     manager.addDocument('en', 'i want a %order%, %modify% %ingredients%, %ingredients%, and %ingredients%', 'order');
     manager.addDocument('en', 'order me a %order% %modify% %ingredients% and %ingredients%', 'order');
@@ -25,28 +31,13 @@ module.exports = (manager) => {
     manager.addDocument('en', 'can you add a %order% %modify% %ingredient% to my order', 'order');
     manager.addDocument('en', 'can i get a %order%', 'order');
 
+    // Checking out
     manager.addDocument('en', 'that is all i want to order', 'finalOrder')
     manager.addDocument('en', 'that will be it', 'finalOrder')
     manager.addDocument('en', 'i would like to checkout', 'finalOrder')
     manager.addDocument('en', 'let me checkout', 'finalOrder')
 
-    // leaving for reference
-    /*manager.addDocument('en', 'Show me the pizzas', 'pizza.show.all')
-    manager.addDocument('en', 'What pizza choices do you have', 'pizza.show.all')
-    manager.addDocument('en', 'List all the pizzas', 'pizza.show.all')
-    manager.addDocument('en', 'What pizzas do you have', 'pizza.show.all')
-
-    manager.addDocument('en', 'Show me the pastas', 'pasta.show.all');
-    manager.addDocument('en', 'What pasta choices do you have', 'pasta.show.all');
-    manager.addDocument('en', 'List all the pastas', 'pasta.show.all');
-    manager.addDocument('en', 'What pastas do you have', 'pasta.show.all');*/
-
-
-    manager.addDocument('en', 'Show me the %item%', 'item.show.all')
-    manager.addDocument('en', 'What %item% choices do you have', 'item.show.all')
-    manager.addDocument('en', 'List all the %item%', 'item.show.all')
-    manager.addDocument('en', 'What %item% do you have', 'item.show.all')
-
+    // Recognizing specified items in input and considering different spellings and synomyms 
     manager.addNamedEntityText('item', 'plate', ['en'], ['plate', 'plates', 'entree', 'entrees'])
     manager.addNamedEntityText('item', 'pizza', ['en'], ['pizza', 'pizzas', 'pie', 'pies'])
     manager.addNamedEntityText('item', 'pasta', ['en'], ['pasta', 'pastas'])
@@ -72,11 +63,7 @@ module.exports = (manager) => {
     manager.addNamedEntityText('order', 'desserts', ['en'], validDesserts)
 
 
-
-
-
-
-
+    // used for identifying ingredients to be added or removed
     manager.addNamedEntityText('ingredients', 'olives', ['en'], ['olives', "olive's"])
     manager.addNamedEntityText('ingredients', 'peppers', ['en'], ['peppers'])
     manager.addNamedEntityText('ingredients', 'pepperoni', ['en'], ['pepperonis', "pepperoni's", 'pepperoni'])
@@ -84,16 +71,17 @@ module.exports = (manager) => {
     manager.addNamedEntityText('ingredients', 'japalenio', ['en'], ['japalenio', "japalenio's", 'japalenios'])
     manager.addNamedEntityText('ingredients', 'tomato', ['en'], ['tomato', "tomato's"])
 
-
+    // recognized when user wants to add or remove ingredient from an item
     manager.addNamedEntityText('modify', 'positive', ['en'], ['add', 'extra', 'put some', 'with'])
     manager.addNamedEntityText('modify', 'negative', ['en'], ['remove', 'take off', 'no', 'without'])
 
 
-
-
     manager.addAnswer('en', 'menu.ask', 'Here is the menu: ');
-    // manager.addAnswer('en', 'order', 'Your {{ order }} is ordered');
-    manager.addAnswer('en', 'order', '');
+
+    // possible responses to couple with receipt once user finalizes order
+    manager.addAnswer('en', 'finalOrder', 'Here is what you ordered today: *receipt here*');
+    manager.addAnswer('en', 'finalOrder', 'Here\'s your receipt: *receipt here*');
+    manager.addAnswer('en', 'finalOrder', 'Your order has been placed: *receipt here*');
     
     
      manager.train().then(async() => {

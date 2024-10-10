@@ -63,10 +63,6 @@ app.post('/', async(req, res) => {
         return res.json({reply: 'I dont understand what you want'})
     }
      
-    // console.log(response)
-    // console.log(Pizza.name)
-    // console.log(validPizzas)
-
     //Start of the section determining what to respond with
     if(intent === 'item.show.all'){
        
@@ -76,19 +72,17 @@ app.post('/', async(req, res) => {
     }
     // Adding to order
     else if(intent === 'order'){
-        // console.log("TESTSETS")
-        // console.log(response)
-        
         const output =  await checkOrder(response, itemCollectionMap)
 
-        // console.log(output)
         res.json({ reply: output });
     }
     // Finalizing order
     else if (intent === 'finalOrder'){
         const output = await checkout()
 
-        return res.json({reply: output})
+        const nlpAnswer = response.answer.replace('*receipt here*', output);
+
+        return res.json({ reply: nlpAnswer })
     }
     else {
         const answer = response.answer;
@@ -98,6 +92,6 @@ app.post('/', async(req, res) => {
 
 
 // Listen for requests
-app.listen(process.env.PORT, () => { 
+app.listen(process.env.PORT, '0.0.0.0', () => { 
     console.log(`Server started on port ${process.env.PORT}`);
 });
