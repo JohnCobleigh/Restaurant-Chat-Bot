@@ -1,18 +1,18 @@
 const { model } = require("mongoose");
 const { Order } = require('./models/order.js')
 
-let order = []
+let names = []
 let calories = []
 let modifiers = []
 let prices = []
 
-async function checkOrder(response, itemCollectionMap){
+async function addToOrder(response, itemCollectionMap){
 
     const entities = response.entities
-    const optionEntity = entities.find(e => e.entity === 'order'); // looking for what items are valid to order (see training.js and validOrders.js)
-    const option = optionEntity.option;                            // pulling item type from optionEntity object
-    const sourceText = optionEntity.sourceText                     // pulling specific name from optionEntity object
-    const collection = itemCollectionMap[option.toLowerCase()]     // matching item type to Mongoose schema (see item.js and server.js)
+    const optionEntity = entities.find(e => e.entity === 'add.to.order'); // looking for what items are valid to order (see training.js and validOrders.js)
+    const option = optionEntity.option;                                   // pulling item type from optionEntity object
+    const sourceText = optionEntity.sourceText                            // pulling specific name from optionEntity object
+    const collection = itemCollectionMap[option.toLowerCase()]            // matching item type to Mongoose schema (see item.js and server.js)
 
     // (debugging stuff)
     console.log(entities)
@@ -51,44 +51,64 @@ async function checkOrder(response, itemCollectionMap){
         modify = ''
     }
 
-    var output = `Ordering a ${sourceText} ${modify} ${ingredients.join(', ')}`
 
     // order schema info
-    order.push(plate.name)
+    names.push(plate.name)
     calories.push(plate.calories)
     modifiers.push(modify.concat(" ", ingredients))
     prices.push(plate.price)
 
-    console.log(order)
+    console.log(names)
 
-    console.log(output)
-    return output;
+    return `${sourceText} ${option} ${modify} ${ingredients.join(', ')}`;
 }
 
-async function checkout(){
+async function removeFromOrder(response){
+    const entities = response.entities
+    const optionEntity = entities.find(e => e.entity === 'add.to.order');
+    const sourceText = optionEntity.sourceText
+
+    const index = names.indexOf(sourceText);
+    if (index > -1){
+        names.splice(index, 1)
+        calories.splice(index, 1)
+        modifiers.splice(index, 1)
+        prices.splice(index, 1)
+    }
+    else if (index <= 0){
+        return `That item is not in your order.`
+    }
+
+    console.log(names)
+    return sourceText
+}
+
+
+async function placeOrder(){
     // created new document to store in MongoDB using Mongoose schema
-    const receipt = new Order({names: order, calories: calories, modifiers: modifiers, prices: prices})
+    const receipt = new Order({names: names, calories: calories, modifiers: modifiers, prices: prices})
     await receipt.save();
 
     let calTotal = calories.reduce((partialSum, a) => partialSum + a, 0);
     let subtotal = prices.reduce((partialSum, a) => partialSum + a, 0);
 
     // reset order-related arrays
-    order.length = 0;
+    names.length = 0;
     calories.length = 0;
     modifiers.length = 0;
     prices.length = 0;  
 
     const receiptDetails = receipt.names.map((name, index) => {
-        return `\u2022 ${name} ${receipt.modifiers[index]} [cal.${receipt.calories[index]}] [$${receipt.prices[index]}]`;
-    }).join('<br><br>');
+        return `\u2022 <b>${name}</b> ${receipt.modifiers[index]} [cal.${receipt.calories[index]}] [$${receipt.prices[index]}]`;
+    }).join('<br /><br />');
 
-    return `<br><br>${receiptDetails}<br><br>
-            Total calories: ${calTotal}<br><br>
-            Subtotal: $${subtotal}<br>
-            Tax: $${(subtotal * 0.0825).toFixed(2)}<br>
-            Total: $${(subtotal + subtotal * 0.0825).toFixed(2)}`;
+    return `<br /><br />${receiptDetails}<br /><br />
+            Total calories: ${calTotal}<br /><br />
+            Subtotal: $${subtotal}<br />
+            Tax: $${(subtotal * 0.0825).toFixed(2)}<br />
+            Total: <b>$${(subtotal + subtotal * 0.0825).toFixed(2)}</b>`;
 }
+
 
 function checkIngredients(entities){
 
@@ -146,11 +166,33 @@ async function displayPartialMenu(entities, itemCollectionMap){
     }
     
     // create array of item names and prices
-    //const itemNames = items.map(i => i.name).join(', ');
-    const itemNames = items.map(i => `\u2022 ${i.name} [cal.${i.calories}] [$${i.price}]`).join('<br><br>');
+    const itemNames = items.map(i => `\u2022 <b>${i.name}</b> [cal.${i.calories}] [$${i.price}]`).join('<br />');
 
-    return `Here are our ${item}s: <br><br> ${itemNames}`
+    //return `Here are our ${item}s: <br /><br /> ${itemNames}`
+    return `<br /><br />${itemNames}`;
 }
 
 
-module.exports = {checkOrder, checkIngredients, checkModify, displayPartialMenu, checkout}
+async function displayGeneralMenu(sections){
+    const head = sections.slice(0, -1).join(', ');
+    const last = sections[sections.length - 1];
+    return `${head}, and ${last}`;
+}
+
+
+async function displayIngredients(response, itemCollectionMap){
+    const entities = response.entities
+    const optionEntity = entities.find(e => e.entity === 'add.to.order');   
+    const option = optionEntity.option;                              
+    const sourceText = optionEntity.sourceText                            
+    const collection = itemCollectionMap[option.toLowerCase()] 
+
+    const item = await collection.findOne({ name: { $regex: new RegExp(`^${sourceText}$`, "i") } }).exec()
+
+    const head = item.ingredients.slice(0, -1).join(', ');
+    const last = item.ingredients[item.ingredients.length - 1];
+    return `<b>${head},</b> & <b>${last}</b>`;
+}
+
+
+module.exports = {addToOrder, checkIngredients, checkModify, displayPartialMenu, placeOrder, removeFromOrder, displayGeneralMenu, displayIngredients}

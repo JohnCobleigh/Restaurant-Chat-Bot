@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react'; // Importing React and useState hook for managing state
+import { useState, useEffect, useRef } from 'react'; // Importing React, useState, useEffect, and useRef hooks
 import './App.css'; // Importing the CSS file for styling
 
 // The main Chatbot component
@@ -7,6 +7,7 @@ function Chatbot() {
   // useState hook to manage the list of messages and the user's input
   const [messages, setMessages] = useState([]); // Stores the history of chat messages
   const [userInput, setUserInput] = useState(''); // Stores the current input from the user
+  const messagesEndRef = useRef(null); // Reference to the bottom of the messages list
 
   useEffect(() => {
     setTimeout(() => {
@@ -14,6 +15,18 @@ function Chatbot() {
       setMessages([{ sender: 'bot', text: initialBotMessage }]); // Update state with the bot's reply
     }, 1000); // 1-second delay
   }, []); // Empty dependency array ensures this runs only once on mount
+
+  // Scroll to bottom of the message list
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // Call scrollToBottom whenever messages change
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   // Function to handle sending a message
   const handleSend = () => {
@@ -38,12 +51,12 @@ function Chatbot() {
     // Clear the input field after sending the message
     setUserInput('');
   };
-
+  
   // Function to handle key down events
   const handleKeyDown = (e) => {
     if(e.key === 'Enter') {
       e.preventDefault();
-      handleSend();//call handleSend function
+      handleSend(); // Call handleSend function
     }
   };
 
@@ -56,14 +69,15 @@ function Chatbot() {
       <div className="chatbot-messages">
         {messages.map((msg, index) => (
           <div key={index} className={`chat-message ${msg.sender}`}>
-            {/*{msg.text}*/}
             {msg.sender === 'bot' ? (
-              <div dangerouslySetInnerHTML={{ __html: msg.text }} />
+              <span dangerouslySetInnerHTML={{ __html: msg.text }} /> // Renders the bot message with HTML
             ) : (
-              msg.text // User messages as plain text
+              msg.text // User message is rendered as plain text
             )}
           </div>
         ))}
+        {/* Ref element to scroll to */}
+        <div ref={messagesEndRef} />
       </div>
 
       {/* Input field for typing and sending messages */}

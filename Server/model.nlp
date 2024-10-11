@@ -42,6 +42,10 @@
             "intent": "menu.ask",
             "domain": "default"
           },
+          "do,item,kind,of,serv,what,you": {
+            "intent": "menu.ask",
+            "domain": "default"
+          },
           "me,menu,show,the": {
             "intent": "menu.ask",
             "domain": "default"
@@ -70,52 +74,82 @@
             "intent": "item.show.all",
             "domain": "default"
           },
+          "%item%,doe,have,the,what": {
+            "intent": "show.ingredients",
+            "domain": "default"
+          },
+          "%item%,doe,have,ingredi,the,what": {
+            "intent": "show.ingredients",
+            "domain": "default"
+          },
+          "%item%,in,is,the,what": {
+            "intent": "show.ingredients",
+            "domain": "default"
+          },
           "%ingredients%,%modify%,%order%,give,me": {
-            "intent": "order",
+            "intent": "add.to.order",
             "domain": "default"
           },
           "%ingredients%,%modify%,%order%,a,and,i,want": {
-            "intent": "order",
+            "intent": "add.to.order",
             "domain": "default"
           },
           "%ingredients%,%modify%,%order%,a,and,me,order": {
-            "intent": "order",
+            "intent": "add.to.order",
             "domain": "default"
           },
           "%ingredients%,%modify%,%order%,a,and,get,it,let,me,on": {
-            "intent": "order",
+            "intent": "add.to.order",
             "domain": "default"
           },
           "%ingredient%,%modify%,%order%,a,add,can,my,order,to,you": {
-            "intent": "order",
+            "intent": "add.to.order",
             "domain": "default"
           },
           "%order%,a,can,get,i": {
-            "intent": "order",
+            "intent": "add.to.order",
+            "domain": "default"
+          },
+          "%order%,can,i,order,the": {
+            "intent": "add.to.order",
+            "domain": "default"
+          },
+          "%order%,can,from,i,my,order,remov": {
+            "intent": "remove.from.order",
+            "domain": "default"
+          },
+          "%order%,anymor,do,i,not,want": {
+            "intent": "remove.from.order",
+            "domain": "default"
+          },
+          "%order%,remov": {
+            "intent": "remove.from.order",
             "domain": "default"
           },
           "all,i,is,order,that,to,want": {
-            "intent": "finalOrder",
+            "intent": "place.order",
             "domain": "default"
           },
           "be,it,that,will": {
-            "intent": "finalOrder",
+            "intent": "place.order",
             "domain": "default"
           },
           "checkout,i,like,to,would": {
-            "intent": "finalOrder",
+            "intent": "place.order",
             "domain": "default"
           },
           "checkout,let,me": {
-            "intent": "finalOrder",
+            "intent": "place.order",
             "domain": "default"
           }
         },
         "intentDict": {
           "menu.ask": "default",
           "item.show.all": "default",
-          "order": "default",
-          "finalOrder": "default"
+          "show.ingredients": "default",
+          "add.to.order": "default",
+          "remove.from.order": "default",
+          "place.order": "default"
         },
         "sentences": [
           {
@@ -126,6 +160,11 @@
           {
             "domain": "default",
             "utterance": "What items do you have?",
+            "intent": "menu.ask"
+          },
+          {
+            "domain": "default",
+            "utterance": "What kind of items do you serve?",
             "intent": "menu.ask"
           },
           {
@@ -165,53 +204,88 @@
           },
           {
             "domain": "default",
+            "utterance": "what does the %item% have",
+            "intent": "show.ingredients"
+          },
+          {
+            "domain": "default",
+            "utterance": "what ingredients does the %item% have",
+            "intent": "show.ingredients"
+          },
+          {
+            "domain": "default",
+            "utterance": "what is in the %item%",
+            "intent": "show.ingredients"
+          },
+          {
+            "domain": "default",
             "utterance": "Give me %order% %modify% %ingredients%",
-            "intent": "order"
+            "intent": "add.to.order"
           },
           {
             "domain": "default",
             "utterance": "i want a %order%, %modify% %ingredients%, %ingredients%, and %ingredients%",
-            "intent": "order"
+            "intent": "add.to.order"
           },
           {
             "domain": "default",
             "utterance": "order me a %order% %modify% %ingredients% and %ingredients%",
-            "intent": "order"
+            "intent": "add.to.order"
           },
           {
             "domain": "default",
             "utterance": "let me get a %order%, and %modify% %ingredients% on it",
-            "intent": "order"
+            "intent": "add.to.order"
           },
           {
             "domain": "default",
             "utterance": "can you add a %order% %modify% %ingredient% to my order",
-            "intent": "order"
+            "intent": "add.to.order"
           },
           {
             "domain": "default",
             "utterance": "can i get a %order%",
-            "intent": "order"
+            "intent": "add.to.order"
+          },
+          {
+            "domain": "default",
+            "utterance": "can i order the %order%",
+            "intent": "add.to.order"
+          },
+          {
+            "domain": "default",
+            "utterance": "can i remove %order% from my order",
+            "intent": "remove.from.order"
+          },
+          {
+            "domain": "default",
+            "utterance": "i do not want %order% anymore",
+            "intent": "remove.from.order"
+          },
+          {
+            "domain": "default",
+            "utterance": "remove %order%",
+            "intent": "remove.from.order"
           },
           {
             "domain": "default",
             "utterance": "that is all i want to order",
-            "intent": "finalOrder"
+            "intent": "place.order"
           },
           {
             "domain": "default",
             "utterance": "that will be it",
-            "intent": "finalOrder"
+            "intent": "place.order"
           },
           {
             "domain": "default",
             "utterance": "i would like to checkout",
-            "intent": "finalOrder"
+            "intent": "place.order"
           },
           {
             "domain": "default",
             "utterance": "let me checkout",
-            "intent": "finalOrder"
+            "intent": "place.order"
           }
         ],
         "domains": {
@@ -237,6 +311,9 @@
               "do": 1,
               "you": 1,
               "have": 1,
+              "kind": 1,
+              "of": 1,
+              "serv": 1,
               "show": 1,
               "me": 1,
               "give": 1,
@@ -244,6 +321,9 @@
               "choic": 1,
               "list": 1,
               "all": 1,
+              "doe": 1,
+              "ingredi": 1,
+              "in": 1,
               "%order%": 1,
               "%modify%": 1,
               "%ingredients%": 1,
@@ -260,6 +340,10 @@
               "%ingredient%": 1,
               "to": 1,
               "my": 1,
+              "remov": 1,
+              "from": 1,
+              "not": 1,
+              "anymor": 1,
               "that": 1,
               "will": 1,
               "be": 1,
@@ -270,8 +354,10 @@
             "intents": {
               "menu.ask": 1,
               "item.show.all": 1,
-              "order": 1,
-              "finalOrder": 1
+              "show.ingredients": 1,
+              "add.to.order": 1,
+              "remove.from.order": 1,
+              "place.order": 1
             },
             "intentFeatures": {
               "menu.ask": {
@@ -284,6 +370,9 @@
                 "do": 1,
                 "you": 1,
                 "have": 1,
+                "kind": 1,
+                "of": 1,
+                "serv": 1,
                 "show": 1,
                 "me": 1,
                 "give": 1
@@ -301,7 +390,17 @@
                 "list": 1,
                 "all": 1
               },
-              "order": {
+              "show.ingredients": {
+                "what": 1,
+                "doe": 1,
+                "the": 1,
+                "%item%": 1,
+                "have": 1,
+                "ingredi": 1,
+                "is": 1,
+                "in": 1
+              },
+              "add.to.order": {
                 "give": 1,
                 "me": 1,
                 "%order%": 1,
@@ -321,9 +420,23 @@
                 "add": 1,
                 "%ingredient%": 1,
                 "to": 1,
-                "my": 1
+                "my": 1,
+                "the": 1
               },
-              "finalOrder": {
+              "remove.from.order": {
+                "can": 1,
+                "i": 1,
+                "remov": 1,
+                "%order%": 1,
+                "from": 1,
+                "my": 1,
+                "order": 1,
+                "do": 1,
+                "not": 1,
+                "want": 1,
+                "anymor": 1
+              },
+              "place.order": {
                 "that": 1,
                 "is": 1,
                 "all": 1,
@@ -344,19 +457,23 @@
             "featuresToIntent": {
               "what": [
                 "menu.ask",
-                "item.show.all"
+                "item.show.all",
+                "show.ingredients"
               ],
               "is": [
                 "menu.ask",
-                "finalOrder"
+                "show.ingredients",
+                "place.order"
               ],
               "on": [
                 "menu.ask",
-                "order"
+                "add.to.order"
               ],
               "the": [
                 "menu.ask",
-                "item.show.all"
+                "item.show.all",
+                "show.ingredients",
+                "add.to.order"
               ],
               "menu": [
                 "menu.ask"
@@ -366,16 +483,27 @@
               ],
               "do": [
                 "menu.ask",
-                "item.show.all"
+                "item.show.all",
+                "remove.from.order"
               ],
               "you": [
                 "menu.ask",
                 "item.show.all",
-                "order"
+                "add.to.order"
               ],
               "have": [
                 "menu.ask",
-                "item.show.all"
+                "item.show.all",
+                "show.ingredients"
+              ],
+              "kind": [
+                "menu.ask"
+              ],
+              "of": [
+                "menu.ask"
+              ],
+              "serv": [
+                "menu.ask"
               ],
               "show": [
                 "menu.ask",
@@ -384,15 +512,16 @@
               "me": [
                 "menu.ask",
                 "item.show.all",
-                "order",
-                "finalOrder"
+                "add.to.order",
+                "place.order"
               ],
               "give": [
                 "menu.ask",
-                "order"
+                "add.to.order"
               ],
               "%item%": [
-                "item.show.all"
+                "item.show.all",
+                "show.ingredients"
               ],
               "choic": [
                 "item.show.all"
@@ -402,79 +531,106 @@
               ],
               "all": [
                 "item.show.all",
-                "finalOrder"
+                "place.order"
+              ],
+              "doe": [
+                "show.ingredients"
+              ],
+              "ingredi": [
+                "show.ingredients"
+              ],
+              "in": [
+                "show.ingredients"
               ],
               "%order%": [
-                "order"
+                "add.to.order",
+                "remove.from.order"
               ],
               "%modify%": [
-                "order"
+                "add.to.order"
               ],
               "%ingredients%": [
-                "order"
+                "add.to.order"
               ],
               "i": [
-                "order",
-                "finalOrder"
+                "add.to.order",
+                "remove.from.order",
+                "place.order"
               ],
               "want": [
-                "order",
-                "finalOrder"
+                "add.to.order",
+                "remove.from.order",
+                "place.order"
               ],
               "a": [
-                "order"
+                "add.to.order"
               ],
               "and": [
-                "order"
+                "add.to.order"
               ],
               "order": [
-                "order",
-                "finalOrder"
+                "add.to.order",
+                "remove.from.order",
+                "place.order"
               ],
               "let": [
-                "order",
-                "finalOrder"
+                "add.to.order",
+                "place.order"
               ],
               "get": [
-                "order"
+                "add.to.order"
               ],
               "it": [
-                "order",
-                "finalOrder"
+                "add.to.order",
+                "place.order"
               ],
               "can": [
-                "order"
+                "add.to.order",
+                "remove.from.order"
               ],
               "add": [
-                "order"
+                "add.to.order"
               ],
               "%ingredient%": [
-                "order"
+                "add.to.order"
               ],
               "to": [
-                "order",
-                "finalOrder"
+                "add.to.order",
+                "place.order"
               ],
               "my": [
-                "order"
+                "add.to.order",
+                "remove.from.order"
+              ],
+              "remov": [
+                "remove.from.order"
+              ],
+              "from": [
+                "remove.from.order"
+              ],
+              "not": [
+                "remove.from.order"
+              ],
+              "anymor": [
+                "remove.from.order"
               ],
               "that": [
-                "finalOrder"
+                "place.order"
               ],
               "will": [
-                "finalOrder"
+                "place.order"
               ],
               "be": [
-                "finalOrder"
+                "place.order"
               ],
               "would": [
-                "finalOrder"
+                "place.order"
               ],
               "like": [
-                "finalOrder"
+                "place.order"
               ],
               "checkout": [
-                "finalOrder"
+                "place.order"
               ]
             },
             "neuralNetwork": {
@@ -499,6 +655,9 @@
                 "do",
                 "you",
                 "have",
+                "kind",
+                "of",
+                "serv",
                 "show",
                 "me",
                 "give",
@@ -506,6 +665,9 @@
                 "choic",
                 "list",
                 "all",
+                "doe",
+                "ingredi",
+                "in",
                 "%order%",
                 "%modify%",
                 "%ingredients%",
@@ -522,6 +684,10 @@
                 "%ingredient%",
                 "to",
                 "my",
+                "remov",
+                "from",
+                "not",
+                "anymor",
                 "that",
                 "will",
                 "be",
@@ -532,173 +698,317 @@
               "intents": [
                 "menu.ask",
                 "item.show.all",
-                "order",
-                "finalOrder"
+                "show.ingredients",
+                "add.to.order",
+                "remove.from.order",
+                "place.order"
               ],
               "perceptrons": [
                 [
-                  2.1904044151306152,
-                  -0.02566094882786274,
-                  0.4879976511001587,
-                  3.719292163848877,
-                  6.718632698059082,
-                  6.229091644287109,
-                  1.5097962617874146,
-                  1.4801361560821533,
-                  1.5097962617874146,
-                  1.3126156330108643,
-                  1.297323226928711,
-                  1.3844860792160034,
-                  -7.725183963775635,
-                  -1.5518373250961304,
-                  -0.4236949682235718,
-                  -0.6073869466781616,
-                  -1.3047831058502197,
-                  -1.3003721237182617,
-                  -1.2707123756408691,
-                  -0.29403674602508545,
-                  -0.1526026427745819,
-                  -0.37736067175865173,
-                  -0.3090170919895172,
-                  -0.25192299485206604,
-                  -1.2639846801757812,
-                  -0.14560990035533905,
-                  -0.4158075153827667,
-                  -0.024450568482279778,
-                  -0.014830071479082108,
-                  -0.014830071479082108,
-                  -0.2534809112548828,
-                  -0.014830071479082108,
-                  -0.342287540435791,
-                  -0.22409620881080627,
-                  -0.22409620881080627,
-                  -0.1021423488855362,
-                  -0.1021423488855362,
-                  -1.2026423215866089,
-                  1.1805790640389389
+                  1.9911065101623535,
+                  -0.008572975173592567,
+                  1.25673508644104,
+                  2.9150547981262207,
+                  7.070617198944092,
+                  6.246110916137695,
+                  1.9283651113510132,
+                  2.045684337615967,
+                  0.8404052257537842,
+                  0.3463015854358673,
+                  0.3463015854358673,
+                  0.3463015854358673,
+                  1.5966917276382446,
+                  1.6421740055084229,
+                  1.5968118906021118,
+                  -7.7499871253967285,
+                  -1.2158544063568115,
+                  -0.24823932349681854,
+                  -0.30662065744400024,
+                  -0.8426083922386169,
+                  -0.2232080101966858,
+                  -0.6342759728431702,
+                  -1.935506820678711,
+                  -1.216712474822998,
+                  -1.1376118659973145,
+                  -0.8230128884315491,
+                  -0.22483055293560028,
+                  -0.4270537495613098,
+                  -0.34616631269454956,
+                  -0.7102052569389343,
+                  -1.4274110794067383,
+                  -0.17946486175060272,
+                  -0.46054357290267944,
+                  -0.5769167542457581,
+                  -0.039550263434648514,
+                  -0.039550263434648514,
+                  -0.1362275928258896,
+                  -0.039550263434648514,
+                  0,
+                  0,
+                  -0.15345528721809387,
+                  -0.15345528721809387,
+                  -0.2413870096206665,
+                  -0.23363713920116425,
+                  -0.23363713920116425,
+                  -0.05076425522565842,
+                  -0.05076425522565842,
+                  -1.2642661333084106,
+                  1.051778819467977
                 ],
                 [
-                  0.08372605592012405,
-                  -0.7547645568847656,
-                  -1.0295016765594482,
-                  1.487228274345398,
-                  -3.8498637676239014,
-                  -3.6099376678466797,
-                  1.1364189386367798,
-                  0.8947519063949585,
-                  1.1364189386367798,
-                  1.576104760169983,
-                  0.49506279826164246,
-                  -0.4771444797515869,
-                  10.102587699890137,
-                  0.8952959775924683,
-                  1.3019388914108276,
-                  1.052504539489746,
-                  -0.5973405241966248,
-                  -0.5477268695831299,
-                  -0.3380400240421295,
-                  -0.4625723361968994,
-                  -0.29836609959602356,
-                  -0.4201318323612213,
-                  -0.16651751101016998,
-                  -0.5017121434211731,
-                  -0.4753814935684204,
-                  -0.04589778557419777,
-                  -0.234922394156456,
-                  -0.21111294627189636,
-                  -0.16035068035125732,
-                  -0.16035068035125732,
-                  -0.5531244874000549,
-                  -0.16035068035125732,
-                  -0.4546612501144409,
-                  -0.20233534276485443,
-                  -0.20233534276485443,
-                  -0.07075424492359161,
-                  -0.07075424492359161,
-                  -0.5490756630897522,
-                  0.45548343517305917
+                  -3.464907646179199,
+                  -2.6639528274536133,
+                  -0.06693127006292343,
+                  -1.4459002017974854,
+                  -3.765470504760742,
+                  -3.6179795265197754,
+                  3.482846736907959,
+                  3.7681732177734375,
+                  -0.21183325350284576,
+                  -0.599214494228363,
+                  -0.599214494228363,
+                  -0.599214494228363,
+                  3.363107204437256,
+                  1.9608914852142334,
+                  -0.3134691119194031,
+                  10.024825096130371,
+                  1.1091810464859009,
+                  2.8888304233551025,
+                  2.8171513080596924,
+                  -4.92096471786499,
+                  -1.5507007837295532,
+                  -2.5315706729888916,
+                  -1.148855209350586,
+                  -0.5520310401916504,
+                  -0.26754096150398254,
+                  -0.7105787992477417,
+                  -0.6741448640823364,
+                  -0.401615709066391,
+                  -0.11644263565540314,
+                  -0.38689595460891724,
+                  -1.027241826057434,
+                  -0.030042100697755814,
+                  -0.17141015827655792,
+                  -0.2787454128265381,
+                  -0.2593105435371399,
+                  -0.2593105435371399,
+                  -0.3535866439342499,
+                  -0.2593105435371399,
+                  -0.013410416431725025,
+                  0,
+                  -0.5463259220123291,
+                  -0.5463259220123291,
+                  -0.21514147520065308,
+                  -0.14280545711517334,
+                  -0.14280545711517334,
+                  -0.013639181852340698,
+                  -0.013639181852340698,
+                  -1.0169790983200073,
+                  0.10822575912738097
                 ],
                 [
-                  -0.4794785976409912,
-                  -0.6662085652351379,
-                  -0.6279944777488708,
-                  -1.7079439163208008,
-                  -1.5710487365722656,
-                  -0.16536970436573029,
-                  -0.28407275676727295,
-                  0.05283793807029724,
-                  -0.28407275676727295,
-                  -0.29601818323135376,
-                  0.7223624587059021,
-                  1.774717092514038,
-                  -0.23348604142665863,
-                  -0.037216830998659134,
-                  -0.002864252310246229,
-                  -0.5686208605766296,
-                  5.304676055908203,
-                  2.979863166809082,
-                  2.633328914642334,
-                  1.2347720861434937,
-                  -0.6850504279136658,
-                  2.3443782329559326,
-                  -0.3266267478466034,
-                  -0.19867900013923645,
-                  -0.8502712249755859,
-                  1.8916935920715332,
-                  -0.599721372127533,
-                  2.6713829040527344,
-                  0.3472065329551697,
-                  0.3472065329551697,
-                  -0.7252835035324097,
-                  0.3472065329551697,
-                  -0.7545167803764343,
-                  -0.11951267719268799,
-                  -0.11951267719268799,
-                  -0.3812996745109558,
-                  -0.3812996745109558,
-                  -0.8173226118087769,
-                  0.8203326334357243
+                  3.139869213104248,
+                  2.2174644470214844,
+                  -3.1027586460113525,
+                  2.1058101654052734,
+                  -3.374519109725952,
+                  -0.5651789903640747,
+                  -3.411756753921509,
+                  -3.4269142150878906,
+                  1.650817632675171,
+                  -0.10560384392738342,
+                  -0.10560384392738342,
+                  -0.10560384392738342,
+                  -1.9498918056488037,
+                  -2.237922191619873,
+                  -0.13457320630550385,
+                  3.072126865386963,
+                  -1.125264048576355,
+                  -2.047760486602783,
+                  -2.1332969665527344,
+                  4.902728080749512,
+                  0.6298828721046448,
+                  4.7171711921691895,
+                  -0.6631344556808472,
+                  -0.24220015108585358,
+                  -0.20397092401981354,
+                  -0.5655186772346497,
+                  -0.15407036244869232,
+                  -0.19045409560203552,
+                  -0.11572625488042831,
+                  -0.46927738189697266,
+                  -0.04142771288752556,
+                  -0.037748318165540695,
+                  -0.08178260922431946,
+                  -0.35058537125587463,
+                  -0.018982620909810066,
+                  -0.018982620909810066,
+                  -0.13072185218334198,
+                  -0.018982620909810066,
+                  -0.01761440560221672,
+                  0,
+                  -0.011403967626392841,
+                  -0.011403967626392841,
+                  -0.14880357682704926,
+                  -0.06317183375358582,
+                  -0.06317183375358582,
+                  -0.01699669100344181,
+                  -0.01699669100344181,
+                  -0.0509706512093544,
+                  -0.9684368778072302
                 ],
                 [
-                  -0.7652458548545837,
-                  1.050188422203064,
-                  -1.0586658716201782,
-                  -2.339555501937866,
-                  -1.34098219871521,
-                  -0.27820655703544617,
-                  -0.4186953604221344,
-                  -0.693170964717865,
-                  -0.4186953604221344,
-                  -1.0373953580856323,
-                  2.00704288482666,
-                  -0.8291901350021362,
-                  -1.1311076879501343,
-                  -0.06849641352891922,
-                  -0.3414497673511505,
-                  0.9469802975654602,
-                  -2.114102363586426,
-                  -1.74515962600708,
-                  -1.4713904857635498,
-                  1.642480731010437,
-                  0.9067010283470154,
-                  -1.8632811307907104,
-                  -1.2205688953399658,
-                  0.9587355256080627,
-                  3.965630054473877,
-                  -1.081269383430481,
-                  2.079371213912964,
-                  -0.6196589469909668,
-                  -0.2301177680492401,
-                  -0.2301177680492401,
-                  2.1546778678894043,
-                  -0.2301177680492401,
-                  4.1161370277404785,
-                  2.7921223640441895,
-                  2.7921223640441895,
-                  1.104966640472412,
-                  1.104966640472412,
-                  5.7824249267578125,
-                  2.5069501750451217
+                  -0.5120036602020264,
+                  -0.5337752103805542,
+                  -0.2707948684692383,
+                  1.9987738132476807,
+                  -3.0302350521087646,
+                  -0.0635509341955185,
+                  -1.809135913848877,
+                  0.4772692620754242,
+                  -0.2669179439544678,
+                  -0.020785069093108177,
+                  -0.020785069093108177,
+                  -0.020785069093108177,
+                  -0.7674140930175781,
+                  -0.5493232607841492,
+                  1.7754300832748413,
+                  -0.8915261030197144,
+                  0,
+                  -0.2371162623167038,
+                  -0.749112606048584,
+                  -0.20989681780338287,
+                  -0.04292573034763336,
+                  0,
+                  5.1232590675354,
+                  4.257814407348633,
+                  3.681185007095337,
+                  1.8051660060882568,
+                  -1.5742653608322144,
+                  1.6353563070297241,
+                  -0.6038416624069214,
+                  0.9735422730445862,
+                  -0.3680011034011841,
+                  1.6010075807571411,
+                  -0.17139333486557007,
+                  4.337078094482422,
+                  0.575860321521759,
+                  0.575860321521759,
+                  -0.3181374967098236,
+                  -3.2556586265563965,
+                  -5.016716957092285,
+                  -3.8307125568389893,
+                  -1.7105448246002197,
+                  -1.7105448246002197,
+                  -0.5714896321296692,
+                  -0.07475980371236801,
+                  -0.07475980371236801,
+                  -0.376179039478302,
+                  -0.376179039478302,
+                  -0.6769620776176453,
+                  -0.1034689485699004
+                ],
+                [
+                  -0.9782105088233948,
+                  -0.5804299712181091,
+                  -0.090047188103199,
+                  -2.6057708263397217,
+                  -0.17070867121219635,
+                  -0.4966471493244171,
+                  1.9510948657989502,
+                  -1.142049789428711,
+                  -0.6542303562164307,
+                  -0.21980172395706177,
+                  -0.21980172395706177,
+                  -0.21980172395706177,
+                  -0.07573294639587402,
+                  -1.1859570741653442,
+                  -0.8537927269935608,
+                  -0.44672587513923645,
+                  -0.1711566299200058,
+                  -0.02102184295654297,
+                  -0.5636921525001526,
+                  0,
+                  0,
+                  0,
+                  4.89654016494751,
+                  -2.187203884124756,
+                  -1.9265044927597046,
+                  -0.7599596381187439,
+                  1.269713044166565,
+                  -2.7495172023773193,
+                  -0.9912293553352356,
+                  -1.2081665992736816,
+                  -0.09376609325408936,
+                  -1.3953971862792969,
+                  -0.18309427797794342,
+                  -1.9286478757858276,
+                  -0.18312974274158478,
+                  -0.18312974274158478,
+                  -1.1619489192962646,
+                  1.8649898767471313,
+                  8.045896530151367,
+                  2.125687837600708,
+                  2.832796573638916,
+                  2.832796573638916,
+                  -0.7553160190582275,
+                  -0.16545097529888153,
+                  -0.16545097529888153,
+                  -0.2766744792461395,
+                  -0.2766744792461395,
+                  -0.40392279624938965,
+                  1.2715143044283486
+                ],
+                [
+                  -0.7510916590690613,
+                  1.2899407148361206,
+                  -1.04506254196167,
+                  -2.437060832977295,
+                  -1.2366336584091187,
+                  -0.33242878317832947,
+                  -0.8882524967193604,
+                  -0.5490678548812866,
+                  -0.254933625459671,
+                  -0.10229922086000443,
+                  -0.10229922086000443,
+                  -0.10229922086000443,
+                  -0.9667496085166931,
+                  2.113069772720337,
+                  -0.7769763469696045,
+                  -1.0463216304779053,
+                  -0.03582753241062164,
+                  -0.34607142210006714,
+                  1.2041847705841064,
+                  0,
+                  0,
+                  -0.02906045876443386,
+                  -2.906846523284912,
+                  -1.513468861579895,
+                  -1.3626112937927246,
+                  1.068312406539917,
+                  0.7309839725494385,
+                  -1.501115322113037,
+                  -1.1375412940979004,
+                  0.6897407174110413,
+                  3.942899465560913,
+                  -0.9603607654571533,
+                  2.0335426330566406,
+                  -0.9414217472076416,
+                  -0.11175882816314697,
+                  -0.11175882816314697,
+                  2.6118199825286865,
+                  -0.5090107917785645,
+                  -0.3547632396221161,
+                  -0.34911322593688965,
+                  -0.4564723074436188,
+                  -0.4564723074436188,
+                  4.350955486297607,
+                  2.7813174724578857,
+                  2.7813174724578857,
+                  1.193200707435608,
+                  1.193200707435608,
+                  5.883590221405029,
+                  2.338892863774869
                 ]
               ]
             }
@@ -715,6 +1025,10 @@
       [
         "en",
         "What items do you have?"
+      ],
+      [
+        "en",
+        "What kind of items do you serve?"
       ],
       [
         "en",
@@ -746,6 +1060,18 @@
       ],
       [
         "en",
+        "what does the %item% have"
+      ],
+      [
+        "en",
+        "what ingredients does the %item% have"
+      ],
+      [
+        "en",
+        "what is in the %item%"
+      ],
+      [
+        "en",
         "Give me %order% %modify% %ingredients%"
       ],
       [
@@ -767,6 +1093,22 @@
       [
         "en",
         "can i get a %order%"
+      ],
+      [
+        "en",
+        "can i order the %order%"
+      ],
+      [
+        "en",
+        "can i remove %order% from my order"
+      ],
+      [
+        "en",
+        "i do not want %order% anymore"
+      ],
+      [
+        "en",
+        "remove %order%"
       ],
       [
         "en",
@@ -889,8 +1231,8 @@
             }
           ]
         },
-        "order": {
-          "name": "order",
+        "add.to.order": {
+          "name": "add.to.order",
           "type": "enum",
           "rules": [
             {
@@ -954,7 +1296,7 @@
               ]
             },
             {
-              "option": "salads",
+              "option": "salad",
               "texts": [
                 "California Cobb",
                 "Thai Crunch",
@@ -965,7 +1307,7 @@
               ]
             },
             {
-              "option": "sangrias",
+              "option": "sangria",
               "texts": [
                 "Sangria Flight",
                 "Red-Berry Sangria",
@@ -974,7 +1316,7 @@
               ]
             },
             {
-              "option": "cocktails",
+              "option": "cocktail",
               "texts": [
                 "CPK Old Fashioned",
                 "Sparkling Mojito",
@@ -996,7 +1338,7 @@
               ]
             },
             {
-              "option": "desserts",
+              "option": "dessert",
               "texts": [
                 "Butter Cake",
                 "Red Velvet Cake",
@@ -1090,10 +1432,54 @@
       "en": {
         "menu.ask": [
           {
-            "answer": "Here is the menu: "
+            "answer": "For drinks, we serve *drink sections here*. And for food, we serve *food sections here*"
+          },
+          {
+            "answer": "Our menu includes *food sections here* as well as *drink sections here*"
           }
         ],
-        "finalOrder": [
+        "item.show.all": [
+          {
+            "answer": "Here are our %item%: *items here*"
+          },
+          {
+            "answer": "For %item%, we serve: *items here*"
+          },
+          {
+            "answer": "Our %item% include: *items here*"
+          }
+        ],
+        "show.ingredients": [
+          {
+            "answer": "Our %item% has: *ingredients here*"
+          },
+          {
+            "answer": "The %item% includes: *ingredients here*"
+          }
+        ],
+        "add.to.order": [
+          {
+            "answer": "I've added a %order% to your order"
+          },
+          {
+            "answer": "A %order% has been added to your order"
+          },
+          {
+            "answer": "Adding a %order% to your order"
+          }
+        ],
+        "remove.from.order": [
+          {
+            "answer": "I've removed a %order% from your order"
+          },
+          {
+            "answer": "A %order% has been removed from your order"
+          },
+          {
+            "answer": "Removing a %order% from your order"
+          }
+        ],
+        "place.order": [
           {
             "answer": "Here is what you ordered today: *receipt here*"
           },
@@ -1122,28 +1508,44 @@
         "locales": {}
       }
     },
-    "order": {
+    "show.ingredients": {
+      "item": {
+        "intent": "show.ingredients",
+        "entity": "item",
+        "mandatory": false,
+        "locales": {}
+      }
+    },
+    "add.to.order": {
       "order": {
-        "intent": "order",
+        "intent": "add.to.order",
         "entity": "order",
         "mandatory": false,
         "locales": {}
       },
       "modify": {
-        "intent": "order",
+        "intent": "add.to.order",
         "entity": "modify",
         "mandatory": false,
         "locales": {}
       },
       "ingredients": {
-        "intent": "order",
+        "intent": "add.to.order",
         "entity": "ingredients",
         "mandatory": false,
         "locales": {}
       },
       "ingredient": {
-        "intent": "order",
+        "intent": "add.to.order",
         "entity": "ingredient",
+        "mandatory": false,
+        "locales": {}
+      }
+    },
+    "remove.from.order": {
+      "order": {
+        "intent": "remove.from.order",
+        "entity": "order",
         "mandatory": false,
         "locales": {}
       }

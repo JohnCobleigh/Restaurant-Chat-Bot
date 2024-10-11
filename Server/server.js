@@ -7,26 +7,24 @@ const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const training = require('./training.js')
-const {checkOrder, displayPartialMenu, checkout} = require('./orderVerification')
+const {addToOrder, displayPartialMenu, placeOrder, removeFromOrder, displayGeneralMenu, displayIngredients} = require('./orderVerification')
 const { MainPlate, Margarita, Martini, Mocktail, Pasta, Pizza, Salad, Sangria, Cocktail, Starter, Dessert } = require('./models/item.js')
 const { Order } = require('./models/order.js')
-const { 
-    validPizzas, validPastas, validMargaritas, 
-    ValidMartinis, validMocktails, validSalads, validSangrias, 
-    validCocktails, validStarters, validDesserts 
-} = require("./validOrders");
 
+// Need to find better solution fr
+// Does not work with entrees/main plates
 const itemCollectionMap = {
-    pizza: Pizza,
-    pasta: Pasta,
-    plate: MainPlate,
-    margarita: Margarita,
-    martini: Martini,
-    mocktail: Mocktail,
-    salad: Salad,
-    sangria: Sangria,
-    cocktail: Cocktail,
-    starter: Starter,
+    //pizzas: Pizza,
+    ...Object.fromEntries(['pizzas', 'pizza'].map(key => [key, Pizza])),
+    ...Object.fromEntries(['pastas', 'pasta'].map(key => [key, Pasta])),
+    ...Object.fromEntries(['entrees', 'entree'].map(key => [key, MainPlate])),
+    ...Object.fromEntries(['margaritas', 'margarita'].map(key => [key, Margarita])),
+    ...Object.fromEntries(['martinis', 'martini'].map(key => [key, Martini])),
+    ...Object.fromEntries(['mocktails', 'mocktail'].map(key => [key, Mocktail])),
+    ...Object.fromEntries(['salads', 'salad'].map(key => [key, Salad])),
+    ...Object.fromEntries(['sangrias', 'sangria'].map(key => [key, Sangria])),
+    ...Object.fromEntries(['cocktails', 'cocktail'].map(key => [key, Cocktail])),
+    ...Object.fromEntries(['starters', 'starter'].map(key => [key, Starter]))
     // Dessert: Dessert
 }
 
@@ -50,40 +48,77 @@ app.get('/', async (req, res) => {
     res.send('Chatbot server is running!');
 });
    
+// Intent routing/processing
 app.post('/', async(req, res) => {
     const { message } = req.body;
 
-    //Responce from the nlp, what it determines the resopnse, intent, entities, etc. to be
+    // Response from the nlp, what it determines the response, intent, entities, etc. to be
     const response = await manager.process('en', message);
     const intent  = response.intent;
     const entities = response.entities;
 
-    //Determines if the response given is understood to be something that exists
+    // Determines if the response given is understood to be something that exists
     if(intent === 'None'){
         return res.json({reply: 'I dont understand what you want'})
     }
      
-    //Start of the section determining what to respond with
-    if(intent === 'item.show.all'){
-       
-        const answer = await displayPartialMenu(entities, itemCollectionMap)
-        return res.json({ reply: answer })
+    // Following if & if-else statements call upon functions in orderVerification.js based on intent from input  
 
-    }
-    // Adding to order
-    else if(intent === 'order'){
-        const output =  await checkOrder(response, itemCollectionMap)
+    // Display what sections of the menu there are
+    if (intent === 'menu.ask'){
+        const drinkSections = ['Cocktails', 'Margaritas', 'Martinis', 'Mocktails', 'Sangrias'];
+        const foodSections = ['Main Plates', 'Pastas', 'Pizzas', 'Salads', 'Starters', 'Desserts'];
 
-        res.json({ reply: output });
-    }
-    // Finalizing order
-    else if (intent === 'finalOrder'){
-        const output = await checkout()
+        const drinksFormatted = await displayGeneralMenu(drinkSections);
+        const foodFormatted = await displayGeneralMenu(foodSections);
 
-        const nlpAnswer = response.answer.replace('*receipt here*', output);
-
+        const nlpAnswer = response.answer.replace('*food sections here*', foodFormatted).replace('*drink sections here*', drinksFormatted);
         return res.json({ reply: nlpAnswer })
     }
+
+    // Display all items in a specific section
+    else if(intent === 'item.show.all'){
+        // pulling item type from input entities
+        const itemEntity = entities.find(e => e.entity === 'item');
+        const item = itemEntity.option;
+
+        const answer = await displayPartialMenu(entities, itemCollectionMap)
+        const nlpAnswer = response.answer.replace('*items here*', answer).replace('%item%', itemEntity.utteranceText)
+        return res.json({ reply: nlpAnswer })
+    }
+
+    // Display list of ingredients for a specific item
+    else if(intent === 'show.ingredients'){
+        // pulling item type from input entities
+        const itemEntity = entities.find(e => e.entity === 'add.to.order');
+        const item = itemEntity.sourceText;
+
+        const answer = await displayIngredients(response, itemCollectionMap)
+        const nlpAnswer = response.answer.replace('*ingredients here*', answer).replace('%item%', item)
+        return res.json({ reply: nlpAnswer })
+    }
+
+    // Adding to order
+    else if(intent === 'add.to.order'){
+        const answer =  await addToOrder(response, itemCollectionMap)
+        const nlpAnswer = response.answer.replace('%order%', answer)
+        res.json({ reply: nlpAnswer });
+    }
+
+    // Removing from order
+    else if(intent === 'remove.from.order'){
+        const answer = await removeFromOrder(response)
+        const nlpAnswer = response.answer.replace('%order%', answer)
+        return res.json({ reply: nlpAnswer })
+    }
+
+    // Finalizing order
+    else if (intent === 'place.order'){
+        const answer = await placeOrder()
+        const nlpAnswer = response.answer.replace('*receipt here*', answer);
+        return res.json({ reply: nlpAnswer })
+    }
+
     else {
         const answer = response.answer;
         res.json({ reply: answer });
