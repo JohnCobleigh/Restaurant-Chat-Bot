@@ -15,11 +15,11 @@ async function addToOrder(response, itemCollectionMap){
     const collection = itemCollectionMap[option.toLowerCase()]            // matching item type to Mongoose schema (see item.js and server.js)
 
     // (debugging stuff)
-    console.log(entities)
-    console.log(optionEntity)
-    console.log(option)         // item type (i.e. pizza, pasta, etc.)
-    console.log(sourceText)     // item name (i.e Thai Chicken)
-    console.log(collection)     // Mongoose schema (i.e. { Pizza })
+    // console.log(entities)
+    // console.log(optionEntity)
+    // console.log(option)         // item type (i.e. pizza, pasta, etc.)
+    // console.log(sourceText)     // item name (i.e Thai Chicken)
+    // console.log(collection)     // Mongoose schema (i.e. { Pizza })
 
     // code below does NOT allow user to leave out item type in order prompt
     // ex. "can i order a Thai Chicken" breaks server but works properly if commented out
@@ -58,7 +58,7 @@ async function addToOrder(response, itemCollectionMap){
     modifiers.push(modify.concat(" ", ingredients))
     prices.push(plate.price)
 
-    console.log(names)
+    // console.log(names)
 
     return `${sourceText} ${option} ${modify} ${ingredients.join(', ')}`;
 }
@@ -69,17 +69,19 @@ async function removeFromOrder(response){
     const sourceText = optionEntity.sourceText
 
     const index = names.indexOf(sourceText);
-    if (index > -1){
+    // console.log(index)
+    // console.log(sourceText)
+    if (index >= 0){
         names.splice(index, 1)
         calories.splice(index, 1)
         modifiers.splice(index, 1)
         prices.splice(index, 1)
     }
-    else if (index <= 0){
+    else if (index == -1){
+        // console.log("names")
         return `That item is not in your order.`
     }
 
-    console.log(names)
     return sourceText
 }
 
@@ -150,17 +152,14 @@ async function displayPartialMenu(entities, itemCollectionMap){
 
     const item = itemEntity.option; // pulling item type
 
-    // matching item recognized in input to schema imported from item.js
+    
     const collection = itemCollectionMap[item.toLowerCase()]
 
-    //Looks to see if the collection exists in the database
     if (!collection){
         return res.json({ reply: `We do not serve any ${item}s.`})
     }
 
     const items = await collection.find({}).exec(); // finds all documents for a specific item
-    
-    //Checks to see if the database has items in the collection
     if (items.length === 0) {
         return res.json({ reply: `No ${item}s found.` });
     }
@@ -194,5 +193,23 @@ async function displayIngredients(response, itemCollectionMap){
     return `<b>${head},</b> & <b>${last}</b>`;
 }
 
+async function describeItem(response, itemCollectionMap){
+    const entities = response.entities
+    const optionEntity = entities.find(e => e.entity === 'add.to.order');   
+    const option = optionEntity.option;                              
+    const sourceText = optionEntity.sourceText       
+    // console.log(option)
+    
+    const collection = itemCollectionMap[option.toLowerCase()] 
+    
+    const item = await collection.findOne({ name: { $regex: new RegExp(`^${sourceText}$`, "i") } }).exec()
+    const description = item.description
+    return description
 
-module.exports = {addToOrder, checkIngredients, checkModify, displayPartialMenu, placeOrder, removeFromOrder, displayGeneralMenu, displayIngredients}
+
+
+
+}
+
+
+module.exports = {addToOrder, checkIngredients, checkModify, displayPartialMenu, placeOrder, removeFromOrder, displayGeneralMenu, displayIngredients, describeItem}

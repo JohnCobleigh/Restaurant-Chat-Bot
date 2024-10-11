@@ -7,7 +7,7 @@ const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const training = require('./training.js')
-const {addToOrder, displayPartialMenu, placeOrder, removeFromOrder, displayGeneralMenu, displayIngredients} = require('./orderVerification')
+const {addToOrder, displayPartialMenu, placeOrder, removeFromOrder, displayGeneralMenu, displayIngredients, describeItem} = require('./orderVerification')
 const { MainPlate, Margarita, Martini, Mocktail, Pasta, Pizza, Salad, Sangria, Cocktail, Starter, Dessert } = require('./models/item.js')
 const { Order } = require('./models/order.js')
 
@@ -24,8 +24,9 @@ const itemCollectionMap = {
     ...Object.fromEntries(['salads', 'salad'].map(key => [key, Salad])),
     ...Object.fromEntries(['sangrias', 'sangria'].map(key => [key, Sangria])),
     ...Object.fromEntries(['cocktails', 'cocktail'].map(key => [key, Cocktail])),
-    ...Object.fromEntries(['starters', 'starter'].map(key => [key, Starter]))
-    // Dessert: Dessert
+    ...Object.fromEntries(['starters', 'starter'].map(key => [key, Starter])),
+    ...Object.fromEntries(['desserts', 'dessert'].map(key => [key, Dessert]))
+   
 }
 
 
@@ -47,7 +48,7 @@ training(manager)
 app.get('/', async (req, res) => {
     res.send('Chatbot server is running!');
 });
-   
+
 // Intent routing/processing
 app.post('/', async(req, res) => {
     const { message } = req.body;
@@ -56,6 +57,8 @@ app.post('/', async(req, res) => {
     const response = await manager.process('en', message);
     const intent  = response.intent;
     const entities = response.entities;
+
+    console.log(response)
 
     // Determines if the response given is understood to be something that exists
     if(intent === 'None'){
@@ -83,8 +86,15 @@ app.post('/', async(req, res) => {
         const item = itemEntity.option;
 
         const answer = await displayPartialMenu(entities, itemCollectionMap)
-        const nlpAnswer = response.answer.replace('*items here*', answer).replace('%item%', itemEntity.utteranceText)
+        const nlpAnswer = response.answer.replace('*items here*', answer).replace('%item%', itemEntity.option)
         return res.json({ reply: nlpAnswer })
+    }
+    
+    // Adding to order
+    else if(intent === 'add.to.order'){
+        const answer =  await addToOrder(response, itemCollectionMap)
+        const nlpAnswer = response.answer.replace('%order%', answer)
+        res.json({ reply: nlpAnswer });
     }
 
     // Display list of ingredients for a specific item
@@ -98,16 +108,14 @@ app.post('/', async(req, res) => {
         return res.json({ reply: nlpAnswer })
     }
 
-    // Adding to order
-    else if(intent === 'add.to.order'){
-        const answer =  await addToOrder(response, itemCollectionMap)
-        const nlpAnswer = response.answer.replace('%order%', answer)
-        res.json({ reply: nlpAnswer });
-    }
-
     // Removing from order
     else if(intent === 'remove.from.order'){
+        
         const answer = await removeFromOrder(response)
+        if (answer == 'That item is not in your order.'){
+            // console.log("TESTS")
+            return res.json({reply: answer})
+        }
         const nlpAnswer = response.answer.replace('%order%', answer)
         return res.json({ reply: nlpAnswer })
     }
@@ -116,6 +124,16 @@ app.post('/', async(req, res) => {
     else if (intent === 'place.order'){
         const answer = await placeOrder()
         const nlpAnswer = response.answer.replace('*receipt here*', answer);
+        return res.json({ reply: nlpAnswer })
+    }
+
+    else if(intent === 'describe.order'){
+
+        const itemEntity = entities.find(e =>e.entity === 'add.to.order')
+        const item = itemEntity.sourceText
+
+        const answer = await describeItem(response, itemCollectionMap)
+        const nlpAnswer = response.answer.replace('*description here*', answer).replace('%order%', item);
         return res.json({ reply: nlpAnswer })
     }
 
