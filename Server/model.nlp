@@ -162,6 +162,18 @@
             "intent": "add.to.order",
             "domain": "default"
           },
+          "%order%,a,and,can,get,i": {
+            "intent": "add.to.order",
+            "domain": "default"
+          },
+          "%ingredients%,%modify%,%order%,and,can,i,order,the": {
+            "intent": "add.to.order",
+            "domain": "default"
+          },
+          "%ingredients%,%modify%,%order%,a,and,give,me": {
+            "intent": "add.to.order",
+            "domain": "default"
+          },
           "%order%,can,from,i,my,order,remov": {
             "intent": "remove.from.order",
             "domain": "default"
@@ -215,6 +227,14 @@
             "domain": "default"
           },
           "checkout,let,me": {
+            "intent": "place.order",
+            "domain": "default"
+          },
+          "everyth,that": {
+            "intent": "place.order",
+            "domain": "default"
+          },
+          "everyth,for,me,that": {
             "intent": "place.order",
             "domain": "default"
           }
@@ -396,6 +416,26 @@
           },
           {
             "domain": "default",
+            "utterance": "can i get a %order%, %order%, and %order%",
+            "intent": "add.to.order"
+          },
+          {
+            "domain": "default",
+            "utterance": "can i order the %order% and the %order% %modify% %ingredients%",
+            "intent": "add.to.order"
+          },
+          {
+            "domain": "default",
+            "utterance": "Give me %order% %modify% %ingredients%, a %order% %modify% %ingredients%, and a %order% %modify% %ingredients%",
+            "intent": "add.to.order"
+          },
+          {
+            "domain": "default",
+            "utterance": "let me get a %order%, and %modify% %ingredients% on it, a %order%, and a %order% %modify% %ingredients%",
+            "intent": "add.to.order"
+          },
+          {
+            "domain": "default",
             "utterance": "can i remove %order% from my order",
             "intent": "remove.from.order"
           },
@@ -462,6 +502,16 @@
           {
             "domain": "default",
             "utterance": "let me checkout",
+            "intent": "place.order"
+          },
+          {
+            "domain": "default",
+            "utterance": "thats everything",
+            "intent": "place.order"
+          },
+          {
+            "domain": "default",
+            "utterance": "thats everything for me",
             "intent": "place.order"
           }
         ],
@@ -541,7 +591,8 @@
               "it": 1,
               "would": 1,
               "like": 1,
-              "checkout": 1
+              "checkout": 1,
+              "everyth": 1
             },
             "intents": {
               "menu.ask": 1,
@@ -719,7 +770,9 @@
                 "like": 1,
                 "checkout": 1,
                 "let": 1,
-                "me": 1
+                "me": 1,
+                "everyth": 1,
+                "for": 1
               }
             },
             "featuresToIntent": {
@@ -892,7 +945,8 @@
               ],
               "%order%": [
                 "add.to.order",
-                "remove.from.order"
+                "remove.from.order",
+                "describe.order"
               ],
               "%modify%": [
                 "add.to.order"
@@ -910,6 +964,7 @@
               "want": [
                 "add.to.order",
                 "remove.from.order",
+                "describe.order",
                 "place.order"
               ],
               "and": [
@@ -986,6 +1041,9 @@
                 "place.order"
               ],
               "checkout": [
+                "place.order"
+              ],
+              "everyth": [
                 "place.order"
               ]
             },
@@ -1064,7 +1122,8 @@
                 "it",
                 "would",
                 "like",
-                "checkout"
+                "checkout",
+                "everyth"
               ],
               "intents": [
                 "menu.ask",
@@ -2011,6 +2070,22 @@
       ],
       [
         "en",
+        "can i get a %order%, %order%, and %order%"
+      ],
+      [
+        "en",
+        "can i order the %order% and the %order% %modify% %ingredients%"
+      ],
+      [
+        "en",
+        "Give me %order% %modify% %ingredients%, a %order% %modify% %ingredients%, and a %order% %modify% %ingredients%"
+      ],
+      [
+        "en",
+        "let me get a %order%, and %modify% %ingredients% on it, a %order%, and a %order% %modify% %ingredients%"
+      ],
+      [
+        "en",
         "can i remove %order% from my order"
       ],
       [
@@ -2064,6 +2139,14 @@
       [
         "en",
         "let me checkout"
+      ],
+      [
+        "en",
+        "thats everything"
+      ],
+      [
+        "en",
+        "thats everything for me"
       ]
     ]
   },
@@ -2392,13 +2475,13 @@
         ],
         "item.show.all": [
           {
-            "answer": "Here are our %item%: *items here*"
+            "answer": "Here are our %item%s: *items here*"
           },
           {
-            "answer": "For %item%, we serve: *items here*"
+            "answer": "For %item%s, we serve: *items here*"
           },
           {
-            "answer": "Our %item% include: *items here*"
+            "answer": "Our %item%s include: *items here*"
           }
         ],
         "show.ingredients": [

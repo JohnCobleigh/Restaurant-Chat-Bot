@@ -105,6 +105,7 @@ module.exports = (manager) => {
     manager.addDocument('en', 'can i remove %order%', 'remove.from.order');
     manager.addDocument('en', 'i do not want %order% anymore', 'remove.from.order');
     manager.addDocument('en', 'remove %order%', 'remove.from.order');
+    manager.addDocument('en', 'i changed my mind, i dont want %order%', 'remove.from.order');
 
     manager.addAnswer('en', 'remove.from.order', 'I\'ve removed a %order% from your order');
     manager.addAnswer('en', 'remove.from.order', 'A %order% has been removed from your order');
@@ -135,11 +136,27 @@ module.exports = (manager) => {
 
 
     /* *********************************************************************** */
+    //Giving the description of an item
+    manager.addDocument('en', 'can you tell me about the %order%', 'describe.order')
+    manager.addDocument('en', 'tell me about the %order%', 'describe.order')
+    manager.addDocument('en', 'what is the %order%', 'describe.order')
+    manager.addDocument('en', 'i want to know about the %order%', 'describe.order')
+    manager.addDocument('en', 'ive never heard of %order% before, tell me about it', 'describe.order')
+    manager.addDocument('en', 'decribe the %order% for me', 'describe.order')
+
+    manager.addAnswer('en', 'describe.order', 'Of course, the %order% is *description here*')
+    manager.addAnswer('en', 'describe.order','Our %order% is *description here*')
+
+    /* *********************************************************************** */
+
+    /* *********************************************************************** */
     // Checking out
     manager.addDocument('en', 'that is all i want to order', 'place.order');
     manager.addDocument('en', 'that will be it', 'place.order');
     manager.addDocument('en', 'i would like to checkout', 'place.order');
     manager.addDocument('en', 'let me checkout', 'place.order');
+    manager.addDocument('en', 'thats everything', 'place.order');
+    manager.addDocument('en', 'thats everything for me', 'place.order');
 
     // Possible phrasings to couple with receipt once user finalizes order
     manager.addAnswer('en', 'place.order', 'Here is what you ordered today: *receipt here*');

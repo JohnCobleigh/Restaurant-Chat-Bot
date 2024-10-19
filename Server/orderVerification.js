@@ -225,17 +225,14 @@ async function displayPartialMenu(entities, itemCollectionMap){
 
     const item = itemEntity.option; // pulling item type
 
-    // matching item recognized in input to schema imported from item.js
+    
     const collection = itemCollectionMap[item.toLowerCase()]
 
-    //Looks to see if the collection exists in the database
     if (!collection){
         return res.json({ reply: `We do not serve any ${item}s.`})
     }
 
     const items = await collection.find({}).exec(); // finds all documents for a specific item
-    
-    //Checks to see if the database has items in the collection
     if (items.length === 0) {
         return res.json({ reply: `No ${item}s found.` });
     }

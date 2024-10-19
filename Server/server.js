@@ -50,7 +50,7 @@ training(manager)
 app.get('/', async (req, res) => {
     res.send('Chatbot server is running!');
 });
-   
+
 // Intent routing/processing
 app.post('/', async(req, res) => {
     const { message } = req.body;
@@ -98,8 +98,15 @@ app.post('/', async(req, res) => {
         const item = itemEntity.option;
 
         const answer = await displayPartialMenu(entities, itemCollectionMap)
-        const nlpAnswer = response.answer.replace('*items here*', answer).replace('%item%', itemEntity.utteranceText)
+        const nlpAnswer = response.answer.replace('*items here*', answer).replace('%item%', itemEntity.option)
         return res.json({ reply: nlpAnswer })
+    }
+    
+    // Adding to order
+    else if(intent === 'add.to.order'){
+        const answer =  await addToOrder(response, itemCollectionMap)
+        const nlpAnswer = response.answer.replace('%order%', answer)
+        res.json({ reply: nlpAnswer });
     }
 
     // Display list of ingredients for a specific item
@@ -180,6 +187,16 @@ app.post('/', async(req, res) => {
         }
 
         const nlpAnswer = response.answer.replace('*receipt here*', answer);
+        return res.json({ reply: nlpAnswer })
+    }
+
+    else if(intent === 'describe.order'){
+
+        const itemEntity = entities.find(e =>e.entity === 'add.to.order')
+        const item = itemEntity.sourceText
+
+        const answer = await describeItem(response, itemCollectionMap)
+        const nlpAnswer = response.answer.replace('*description here*', answer).replace('%order%', item);
         return res.json({ reply: nlpAnswer })
     }
 
