@@ -258,6 +258,7 @@ async function displayIngredients(entities, itemCollectionMap){
     const sourceText = optionEntity.sourceText                            
     const collection = itemCollectionMap[option.toLowerCase()] 
 
+    sourceText.replace(/[^\w\s]/gi, '')
     const item = await collection.findOne({ name: { $regex: new RegExp(`^${sourceText}$`, "i") } }).exec()
 
     const head = item.ingredients.slice(0, -1).join(', ');
@@ -271,6 +272,7 @@ async function displayCalories(entities, itemCollectionMap) {
     const sourceText = optionEntity.sourceText;                            
     const collection = itemCollectionMap[option.toLowerCase()];
     
+    sourceText.replace(/[^\w\s]/gi, '')
     const item = await collection.findOne({ name: { $regex: new RegExp(`^${sourceText}$`, "i") } }).exec();
 
     return item.calories;
@@ -282,6 +284,7 @@ async function displayDescription(entities, itemCollectionMap){
     const sourceText = optionEntity.sourceText                            
     const collection = itemCollectionMap[option.toLowerCase()] 
 
+    sourceText.replace(/[^\w\s]/gi, '')
     const item = await collection.findOne({ name: { $regex: new RegExp(`^${sourceText}$`, "i") } }).exec();
 
     return `${item.description}<br /><br />`

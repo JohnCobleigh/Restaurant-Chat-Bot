@@ -104,7 +104,7 @@ app.post('/', async(req, res) => {
     
     // Adding to order
     else if(intent === 'add.to.order'){
-        const answer =  await addToOrder(response, itemCollectionMap)
+        const answer =  await addToOrder(entities, itemCollectionMap)
         const nlpAnswer = response.answer.replace('%order%', answer)
         res.json({ reply: nlpAnswer });
     }
@@ -195,7 +195,7 @@ app.post('/', async(req, res) => {
         const itemEntity = entities.find(e =>e.entity === 'add.to.order')
         const item = itemEntity.sourceText
 
-        const answer = await describeItem(response, itemCollectionMap)
+        const answer = await describeItem(entities, itemCollectionMap)
         const nlpAnswer = response.answer.replace('*description here*', answer).replace('%order%', item);
         return res.json({ reply: nlpAnswer })
     }
