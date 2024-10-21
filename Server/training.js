@@ -44,9 +44,9 @@ module.exports = (manager) => {
     manager.addDocument('en', 'List all the %item%', 'item.show.all');
     manager.addDocument('en', 'What %item% do you have', 'item.show.all');
 
-    manager.addAnswer('en', 'item.show.all', 'Here are our %item%: *items here*');
-    manager.addAnswer('en', 'item.show.all', 'For %item%, we serve: *items here*');
-    manager.addAnswer('en', 'item.show.all', 'Our %item% include: *items here*');
+    manager.addAnswer('en', 'item.show.all', 'Here are our %item%s: *items here*');
+    manager.addAnswer('en', 'item.show.all', 'For %item%s, we serve: *items here*');
+    manager.addAnswer('en', 'item.show.all', 'Our %item%s include: *items here*');
     /* *********************************************************************** */ 
 
 
@@ -67,8 +67,8 @@ module.exports = (manager) => {
     manager.addDocument('en', 'Can you describe the %item%', 'show.description');
     manager.addDocument('en', 'Can you give me a description for the %item%', 'show.description');
 
-    manager.addAnswer('en', 'show.description', '*description here* I can add this to your order if you\'d like.');
-    manager.addAnswer('en', 'show.description', '*description here* Let me know if you want to order this.');
+    manager.addAnswer('en', 'show.description', '*description here* I can add this to your order if you\'d like!');
+    manager.addAnswer('en', 'show.description', '*description here* Let me know if you want to order this!');
     /* *********************************************************************** */ 
 
 
@@ -134,21 +134,7 @@ module.exports = (manager) => {
     manager.addAnswer('en', 'current.order', 'Your current order: *current order here* Let me know if I change anything for you.');
     /* *********************************************************************** */
 
-
-    /* *********************************************************************** */
-    //Giving the description of an item
-    manager.addDocument('en', 'can you tell me about the %order%', 'describe.order')
-    manager.addDocument('en', 'tell me about the %order%', 'describe.order')
-    manager.addDocument('en', 'what is the %order%', 'describe.order')
-    manager.addDocument('en', 'i want to know about the %order%', 'describe.order')
-    manager.addDocument('en', 'ive never heard of %order% before, tell me about it', 'describe.order')
-    manager.addDocument('en', 'decribe the %order% for me', 'describe.order')
-
-    manager.addAnswer('en', 'describe.order', 'Of course, the %order% is *description here*')
-    manager.addAnswer('en', 'describe.order','Our %order% is *description here*')
-
-    /* *********************************************************************** */
-
+    
     /* *********************************************************************** */
     // Checking out
     manager.addDocument('en', 'that is all i want to order', 'place.order');

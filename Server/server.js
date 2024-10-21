@@ -93,47 +93,59 @@ app.post('/', async(req, res) => {
 
     // Display all items in a specific section
     else if(intent === 'item.show.all'){
+        const answer = await displayPartialMenu(entities, itemCollectionMap)
+
+        if (answer == null){
+            res.json({ reply: `Sorry, I couldn't understand which item you're looking for <b>\u2639</b>.<br /><br />Feel free to ask me what type of items we serve!` })
+        }
+
         // pulling item type from input entities
         const itemEntity = entities.find(e => e.entity === 'item');
         const item = itemEntity.option;
 
-        const answer = await displayPartialMenu(entities, itemCollectionMap)
-        const nlpAnswer = response.answer.replace('*items here*', answer).replace('%item%', itemEntity.option)
+        const nlpAnswer = response.answer.replace('*items here*', answer).replace('%item%', item)
         return res.json({ reply: nlpAnswer })
     }
     
-    // Adding to order
-    else if(intent === 'add.to.order'){
-        const answer =  await addToOrder(entities, itemCollectionMap)
-        const nlpAnswer = response.answer.replace('%order%', answer)
-        res.json({ reply: nlpAnswer });
-    }
-
     // Display list of ingredients for a specific item
     else if(intent === 'show.ingredients'){
-        // pulling item type from input entities
+        const answer = await displayIngredients(entities, itemCollectionMap)
+
+        if (answer == null){
+            return res.json({ reply: `We currently do <i>not</i> serve the item(s) you want to know more about <b>\u2639</b>.<br /><br />If you have any questions about menu, don't hesitate to ask me!`})
+        }
+
         const itemEntity = entities.find(e => e.entity === 'add.to.order');
         const item = itemEntity.sourceText;
 
-        const answer = await displayIngredients(entities, itemCollectionMap)
         const nlpAnswer = response.answer.replace('*ingredients here*', answer).replace('%item%', item)
         return res.json({ reply: nlpAnswer })
     }
 
     else if(intent === 'show.description'){
+        const answer = await displayDescription(entities, itemCollectionMap)
+
+        if (answer == null){
+            return res.json({ reply: `We currently do <i>not</i> serve the item(s) you want to know more about <b>\u2639</b>.<br /><br />If you have any questions about menu, don't hesitate to ask me!`})
+        }
+
         const itemEntity = entities.find(e => e.entity === 'add.to.order');
         const item = itemEntity.sourceText;
 
-        const answer = await displayDescription(entities, itemCollectionMap)
         const nlpAnswer = response.answer.replace('*description here*', answer).replace('%item%', item)
         return res.json({ reply: nlpAnswer })
     }
 
     else if(intent === 'show.calories'){
+        const answer = await displayCalories(entities, itemCollectionMap)
+
+        if (answer == null){
+            return res.json({ reply: `We currently do <i>not</i> serve the item(s) you want to know more about <b>\u2639</b>.<br /><br />If you have any questions about menu, don't hesitate to ask me!`})
+        }
+
         const itemEntity = entities.find(e => e.entity === 'add.to.order');
         const item = itemEntity.sourceText;
 
-        const answer = await displayCalories(entities, itemCollectionMap)
         const nlpAnswer = response.answer.replace('*calories here*', answer).replace('%item%', item)
         return res.json({ reply: nlpAnswer })
     }
@@ -141,6 +153,12 @@ app.post('/', async(req, res) => {
     // Adding to order
     else if(intent === 'add.to.order'){
         const answer =  await addToOrder(entities, itemCollectionMap)
+
+        if (answer == null)
+        {
+            return res.json({ reply: `We currently do <i>not</i> serve the item(s) you want to order <b>\u2639</b>.<br /><br />Ask me about our menu for more info!`})
+        }
+
         const nlpAnswer = response.answer.replace('%order%', answer)
         res.json({ reply: nlpAnswer });
     }
@@ -151,7 +169,7 @@ app.post('/', async(req, res) => {
 
         if(answer == null)
         {
-            return res.json({ reply: 'That item is <i>not</i> currently in your order. <br /><br /> You can ask me what\'s in your cart at anytime!'})
+            return res.json({ reply: 'Your order currently does <i>not</i> have the item(s) you want to remove.<br /><br />You can ask me what\'s in your cart at anytime!'})
         }
 
         const nlpAnswer = response.answer.replace('%order%', answer)
@@ -170,7 +188,7 @@ app.post('/', async(req, res) => {
 
         if(answer == null)
         {
-            return res.json({ reply: 'You currently don\'t have anything in your cart. <br /><br /> Let me know if you have questions about our menu!'})
+            return res.json({ reply: 'You currently <i>don\'t</i> have anything in your cart. <br /><br /> Let me know if you have questions about our menu!'})
         }
 
         const nlpAnswer = response.answer.replace('*current order here*', answer)
@@ -183,20 +201,10 @@ app.post('/', async(req, res) => {
 
         if(answer == null)
         {
-            return res.json({ reply: 'You currently don\'t have anything in your cart. <br /><br /> Let me know if you have questions about our menu!'})
+            return res.json({ reply: 'You currently <i>don\'t</i> have anything in your cart. <br /><br /> Be sure to add any items to your cart before placing an order!'})
         }
 
         const nlpAnswer = response.answer.replace('*receipt here*', answer);
-        return res.json({ reply: nlpAnswer })
-    }
-
-    else if(intent === 'describe.order'){
-
-        const itemEntity = entities.find(e =>e.entity === 'add.to.order')
-        const item = itemEntity.sourceText
-
-        const answer = await describeItem(entities, itemCollectionMap)
-        const nlpAnswer = response.answer.replace('*description here*', answer).replace('%order%', item);
         return res.json({ reply: nlpAnswer })
     }
 

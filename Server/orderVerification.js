@@ -41,7 +41,7 @@ async function addToOrder(entities, itemCollectionMap){
             collection = itemCollectionMap[option.toLowerCase()]              // matching item type to Mongoose schema (see item.js and server.js)
             console.log(collection)                                           // Mongoose schema (i.e. { Pizza })
 
-            sourceText.replace(/[^\w\s]/gi, '')
+            sourceText.replace(/[^\w\s]/gi, '') // remove punctuation and other special chars
             item = await collection.findOne({ name: { $regex: new RegExp(`^${sourceText}$`, "i") } }).exec()
 
             if (!item)
@@ -87,10 +87,23 @@ async function addToOrder(entities, itemCollectionMap){
         ingredients = [];
     }
 
+    // formatting output
     orderDetails = tempNames.map((name, index) => {
         const modifier = tempModifiers[index] ? tempModifiers[index] : '';
-        return `<b>${name}</b> ${modifier}`
-    }).join(', ');
+
+        if (tempNames.length == 1 || (index == tempNames.length - 2 && tempNames.length == 2))
+            return `<b>${name}</b>${modifier}`
+
+        if (index == tempNames.length - 1 && tempNames.length > 1) {
+            return `and <b>${name}</b>${modifier}`;
+        }
+
+        return ` <b>${name}</b>${modifier},`
+    }).join(' ');
+
+    // if user didn't order anything found on menu, return null
+    if (orderDetails == null || orderDetails == '')
+        return null
 
     return orderDetails
 }
@@ -126,8 +139,20 @@ async function removeFromOrder(entities){
 
     orderDetails = tempNames.map((name, index) => {
         const modifier = tempModifiers[index] ? tempModifiers[index] : '';
-        return `<b>${name}</b> ${modifier}`
-    }).join(', ');
+
+        if (tempNames.length == 1 || (index == tempNames.length - 2 && tempNames.length == 2))
+            return `<b>${name}</b>${modifier}`
+
+        if (index == tempNames.length - 1 && tempNames.length > 1) {
+            return `and <b>${name}</b>${modifier}`;
+        }
+
+        return ` <b>${name}</b>${modifier},`
+    }).join(' ');
+
+    // if user didn't remove an item in their current order, return null
+    if (orderDetails == null || orderDetails == '')
+        return null
 
     return orderDetails
 }
@@ -220,11 +245,10 @@ async function displayPartialMenu(entities, itemCollectionMap){
     const itemEntity = entities.find(e => e.entity === 'item');
         
     if (!itemEntity) {
-        return res.json({ reply: "Sorry, I couldn't understand which item you're looking for." });
+        return null;
     }
 
     const item = itemEntity.option; // pulling item type
-
     
     const collection = itemCollectionMap[item.toLowerCase()]
 
@@ -240,7 +264,6 @@ async function displayPartialMenu(entities, itemCollectionMap){
     // create array of item names and prices
     const itemNames = items.map(i => `\u2022 <b>${i.name}</b> [cal.${i.calories}] [$${i.price}]`).join('<br />');
 
-    //return `Here are our ${item}s: <br /><br /> ${itemNames}`
     return `<br /><br />${itemNames}`;
 }
 
@@ -253,13 +276,22 @@ async function displayGeneralMenu(sections){
 
 
 async function displayIngredients(entities, itemCollectionMap){
-    const optionEntity = entities.find(e => e.entity === 'add.to.order');   
+    const optionEntity = entities.find(e => e.entity === 'add.to.order');
+    
+    if (optionEntity == undefined || optionEntity == null){
+        return null
+    } 
+
     const option = optionEntity.option;                              
     const sourceText = optionEntity.sourceText                            
     const collection = itemCollectionMap[option.toLowerCase()] 
 
-    sourceText.replace(/[^\w\s]/gi, '')
+    sourceText.replace(/[^\w\s]/gi, '') // remove punctuation and other special chars
     const item = await collection.findOne({ name: { $regex: new RegExp(`^${sourceText}$`, "i") } }).exec()
+
+    if (item == null){
+        return null;
+    }
 
     const head = item.ingredients.slice(0, -1).join(', ');
     const last = item.ingredients[item.ingredients.length - 1];
@@ -268,23 +300,33 @@ async function displayIngredients(entities, itemCollectionMap){
 
 async function displayCalories(entities, itemCollectionMap) {
     const optionEntity = entities.find(e => e.entity === 'add.to.order');   
+
+    if (optionEntity == undefined || optionEntity == null){
+        return null
+    } 
+
     const option = optionEntity.option;                              
     const sourceText = optionEntity.sourceText;                            
     const collection = itemCollectionMap[option.toLowerCase()];
     
-    sourceText.replace(/[^\w\s]/gi, '')
+    sourceText.replace(/[^\w\s]/gi, '') // remove punctuation and other special chars
     const item = await collection.findOne({ name: { $regex: new RegExp(`^${sourceText}$`, "i") } }).exec();
 
-    return item.calories;
+    return `<b>${item.calories}</b>`;
 }
 
 async function displayDescription(entities, itemCollectionMap){
     const optionEntity = entities.find(e => e.entity === 'add.to.order');   
+
+    if (optionEntity == undefined || optionEntity == null){
+        return null
+    } 
+
     const option = optionEntity.option;                              
     const sourceText = optionEntity.sourceText                            
     const collection = itemCollectionMap[option.toLowerCase()] 
 
-    sourceText.replace(/[^\w\s]/gi, '')
+    sourceText.replace(/[^\w\s]/gi, '') // remove punctuation and other special chars
     const item = await collection.findOne({ name: { $regex: new RegExp(`^${sourceText}$`, "i") } }).exec();
 
     return `${item.description}<br /><br />`
@@ -294,6 +336,11 @@ async function displayDescription(entities, itemCollectionMap){
 async function updateOrder(entities, itemCollectionMap){
     // (used for searching mongodb documents)
     const optionEntity = entities.find(e => e.entity === 'add.to.order');   
+
+    if (optionEntity == undefined || optionEntity == null){
+        return null
+    } 
+
     const option = optionEntity.option;                                                      
     const collection = itemCollectionMap[option.toLowerCase()] 
 
