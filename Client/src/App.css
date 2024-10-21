@@ -13,10 +13,13 @@
   background-color: #fff9de;
   background-image: url("./src/assets/cpk_logo.png");
   background-position: center;
-  background-size: 400px 150px;
+  background-size: 800px 300px;
   background-repeat: no-repeat;
   border-radius: 0px;
-  font-family: Arial, sans-serif;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
 }
 
 /* Chatbot header */

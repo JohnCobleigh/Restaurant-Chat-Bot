@@ -38,7 +38,7 @@ function Chatbot() {
     // Add the user's message to the chat history
     const newMessages = [...messages, { sender: 'user', text: userInput }];
     setMessages(newMessages); // Update state with the new message
-    
+
     // http://localhost:5001/  (need to use 5001 here to work locally on both Mac & Windows)
     axios.post('/api/', { message: userInput })
       .then(response => {
