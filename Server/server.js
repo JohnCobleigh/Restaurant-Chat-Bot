@@ -31,7 +31,7 @@ const itemCollectionMap = {
 
 
 app.use(cors({
-    origin: 'http://localhost:5173/'
+    origin: ['https://restaurant-chat-bot-frontend.onrender.com', 'http://localhost:5000']
 }));
 
 // Connecting to database, MUST specify database name
