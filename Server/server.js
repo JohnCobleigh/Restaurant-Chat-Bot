@@ -33,7 +33,7 @@ const drinkSections = ['Cocktails', 'Margaritas', 'Martinis', 'Mocktails', 'Sang
 const foodSections = ['Main Plates', 'Pastas', 'Pizzas', 'Salads', 'Starters', 'Desserts'];
 
 app.use(cors({
-    origin: ['https://restaurant-chat-bot-frontend.onrender.com', 'http://localhost:5000']
+    origin: ['https://cpkbot-frontend.onrender.com', 'http://localhost:5000']
 }));
 
 // Connecting to database, MUST specify database name
