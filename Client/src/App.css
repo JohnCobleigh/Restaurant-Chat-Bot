@@ -13,10 +13,13 @@
   background-color: #fff9de;
   background-image: url("./src/assets/cpk_logo.png");
   background-position: center;
-  background-size: 400px 150px;
+  background-size: 800px 300px;
   background-repeat: no-repeat;
   border-radius: 0px;
-  font-family: Arial, sans-serif;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
 }
 
 /* Chatbot header */
@@ -76,10 +79,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 10px 10px; /* Increased top and bottom padding */
+  background-color: #fdd835; /* Yellow background */
+  border-radius: 30px; /* Rounded corners for the container */
   width: 100%;
-  border-top: 1px solid #cccccc60;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-bottom: 20px; /* Space added below the input container */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); /* Optional shadow */
 }
+
 
 .chatbot-input input {
   flex-grow: 1;
@@ -89,22 +98,55 @@
   margin-right: 15px;
   font-size: 15px;
   width: 80%;
-  max-width: 600px;
+  max-width: 800px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); /* Optional shadow for the button */
 }
 
-/* Button's color */
+/* Style for the circular button */
 .chatbot-input button {
-  background-color: #fff4b2;
-  color: #333; /*Enter*/
-  padding: 15px;
+  background-color: #ffffff;
   border: none;
-  border-radius: 20px;
-  font-size: 15px;
+  border-radius: 50%; /* Keeps the button a circle */
+  width: 50px; /* Size of the circle */
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  width: 100px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); /* Optional shadow for the button */
 }
 
-/* Color change when hover */
+/* Hover effect */
 .chatbot-input button:hover {
-  background-color: #fedb83;
+  background-color: #000000; /* Matches hover color as seen in the image */
+}
+.chatbot-input button:hover svg {
+  color: #ffffff; /* Change icon color on hover */
+}
+
+/* Style for the microphone button */
+.audio-button {
+  background-color: #000000; /* Change this to any color you prefer */
+  border: none;
+  border-radius: 50%; /* Makes the button circular */
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-right: 15px; /* Space between icon and input field */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); /* Optional shadow */
+}
+
+.audio-button:hover {
+  background-color: #ffffff; /* Change hover color */
+}
+
+.audio-button svg {
+  color: #ffffff; /* Default icon color */
+}
+
+.audio-button:hover svg {
+  color: #000; /* Change icon color on hover */
 }

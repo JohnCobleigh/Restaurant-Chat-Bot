@@ -33,7 +33,7 @@ const drinkSections = ['Cocktails', 'Margaritas', 'Martinis', 'Mocktails', 'Sang
 const foodSections = ['Main Plates', 'Pastas', 'Pizzas', 'Salads', 'Starters', 'Desserts'];
 
 app.use(cors({
-    origin: ['https://cpkbot-frontend.onrender.com', 'http://localhost:5000']
+    origin: ['https://cpkbot-frontend.onrender.com', 'http://localhost:10000']
 }));
 
 // Connecting to database, MUST specify database name
@@ -60,7 +60,7 @@ app.post('/', async(req, res) => {
     const intent  = response.intent;
     const entities = response.entities;
 
-    //console.log(intent)
+    console.log(intent)
     console.log(entities)
 
     // Determines if the response given is understood to be something that exists

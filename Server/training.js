@@ -88,9 +88,11 @@ module.exports = (manager) => {
     manager.addDocument('en', 'i want a %order%, %modify% %ingredients%, %ingredients%, and %ingredients%', 'add.to.order');
     manager.addDocument('en', 'order me a %order% %modify% %ingredients% and %ingredients%', 'add.to.order');
     manager.addDocument('en', 'let me get a %order%', 'add.to.order');
+    manager.addDocument('en', 'let me get a %order% and %order%', 'add.to.order');
     manager.addDocument('en', 'let me get a %order%, and %modify% %ingredients%', 'add.to.order');
     manager.addDocument('en', 'can you add a %order% %modify% %ingredient% to my order', 'add.to.order');
     manager.addDocument('en', 'can i get a %order%', 'add.to.order');
+    manager.addDocument('en', 'can i get a %order% and %order%', 'add.to.order');
     manager.addDocument('en', 'can i order the %order%', 'add.to.order');
 
     manager.addAnswer('en', 'add.to.order', 'I\'ve added a %order% to your order. Can I get you anything else?');
@@ -126,7 +128,7 @@ module.exports = (manager) => {
     manager.addDocument('en', 'what is in my order', 'current.order');
     manager.addDocument('en', 'what\'s in my cart', 'current.order');
     manager.addDocument('en', 'what do i currently have', 'current.order');
-    manager.addDocument('en', 'show me my order right now', 'current.order');
+    manager.addDocument('en', 'show me my order right ncow', 'current.order');
     manager.addDocument('en', 'show me my cart', 'current.order');
 
     manager.addAnswer('en', 'current.order', 'Here\'s what\'s currently in your order: *current order here* Let me know if you want to add anything else!');

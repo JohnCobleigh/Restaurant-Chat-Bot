@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useState, useEffect, useRef } from 'react'; // Importing React, useState, useEffect, and useRef hooks
 import './App.css'; // Importing the CSS file for styling
+import { GoArrowUp } from 'react-icons/go'; // Importing the arrow icon for the send button
+import { AiOutlineAudio } from 'react-icons/ai'; // Importing the microphone icon for audio input
 
 // The main Chatbot component
 function Chatbot() {
@@ -36,9 +38,9 @@ function Chatbot() {
     // Add the user's message to the chat history
     const newMessages = [...messages, { sender: 'user', text: userInput }];
     setMessages(newMessages); // Update state with the new message
-    
-    // http://localhost:5001/  (need to use 5001 here to work locally on both Mac & Windows)
-    axios.post(`${import.meta.env.VITE_SERVER_URL}/`, { message: userInput })
+
+    //axios.post('/api/', { message: userInput })                                         // uncomment for local run
+    axios.post(`${import.meta.env.VITE_SERVER_URL}/`, { message: userInput })         // uncomment for deploying
       .then(response => {
         const botResponse = response.data.reply;  // Backend response
         setMessages([...newMessages, { sender: 'bot', text: botResponse }]);  // Update chat with bot's reply
@@ -82,6 +84,10 @@ function Chatbot() {
 
       {/* Input field for typing and sending messages */}
       <div className="chatbot-input">
+        {/* Audio button for future audio input feature */}
+        <div className="audio-button" onClick={() => console.log('Microphone clicked!')}>
+          <AiOutlineAudio size={20} /> {/* Microphone icon */}
+        </div>
         <input
           type="text"
           value={userInput} // Bind the input field to the userInput state
@@ -89,7 +95,9 @@ function Chatbot() {
           onKeyDown={handleKeyDown}
           placeholder="Place an order or ask me about the menu!" // Prompt text for the input
         />
-        <button onClick={handleSend}>Enter</button> {/* Send button triggers the handleSend function */}
+        <button onClick={handleSend}>
+          <GoArrowUp size={25} /> {/* Arrow icon */}
+        </button>
       </div>
     </div>
   );
