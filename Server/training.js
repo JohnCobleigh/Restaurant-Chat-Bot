@@ -8,7 +8,6 @@ const {
 module.exports = (manager) => {
     /* *********************************************************************** */
     // Asking for general menu info
-
     // display both food and drink sections
     manager.addDocument('en', 'What is on the menu?', 'menu.ask');
     manager.addDocument('en', 'What items do you have?', 'menu.ask');
@@ -17,21 +16,29 @@ module.exports = (manager) => {
     manager.addDocument('en', 'Whats on the menu', 'menu.ask');
     manager.addDocument('en', 'Give me the menu', 'menu.ask');
 
-    // Possible phrasings for listing general menu sections
+
     manager.addAnswer('en', 'menu.ask', 'For drinks, we serve *drink sections here*. And for food, we serve *food sections here*');
     manager.addAnswer('en', 'menu.ask', 'Our menu includes *food sections here* as well as *drink sections here*');
+    /* *********************************************************************** */
 
+
+    /* *********************************************************************** */
     // display only food sections
     manager.addDocument('en', 'What kind of food do you serve?', 'food.ask');
     manager.addDocument('en', 'What type of food do you have?', 'food.ask');
     manager.addDocument('en', 'What foods do you have?', 'food.ask');
+
     manager.addAnswer('en', 'food.ask', 'For food, we serve *food sections here*. Let me know you have any further questions.');
     manager.addAnswer('en', 'food.ask', 'Our kitchen makes both classic and original *food sections here*. You can ask me about any specifics!');
+    /* *********************************************************************** */
 
+
+    /* *********************************************************************** */
     // display only drink sections
     manager.addDocument('en', 'What kind of drinks do you serve?', 'drink.ask');
     manager.addDocument('en', 'What type of drinks do you have?', 'drink.ask');
     manager.addDocument('en', 'What drinks do you have?', 'drink.ask');
+
     manager.addAnswer('en', 'drink.ask', 'For drinks, we serve *drink sections here*. Let me know you have any further questions.');
     manager.addAnswer('en', 'drink.ask', 'Our bar makes *drink sections here*. You can ask me about any specifics!');
     /* *********************************************************************** */
@@ -55,6 +62,8 @@ module.exports = (manager) => {
     manager.addDocument('en', 'what does the %item% have', 'show.ingredients');
     manager.addDocument('en', 'what ingredients does the %item% have', 'show.ingredients');
     manager.addDocument('en', 'what is in the %item%', 'show.ingredients');
+    manager.addDocument('en', 'whats on the %item%', 'show.ingredients');
+    manager.addDocument('en', 'what\'s on the %item%', 'show.ingredients');
 
     manager.addAnswer('en', 'show.ingredients', 'Our %item% has: *ingredients here*');
     manager.addAnswer('en', 'show.ingredients', 'The %item% includes: *ingredients here*');
@@ -66,6 +75,10 @@ module.exports = (manager) => {
     manager.addDocument('en', 'Describe the %item% to me', 'show.description');
     manager.addDocument('en', 'Can you describe the %item%', 'show.description');
     manager.addDocument('en', 'Can you give me a description for the %item%', 'show.description');
+    manager.addDocument('en', 'tell me about the %item%', 'show.description');
+    manager.addDocument('en', 'Can you tell me about the %item%', 'show.description');
+    manager.addDocument('en', '%item%', 'show.description');
+    manager.addDocument('en', 'Can you tell me about the %order%', 'show.description');
 
     manager.addAnswer('en', 'show.description', '*description here* I can add this to your order if you\'d like!');
     manager.addAnswer('en', 'show.description', '*description here* Let me know if you want to order this!');
@@ -76,10 +89,25 @@ module.exports = (manager) => {
     // Asking how many calories a specified item has
     manager.addDocument('en', 'how many calories does the %item% have', 'show.calories');
     manager.addDocument('en', 'how many calories are in the %item%', 'show.calories');
+    manager.addDocument('en', 'can you tell me how many calories the %item% has', 'show.calories');
 
     manager.addAnswer('en', 'show.calories', 'Our %item% has *calories here* calories.');
     manager.addAnswer('en', 'show.calories', 'There are *calories here* calories in the %item%.')
     /* *********************************************************************** */ 
+
+    
+    /* *********************************************************************** */ 
+    // Asking for recommendations
+    manager.addDocument('en', 'what %item% would you recommend', 'recommend');
+    manager.addDocument('en', 'can you give me some %item% recommendations', 'recommend');
+    manager.addDocument('en', 'what is your favorite %item%', 'recommend');
+    manager.addDocument('en', 'what %item% should i order', 'recommend');
+
+    manager.addAnswer('en', 'recommend', 'I would recommend you order the *recommendation*');
+    manager.addAnswer('en', 'recommend', 'You should get the *recommendation*')
+    manager.addAnswer('en', 'recommend', 'I think you would like the *recommendation*')
+    /* *********************************************************************** */ 
+
 
 
     /* *********************************************************************** */
@@ -88,12 +116,16 @@ module.exports = (manager) => {
     manager.addDocument('en', 'i want a %order%, %modify% %ingredients%, %ingredients%, and %ingredients%', 'add.to.order');
     manager.addDocument('en', 'order me a %order% %modify% %ingredients% and %ingredients%', 'add.to.order');
     manager.addDocument('en', 'let me get a %order%', 'add.to.order');
+    manager.addDocument('en', 'let me get the %order%', 'add.to.order');
     manager.addDocument('en', 'let me get a %order% and %order%', 'add.to.order');
     manager.addDocument('en', 'let me get a %order%, and %modify% %ingredients%', 'add.to.order');
     manager.addDocument('en', 'can you add a %order% %modify% %ingredient% to my order', 'add.to.order');
     manager.addDocument('en', 'can i get a %order%', 'add.to.order');
     manager.addDocument('en', 'can i get a %order% and %order%', 'add.to.order');
     manager.addDocument('en', 'can i order the %order%', 'add.to.order');
+    manager.addDocument('en', 'can i order a %order% %item%', 'add.to.order');
+    manager.addDocument('en', 'add a %order% to my order', 'add.to.order');
+    manager.addDocument('en', 'can i get a %order% %item%', 'add.to.order');
 
     manager.addAnswer('en', 'add.to.order', 'I\'ve added a %order% to your order. Can I get you anything else?');
     manager.addAnswer('en', 'add.to.order', 'A %order% has been added to your order. Anything else?');
@@ -108,18 +140,30 @@ module.exports = (manager) => {
     manager.addDocument('en', 'i do not want %order% anymore', 'remove.from.order');
     manager.addDocument('en', 'remove %order%', 'remove.from.order');
     manager.addDocument('en', 'i changed my mind, i dont want %order%', 'remove.from.order');
+    manager.addDocument('en', 'take the %order% off my order', 'remove.from.order');
+    manager.addDocument('en', 'remove the %order% from my order', 'remove.from.order');
+    manager.addDocument('en', 'take off the %order% from my order', 'remove.from.order');
 
     manager.addAnswer('en', 'remove.from.order', 'I\'ve removed a %order% from your order');
     manager.addAnswer('en', 'remove.from.order', 'A %order% has been removed from your order');
     manager.addAnswer('en', 'remove.from.order', 'Removing a %order% from your order');
+    manager.addAnswer('en', 'remove.from.order', 'The %order% has been removed from your order');
     /* *********************************************************************** */
 
 
     /* *********************************************************************** */
     // Replacing/changing an item or ingredient in current order
-    manager.addDocument('en', 'can i get a %item% instead of the %item%', 'update.order');
+    manager.addDocument('en', 'can i get a %item% %switch% the %item%', 'update.order');
+    manager.addDocument('en', 'can i %switch% the %item% for the %item%', 'update.order');
+    manager.addDocument('en', 'can i %switch% the %item% with a %item%', 'update.order');
+    manager.addDocument('en', 'would it be okay to %switch% the %item% to a %item%', 'update.order');
+    manager.addDocument('en', 'could you %switch% the %item% to a %item%', 'update.order');
+    manager.addDocument('en', 'i’d prefer a %item% %switch% the %item%, can you make that change', 'update.order')
+    
 
     manager.addAnswer('en', 'update.order', 'Replacing your *first item here* with the *second item here*');
+    manager.addAnswer('en', 'update.order', 'I\'ve replaced your *first item here* with the *second item here*');
+    manager.addAnswer('en', 'update.order', 'I\'ve removed the *second item here* from your order and replaced it with the *first item here*');
     /* *********************************************************************** */
 
 
@@ -128,7 +172,7 @@ module.exports = (manager) => {
     manager.addDocument('en', 'what is in my order', 'current.order');
     manager.addDocument('en', 'what\'s in my cart', 'current.order');
     manager.addDocument('en', 'what do i currently have', 'current.order');
-    manager.addDocument('en', 'show me my order right ncow', 'current.order');
+    manager.addDocument('en', 'show me my order right now', 'current.order');
     manager.addDocument('en', 'show me my cart', 'current.order');
 
     manager.addAnswer('en', 'current.order', 'Here\'s what\'s currently in your order: *current order here* Let me know if you want to add anything else!');
@@ -146,14 +190,47 @@ module.exports = (manager) => {
     manager.addDocument('en', 'thats everything', 'place.order');
     manager.addDocument('en', 'thats everything for me', 'place.order');
 
-    // Possible phrasings to couple with receipt once user finalizes order
     manager.addAnswer('en', 'place.order', 'Here is what you ordered today: *receipt here*');
     manager.addAnswer('en', 'place.order', 'Here\'s your receipt: *receipt here*');
     manager.addAnswer('en', 'place.order', 'Your order has been placed: *receipt here*');
     /* *********************************************************************** */
 
 
-    // Recognizing specified items in input and considering different spellings and synomyms 
+
+    manager.addDocument('en', 'yes', 'answer.yes');
+    manager.addDocument('en', 'yeah', 'answer.yes')
+    manager.addDocument('en', 'yea', 'answer.yes')
+    manager.addDocument('en', 'sure', 'answer.yes')
+    manager.addDocument('en', 'ok', 'answer.yes')
+    manager.addDocument('en', 'uh-huh', 'answer.yes')
+    manager.addDocument('en', 'uh huh', 'answer.yes')
+    manager.addDocument('en', 'i do', 'answer.yes')
+
+    manager.addAnswer('en', 'answer.yes', 'ok yes')
+
+
+
+    manager.addDocument('en', 'no', 'answer.no')
+    manager.addDocument('en', 'nah', 'answer.no')
+    manager.addDocument('en', 'nope', 'answer.no')
+    manager.addDocument('en', 'i dont', 'answer.no')
+
+    manager.addAnswer('en', 'answer.no', 'ok no')
+
+
+    
+    manager.addDocument('en', 'can i get that', 'answer.order.that')
+    manager.addDocument('en', 'can i order that', 'answer.order.that')
+    manager.addDocument('en', 'i want that', 'answer.order.that')
+    manager.addDocument('en', 'get that for me', 'answer.order.that')
+    manager.addDocument('en', 'add that to my order', 'answer.order.that')
+
+    manager.addAnswer('en', 'answer.order.that', 'ok order that')
+
+
+
+    // Recognizing specified items in input and considering different spellings and synomyms
+    //Food types
     manager.addNamedEntityText('item', 'plate', ['en'], ['plate', 'plates', 'entree', 'entrees']);
     manager.addNamedEntityText('item', 'pizza', ['en'], ['pizza', 'pizzas', 'pie', 'pies']);
     manager.addNamedEntityText('item', 'pasta', ['en'], ['pasta', 'pastas']);
@@ -167,6 +244,7 @@ module.exports = (manager) => {
     manager.addNamedEntityText('item', 'dessert', ['en'], ['dessert', 'desserts', 'sweet treat', 'sweet treats']);
     manager.addNamedEntityText('item', 'pasta', ['en'], ['pasta', 'pastas']);
     
+    //Types of items in each category
     manager.addNamedEntityText('add.to.order', 'pizza', ['en'], validPizzas);
     manager.addNamedEntityText('add.to.order', 'pasta', ['en'], validPastas);
     manager.addNamedEntityText('add.to.order', 'margarita', ['en'], validMargaritas);
@@ -178,7 +256,7 @@ module.exports = (manager) => {
     manager.addNamedEntityText('add.to.order', 'starter', ['en'], validStarters);
     manager.addNamedEntityText('add.to.order', 'dessert', ['en'], validDesserts);
 
-    // used for identifying ingredients to be added or removed
+    //Ingredient types
     manager.addNamedEntityText('ingredients', 'olives', ['en'], ['olives', "olive's"]);
     manager.addNamedEntityText('ingredients', 'peppers', ['en'], ['peppers']);
     manager.addNamedEntityText('ingredients', 'pepperoni', ['en'], ['pepperonis', "pepperoni's", 'pepperoni']);
@@ -186,10 +264,17 @@ module.exports = (manager) => {
     manager.addNamedEntityText('ingredients', 'jalapeno', ['en'], ['jalapenos']);
     manager.addNamedEntityText('ingredients', 'tomato', ['en'], ['tomato', "tomato's"]);
 
-    // recognizes when user wants to add or remove ingredient from an item
+    //Recognizes when user wants to add or remove ingredient from an item
     manager.addNamedEntityText('modify', 'positive', ['en'], ['add', 'extra', 'put some', 'with']);
     manager.addNamedEntityText('modify', 'negative', ['en'], ['take off', 'no', 'without']);
-    
+
+    //Needed to find out what item you want to replace and what item to replace it with
+    manager.addNamedEntityText('switch', 'replace', ['en'], ['replace', 'instead of', 'change', 'substitute', 'swap'])
+
+
+
+
+    //Saves the training data, allowing the bot to respond consistently across different chats (I believe)
     manager.train().then(async() => {
         manager.save();
     });

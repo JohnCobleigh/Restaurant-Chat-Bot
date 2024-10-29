@@ -1,16 +1,17 @@
 //Main
 require('dotenv').config();
 
-const { NlpManager } = require('node-nlp');
+const { NlpManager, NlpExcelReader } = require('node-nlp');
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const training = require('./training.js')
 const {addToOrder, displayPartialMenu, placeOrder, removeFromOrder, displayGeneralMenu, 
-       displayIngredients, displayCalories, displayDescription, displayCurrentOrder, updateOrder} = require('./orderVerification')
+       displayIngredients, displayCalories, displayDescription, displayCurrentOrder, updateOrder, afterDecision, giveRecommendation, setPreviousRecommendation, conversation, previousRecommendation} = require('./orderVerification')
 const { MainPlate, Margarita, Martini, Mocktail, Pasta, Pizza, Salad, Sangria, Cocktail, Starter, Dessert } = require('./models/item.js')
-const { Order } = require('./models/order.js')
+const { Order } = require('./models/order.js');
+const { MdRecommend } = require('react-icons/md');
 
 // Need to find better solution fr
 // Does not work with entrees/main plates
@@ -60,8 +61,24 @@ app.post('/', async(req, res) => {
     const intent  = response.intent;
     const entities = response.entities;
 
-    console.log(intent)
-    console.log(entities)
+    console.log(response)
+    // console.log(intent)
+    // console.log(entities)
+    
+    if(intent != 'None'){
+        conversation.push(response)
+    }
+
+    if(conversation.length  > 1){
+        if(conversation[conversation.length - 2].intent != 'recommend'){
+            setPreviousRecommendation(null)
+        }
+    }
+
+
+    // console.log(previousRecommendation)
+    // console.log(conversation)
+
 
     // Determines if the response given is understood to be something that exists
     if(intent === 'None'){
@@ -71,6 +88,7 @@ app.post('/', async(req, res) => {
     // Following if & if-else statements call upon functions in orderVerification.js based on intent from input  
 
     // Display what sections of the menu there are
+    //TODO: Maybe put all the intent testing into a different file for a cleaner main
     if(intent === 'menu.ask'){
         const drinksFormatted = await displayGeneralMenu(drinkSections);
         const foodFormatted = await displayGeneralMenu(foodSections);
@@ -150,6 +168,21 @@ app.post('/', async(req, res) => {
         return res.json({ reply: nlpAnswer })
     }
 
+    else if(intent === 'recommend'){
+        const answer = await giveRecommendation(entities, itemCollectionMap)
+
+        if (answer == null){
+            return res.json({ reply: `I dont have any recommendations to give you <b>\u2639</b>.<br /><br />If you have any questions about menu, don't hesitate to ask me!`})
+        }
+
+        const itemEntity = entities.find(e => e.entity === 'item');
+        const item = itemEntity.sourceText;
+
+        const nlpAnswer = response.answer.replace('*recommendation*', answer).replace('%item%', item)
+        return res.json({ reply: nlpAnswer })
+        
+    }
+
     // Adding to order
     else if(intent === 'add.to.order'){
         const answer =  await addToOrder(entities, itemCollectionMap)
@@ -206,6 +239,19 @@ app.post('/', async(req, res) => {
 
         const nlpAnswer = response.answer.replace('*receipt here*', answer);
         return res.json({ reply: nlpAnswer })
+    }
+
+    else if(intent === 'answer.yes' || intent === 'answer.no' || intent === 'answer.order.that'){
+        // console.log("TESTETS");
+
+        if(intent === 'answer.no'){
+            return;
+        }
+        
+        const answer = await afterDecision(response, itemCollectionMap)
+        const nlpAnswer = response.answer
+        console.log(answer)
+        return res.json({ reply: nlpAnswer });
     }
 
     else {

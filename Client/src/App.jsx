@@ -39,8 +39,8 @@ function Chatbot() {
     const newMessages = [...messages, { sender: 'user', text: userInput }];
     setMessages(newMessages); // Update state with the new message
 
-    //axios.post('/api/', { message: userInput })                                         // uncomment for local run
-    axios.post(`${import.meta.env.VITE_SERVER_URL}/`, { message: userInput })         // uncomment for deploying
+    axios.post('/api/', { message: userInput })                                         // uncomment for local run
+    // axios.post(`${import.meta.env.VITE_SERVER_URL}/`, { message: userInput })         // uncomment for deploying
       .then(response => {
         const botResponse = response.data.reply;  // Backend response
         setMessages([...newMessages, { sender: 'bot', text: botResponse }]);  // Update chat with bot's reply

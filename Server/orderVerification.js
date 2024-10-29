@@ -6,6 +6,9 @@ let names = []
 let calories = []
 let modifiers = []
 let prices = []
+let conversation = []
+
+var previousRecommendation = null
 
 async function addToOrder(entities, itemCollectionMap){
     let collection = '';
@@ -209,7 +212,6 @@ async function placeOrder(){
             Total: <b>$${(subtotal + subtotal * 0.0825).toFixed(2)}</b>`;
 }
 
-
 function checkIngredients(entities){
 
     var ingredients = []
@@ -228,7 +230,6 @@ function checkIngredients(entities){
     return ingredients
 }
 
-
 function checkModify(entities){
 
     for(const element of entities){
@@ -238,7 +239,6 @@ function checkModify(entities){
     }
     return
 }
-
 
 async function displayPartialMenu(entities, itemCollectionMap){
     // looking for what constitutes as an item (look at lines 37-48 in training.js)
@@ -267,13 +267,11 @@ async function displayPartialMenu(entities, itemCollectionMap){
     return `<br /><br />${itemNames}`;
 }
 
-
 async function displayGeneralMenu(sections){
     const head = sections.slice(0, -1).join(', ');
     const last = sections[sections.length - 1];
     return `${head}, and ${last}`;
 }
-
 
 async function displayIngredients(entities, itemCollectionMap){
     const optionEntity = entities.find(e => e.entity === 'add.to.order');
@@ -332,39 +330,243 @@ async function displayDescription(entities, itemCollectionMap){
     return `${item.description}<br /><br />`
 }
 
-
 async function updateOrder(entities, itemCollectionMap){
     // (used for searching mongodb documents)
-    const optionEntity = entities.find(e => e.entity === 'add.to.order');   
+
+    const switchIndex = entities.findIndex(e => e.entity === 'switch');
+    // console.log(switchIndex)
+
+    const optionEntityType = entities.find(e => e.entity === 'add.to.order');   
+    const optionEntity = entities.filter(e => e.entity === 'add.to.order');   
+    // console.log(optionEntity)
 
     if (optionEntity == undefined || optionEntity == null){
         return null
     } 
 
-    const option = optionEntity.option;                                                      
-    const collection = itemCollectionMap[option.toLowerCase()] 
+    if (switchIndex == 0){
 
-    // creating array of item names (strings) based on each entity that nlp.js recognizes
-    const itemNames = entities.map(e => e.sourceText);
-
-    // searching array above for item that user wants instead
-    const item = await collection.findOne({ name: { $regex: new RegExp(`^${itemNames[0]}$`, "i") } }).exec();
+        const option = optionEntityType.option;
+        const collection = itemCollectionMap[option.toLowerCase()] 
     
-    // seerching global array of current order item names for item that user wants to replace
-    const index = names.indexOf(itemNames[1]);
+        // creating array of item names (strings) based on each entity that nlp.js recognizes
+        const itemNames = optionEntity.map(e => e.sourceText);
+    
+        // searching array above for item that user wants instead
+        const item = await collection.findOne({ name: { $regex: new RegExp(`^${itemNames[1]}$`, "i") } }).exec();
+        
+        // seerching global array of current order item names for item that user wants to replace
+        const index = names.indexOf(itemNames[0]);
 
-    if (index < 0){
-        return 'The item you want to replace is not in your cart currently. Let me know which item you\'d like to order!'
+        if (index < 0){
+            return 'The item you want to replace is not in your cart currently. Let me know which item you\'d like to order!'
+        }
+        
+        names[index] = item.name;
+        calories[index] = item.calories;
+        modifiers[index] = '';
+        prices[index] = item.price;
+
+    return `Replacing your ${itemNames[0]} with a ${itemNames[1]}`
+
+    }
+    else if (switchIndex == 1){
+
+        const option = optionEntityType.option;                                                      
+        const collection = itemCollectionMap[option.toLowerCase()] 
+    
+        const itemNames = optionEntity.map(e => e.sourceText);
+        const item = await collection.findOne({ name: { $regex: new RegExp(`^${itemNames[0]}$`, "i") } }).exec();
+        // console.log(item)
+        
+        const index = names.indexOf(itemNames[1]);
+    
+        if (index < 0){
+            return 'The item you want to replace is not in your cart currently. Let me know which item you\'d like to order!'
+        }
+    
+        names[index] = item.name;
+        calories[index] = item.calories;
+        modifiers[index] = '';
+        prices[index] = item.price;
+    
+        return `Replacing your ${itemNames[1]} with a ${itemNames[0]}`
+
+    }
+    else
+        return`Error finding switch index`
+
+}
+
+async function afterDecision(response, itemCollectionMap){
+    
+    const previousResponse = conversation[conversation.length - 2]
+    const previousResponseIntent = previousResponse.intent
+
+
+
+    if(previousResponseIntent === 'show.description' || previousResponseIntent === 'show.calories') 
+        afterDecisionDescription(response, itemCollectionMap)
+    else if(previousResponseIntent === 'recommend')
+        afterDecisionRecommendation(response, itemCollectionMap)
+
+}
+
+async function giveRecommendation(entities, itemCollectionMap){
+    const itemEntity = entities.find(e => e.entity === 'item')
+
+    // console.log(itemEntity)
+
+    if(itemEntity == undefined || itemEntity == null){
+        return null
     }
 
-    names[index] = item.name;
-    calories[index] = item.calories;
-    modifiers[index] = '';
-    prices[index] = item.price;
+    const option = itemEntity.option   
+    const collection = itemCollectionMap[option.toLowerCase()]
+    const items = await collection.find({ favorite: true }).exec();
 
-    return `Replacing your ${itemNames[1]} with a ${itemNames[0]}`
+    
+    // console.log(items)
+
+    if (items.length > 0) {
+        const randomItem = items[Math.floor(Math.random() * items.length)];
+        previousRecommendation = randomItem
+        console.log(randomItem);
+        return `<b>${randomItem.name}</b>`;
+    } else {
+        console.log("No items found with recommendation set to true.");
+        // return 'Error finding item,  none in array, add some favorites to type';
+        return null;
+    }
+    
+
+}
+
+
+
+async function afterDecisionDescription(response, itemCollectionMap){
+
+    let collection = '';
+    let orderDetails = '';
+    let modify = '';
+    let ingredients = []
+
+    let tempNames = []
+    let tempCalories = []
+    let tempModifiers = []
+    let tempPrices = []
+    
+
+    const previousResponse = conversation[conversation.length - 2]
+    const previousResponseEntities = previousResponse.entities
+    const previousOptionEntity = previousResponseEntities.find(e => e.entity === 'add.to.order');
+    const previousOption = previousOptionEntity.option
+    const previousSourceText = previousOptionEntity.sourceText
+
+    // console.log(previousOptionEntity)
+
+    if(previousOptionEntity.entity === 'add.to.order'){
+        collection = itemCollectionMap[previousOption.toLowerCase()]              // matching item type to Mongoose schema (see item.js and server.js)
+        // console.log(collection)                                           // Mongoose schema (i.e. { Pizza })
+
+        previousSourceText.replace(/[^\w\s]/gi, '') // remove punctuation and other special chars
+        item = await collection.findOne({ name: { $regex: new RegExp(`^${previousSourceText}$`, "i") } }).exec()
+
+        if (!item)
+            return res.json({ reply: `We do not serve a ${previousSourceText}.`})
+
+
+        // push item info to order-related arrays
+        names.push(item.name)
+        calories.push(item.calories)
+        prices.push(item.price)
+
+        // push same info to temp arrays for items being **currently** ordered
+        tempNames.push(item.name)
+        tempCalories.push(item.calories)
+        tempPrices.push(item.price)
+
+        // console.log(names)
+
+    }
+
+    orderDetails = tempNames.map((name, index) => {
+        const modifier = tempModifiers[index] ? tempModifiers[index] : '';
+
+        if (tempNames.length == 1 || (index == tempNames.length - 2 && tempNames.length == 2))
+            return `<b>${name}</b>${modifier}`
+
+        if (index == tempNames.length - 1 && tempNames.length > 1) {
+            return `and <b>${name}</b>${modifier}`;
+        }
+
+        return ` <b>${name}</b>${modifier},`
+    }).join(' ');
+
+    // if user didn't order anything found on menu, return null
+    if (orderDetails == null || orderDetails == '')
+        return null
+
+    return orderDetails
+
+
+
+}
+
+async function afterDecisionRecommendation(response, itemCollectionMap){
+
+    let collection = '';
+    let orderDetails = '';
+    let modify = '';
+    let ingredients = []
+
+    let tempNames = []
+    let tempCalories = []
+    let tempModifiers = []
+    let tempPrices = []
+    
+
+
+    if (!previousRecommendation)
+        return res.json({ reply: `We do not serve a ${previousRecommendation}.`})
+
+
+    // push item info to order-related arrays
+    names.push(previousRecommendation.name)
+    calories.push(previousRecommendation.calories)
+    prices.push(previousRecommendation.price)
+
+    // push same info to temp arrays for items being **currently** ordered
+    tempNames.push(previousRecommendation.name)
+    tempCalories.push(previousRecommendation.calories)
+    tempPrices.push(previousRecommendation.price)
+
+    // console.log(names)
+    orderDetails = tempNames.map((name, index) => {
+        const modifier = tempModifiers[index] ? tempModifiers[index] : '';
+
+        if (tempNames.length == 1 || (index == tempNames.length - 2 && tempNames.length == 2))
+            return `<b>${name}</b>${modifier}`
+
+        if (index == tempNames.length - 1 && tempNames.length > 1) {
+            return `and <b>${name}</b>${modifier}`;
+        }
+
+        return ` <b>${name}</b>${modifier},`
+    }).join(' ');
+
+    // if user didn't order anything found on menu, return null
+    if (orderDetails == null || orderDetails == '')
+        return null
+
+    return orderDetails
+
+}
+
+function setPreviousRecommendation(newValue){
+    previousRecommendation = newValue
 }
 
 module.exports = {addToOrder, checkIngredients, checkModify, displayPartialMenu, placeOrder, removeFromOrder, 
                   displayGeneralMenu, displayIngredients, displayCalories, displayDescription, displayCurrentOrder, 
-                  updateOrder}
+                  updateOrder, afterDecision, giveRecommendation, setPreviousRecommendation, conversation, previousRecommendation}
