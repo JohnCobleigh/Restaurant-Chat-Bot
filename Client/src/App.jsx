@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { useState, useEffect, useRef } from 'react'; // Importing React, useState, useEffect, and useRef hooks
-import './App.css'; // Importing the CSS file for styling
-import { GoArrowUp } from 'react-icons/go'; // Importing the arrow icon for the send button
+import { useEffect, useRef, useState } from 'react'; // Importing React, useState, useEffect, and useRef hooks
 import { AiOutlineAudio } from 'react-icons/ai'; // Importing the microphone icon for audio input
+import { GoArrowUp } from 'react-icons/go'; // Importing the arrow icon for the send button
+import './App.css'; // Importing the CSS file for styling
 
 // The main Chatbot component
 function Chatbot() {
@@ -39,8 +39,8 @@ function Chatbot() {
     const newMessages = [...messages, { sender: 'user', text: userInput }];
     setMessages(newMessages); // Update state with the new message
 
-    // http://localhost:5001/  (need to use 5001 here to work locally on both Mac & Windows)
-    axios.post('/api/', { message: userInput })
+    //axios.post('/api/', { message: userInput })                                         // uncomment for local run
+    axios.post(`${import.meta.env.VITE_SERVER_URL}/`, { message: userInput })         // uncomment for deploying
       .then(response => {
         const botResponse = response.data.reply;  // Backend response
         setMessages([...newMessages, { sender: 'bot', text: botResponse }]);  // Update chat with bot's reply
