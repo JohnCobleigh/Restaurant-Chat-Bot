@@ -1,4 +1,3 @@
-const { modelNames } = require("mongoose");
 const { 
     validPizzas, validPastas, validMargaritas, 
     ValidMartinis, validMocktails, validSalads, validSangrias, 
@@ -65,8 +64,8 @@ module.exports = (manager) => {
     manager.addDocument('en', 'whats on the %item%', 'show.ingredients');
     manager.addDocument('en', 'what\'s on the %item%', 'show.ingredients');
 
-    manager.addAnswer('en', 'show.ingredients', 'Our %item% has: *ingredients here*');
-    manager.addAnswer('en', 'show.ingredients', 'The %item% includes: *ingredients here*');
+    manager.addAnswer('en', 'show.ingredients', 'Our %item% has: *info here*');
+    manager.addAnswer('en', 'show.ingredients', 'The %item% includes: *info here*');
     /* *********************************************************************** */ 
 
 
@@ -80,8 +79,8 @@ module.exports = (manager) => {
     manager.addDocument('en', '%item%', 'show.description');
     manager.addDocument('en', 'Can you tell me about the %order%', 'show.description');
 
-    manager.addAnswer('en', 'show.description', '*description here* I can add this to your order if you\'d like!');
-    manager.addAnswer('en', 'show.description', '*description here* Let me know if you want to order this!');
+    manager.addAnswer('en', 'show.description', '*info here* I can add this to your order if you\'d like!');
+    manager.addAnswer('en', 'show.description', '*info here* Let me know if you want to order this!');
     /* *********************************************************************** */ 
 
 
@@ -91,8 +90,18 @@ module.exports = (manager) => {
     manager.addDocument('en', 'how many calories are in the %item%', 'show.calories');
     manager.addDocument('en', 'can you tell me how many calories the %item% has', 'show.calories');
 
-    manager.addAnswer('en', 'show.calories', 'Our %item% has *calories here* calories.');
-    manager.addAnswer('en', 'show.calories', 'There are *calories here* calories in the %item%.')
+    manager.addAnswer('en', 'show.calories', 'Our %item% has *info here* calories.');
+    manager.addAnswer('en', 'show.calories', 'There are *info here* calories in the %item%.')
+    /* *********************************************************************** */ 
+
+
+    /* *********************************************************************** */ 
+    // Asking how much an item cost
+    manager.addDocument('en', 'how much does the %item% cost', 'show.price');
+    manager.addDocument('en', 'how expensive is the %item%%', 'show.price');
+
+    manager.addAnswer('en', 'show.price', 'Our %item% is *info here*.');
+    manager.addAnswer('en', 'show.price', 'The %item% costs *info here*.')
     /* *********************************************************************** */ 
 
     
@@ -107,7 +116,6 @@ module.exports = (manager) => {
     manager.addAnswer('en', 'recommend', 'You should get the *recommendation*')
     manager.addAnswer('en', 'recommend', 'I think you would like the *recommendation*')
     /* *********************************************************************** */ 
-
 
 
     /* *********************************************************************** */
@@ -126,10 +134,11 @@ module.exports = (manager) => {
     manager.addDocument('en', 'can i order a %order% %item%', 'add.to.order');
     manager.addDocument('en', 'add a %order% to my order', 'add.to.order');
     manager.addDocument('en', 'can i get a %order% %item%', 'add.to.order');
+    manager.addDocument('en', 'can i order %number% %order%', 'add.to.order');
 
-    manager.addAnswer('en', 'add.to.order', 'I\'ve added a %order% to your order. Can I get you anything else?');
-    manager.addAnswer('en', 'add.to.order', 'A %order% has been added to your order. Anything else?');
-    manager.addAnswer('en', 'add.to.order', 'Adding a %order% to your order. Let me know if there\'s anything else you would like.');
+    manager.addAnswer('en', 'add.to.order', 'I\'ve added %order% to your order. Can I get you anything else?');
+    manager.addAnswer('en', 'add.to.order', '%order% has been added to your order. Anything else?');
+    manager.addAnswer('en', 'add.to.order', 'Adding %order% to your order. Let me know if there\'s anything else you would like.');
     /* *********************************************************************** */
 
 
@@ -224,8 +233,9 @@ module.exports = (manager) => {
     manager.addDocument('en', 'i want that', 'answer.order.that')
     manager.addDocument('en', 'get that for me', 'answer.order.that')
     manager.addDocument('en', 'add that to my order', 'answer.order.that')
+    manager.addDocument('en', 'can i order that %modify% %ingredients%', 'answer.order.that')
 
-    manager.addAnswer('en', 'answer.order.that', 'ok order that')
+    manager.addAnswer('en', 'answer.order.that', 'Sure! I\'ve just added it to your order.')
 
 
 
@@ -270,6 +280,8 @@ module.exports = (manager) => {
 
     //Needed to find out what item you want to replace and what item to replace it with
     manager.addNamedEntityText('switch', 'replace', ['en'], ['replace', 'instead of', 'change', 'substitute', 'swap'])
+
+    //manager.addNamedEntityText('digit', 'one', ['en'], ['a', 'the'])
 
 
 
