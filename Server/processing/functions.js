@@ -1,3 +1,4 @@
+const { IoPizzaSharp } = require('react-icons/io5');
 const { MainPlate, Margarita, Martini, Mocktail, Pasta, Pizza, Salad, Sangria, Cocktail, Starter, Dessert } = require('../models/item.js')
 const { Order } = require('../models/order.js');
 
@@ -25,6 +26,7 @@ let quantities = []
 let conversation = []
 
 var previousRecommendation = null
+var orderConfirmation = false
 
 async function addToOrder(entities){
     let collection = '';
@@ -232,6 +234,12 @@ async function placeOrder(){
         return null;
     }
 
+    if(orderConfirmation == false){
+        orderConfirmation = true
+        
+        return 'Are you sure?'
+    }
+
     // created new document to store in MongoDB using Mongoose schema
     const receipt = new Order({names: names, calories: calories, modifiers: modifiers, prices: prices})
     await receipt.save();
@@ -249,6 +257,8 @@ async function placeOrder(){
         const modifier = receipt.modifiers[index] ? receipt.modifiers[index] : '';
         return `\u2022 ${quantities[index]}x <b>${name}</b> ${modifier} [cal.${receipt.calories[index]}] [$${receipt.prices[index]}]`;
     }).join('<br /><br />');
+
+    orderConfirmation = false
 
     return `<br /><br />${receiptDetails}<br /><br />
             Total calories: ${calTotal}<br /><br />
@@ -421,12 +431,15 @@ async function updateOrder(entities){
 async function afterDecision(response){
     
     const previousResponse = conversation[conversation.length - 2]
+    console.log(previousResponse, " ", response)
     const previousResponseIntent = previousResponse.intent
 
     if(previousResponseIntent === 'show.description' || previousResponseIntent === 'show.calories' || previousResponseIntent === 'show.ingredients' || previousResponseIntent === 'show.price') 
         afterDecisionDescription(response)
     else if(previousResponseIntent === 'recommend')
         afterDecisionRecommendation(response)
+    else if(previousResponseIntent === 'place.order')
+        placeOrder()
 }
 
 async function giveRecommendation(entities){
@@ -445,15 +458,33 @@ async function giveRecommendation(entities){
     // console.log(items)
 
     if (items.length > 0) {
-        const randomItem = items[Math.floor(Math.random() * items.length)];
-        previousRecommendation = randomItem
-        //console.log(randomItem);
-        return `<b>${randomItem.name}</b>`;
+        var randomItem = null
+        if(previousRecommendation){
+            do{
+                randomItem = items[Math.floor(Math.random() * items.length)];
+                console.log(previousRecommendation.name, " ", randomItem.name)
+            }while(previousRecommendation.name === randomItem.name)
+
+            previousRecommendation = randomItem
+            //console.log(randomItem);
+            return `<b>${randomItem.name}</b>`;
+        } else {
+            randomItem = items[Math.floor(Math.random() * items.length)];
+            previousRecommendation = randomItem
+            return `<b>${randomItem.name}</b>`;
+        }
     } else {
         //console.log("No items found with recommendation set to true.");
         // return 'Error finding item,  none in array, add some favorites to type';
         return null;
     }
+}
+
+async function clearOrder(){
+    names = []
+    calories = []
+    modifiers = []
+    prices = []
 }
 
 async function afterDecisionDescription(response){
@@ -487,6 +518,15 @@ function setPreviousRecommendation(newValue){
     previousRecommendation = newValue
 }
 
+function setOrderConfirmation(value){
+    orderConfirmnation = value
+}
+
+function getOrderConfirmation(){
+    return orderConfirmation
+}
+
 module.exports = {addToOrder, checkIngredients, checkModify, displayPartialMenu, placeOrder, removeFromOrder, 
                   displayGeneralMenu, displayCurrentOrder, updateOrder, afterDecision, giveRecommendation, 
-                  setPreviousRecommendation, conversation, previousRecommendation, displaySpecificInfo}
+                  setPreviousRecommendation, clearOrder, setOrderConfirmation, getOrderConfirmation,
+                  conversation, previousRecommendation, displaySpecificInfo}

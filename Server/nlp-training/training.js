@@ -49,6 +49,7 @@ module.exports = (manager) => {
     manager.addDocument('en', 'What %item% choices do you have', 'item.show.all');
     manager.addDocument('en', 'List all the %item%', 'item.show.all');
     manager.addDocument('en', 'What %item% do you have', 'item.show.all');
+    manager.addDocument('en', 'can you tell me what %item% you serve', 'item.show.all');
 
     manager.addAnswer('en', 'item.show.all', 'Here are our %item%s: *items here*');
     manager.addAnswer('en', 'item.show.all', 'For %item%s, we serve: *items here*');
@@ -189,7 +190,24 @@ module.exports = (manager) => {
     manager.addAnswer('en', 'current.order', 'Your current order: *current order here* Let me know if I change anything for you.');
     /* *********************************************************************** */
 
+
+
+    /* *********************************************************************** */
+    // Clear the whole cart
+    manager.addDocument('en', 'can you clear my curent order', 'clear.order');
+    manager.addDocument('en', 'can you empty my cart', 'clear.order');
+    manager.addDocument('en', 'can you clear my cart', 'clear.order');
+    manager.addDocument('en', 'remove everything in my cart please', 'clear.order');
+    manager.addDocument('en', 'clear my order', 'clear.order');
+    manager.addDocument('en', 'empty my cart', 'clear.order');
     
+    manager.addAnswer('en', 'clear.order', 'I\'ve emptied your cart');
+    /* *********************************************************************** */
+    
+
+
+
+
     /* *********************************************************************** */
     // Checking out
     manager.addDocument('en', 'that is all i want to order', 'place.order');
@@ -233,7 +251,7 @@ module.exports = (manager) => {
     manager.addDocument('en', 'i want that', 'answer.order.that')
     manager.addDocument('en', 'get that for me', 'answer.order.that')
     manager.addDocument('en', 'add that to my order', 'answer.order.that')
-    manager.addDocument('en', 'can i order that %modify% %ingredients%', 'answer.order.that')
+    // manager.addDocument('en', 'can i order that %modify% %ingredients%', 'answer.order.that')
 
     manager.addAnswer('en', 'answer.order.that', 'Sure! I\'ve just added it to your order.')
 

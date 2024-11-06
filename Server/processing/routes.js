@@ -1,6 +1,6 @@
 const {addToOrder, displayPartialMenu, placeOrder, removeFromOrder, displayGeneralMenu, 
        displayCurrentOrder, updateOrder, afterDecision, giveRecommendation, setPreviousRecommendation, 
-       conversation, previousRecommendation, displaySpecificInfo} = require('./functions')
+       clearOrder, conversation, previousRecommendation, displaySpecificInfo, setOrderConfirmation, getOrderConfirmation} = require('./functions')
        
 const drinkSections = ['Cocktails', 'Margaritas', 'Martinis', 'Mocktails', 'Sangrias'];
 const foodSections = ['Main Plates', 'Pastas', 'Pizzas', 'Salads', 'Starters', 'Desserts'];
@@ -19,7 +19,7 @@ module.exports = (app, manager) => {
         const intent  = response.intent;
         const entities = response.entities;
     
-        // console.log(response)
+        console.log(response)
         // console.log(intent)
         // console.log(entities)
         
@@ -55,12 +55,14 @@ module.exports = (app, manager) => {
             return res.json({ reply: nlpAnswer })
         }
     
+        //Shows the items under the food type requested
         else if(intent === 'food.ask'){
             const foodFormatted = await displayGeneralMenu(foodSections);
             const nlpAnswer = response.answer.replace('*food sections here*', foodFormatted);
             return res.json({ reply: nlpAnswer })
         }
     
+        //Displays the drinks when prompted
         else if(intent === 'drink.ask'){
             const drinksFormatted = await displayGeneralMenu(drinkSections);
             const nlpAnswer = response.answer.replace('*drink sections here*', drinksFormatted);
@@ -160,21 +162,39 @@ module.exports = (app, manager) => {
     
         // Finalizing order
         else if(intent === 'place.order'){
-            const answer = await placeOrder()
+            if(getOrderConfirmation()){
+                const answer = await placeOrder()
+                console.log(getOrderConfirmation())
     
-            if(answer == null)
-            {
-                return res.json({ reply: 'You currently <i>don\'t</i> have anything in your cart. <br /><br /> Be sure to add any items to your cart before placing an order!'})
+                if(answer == null)
+                {
+                    return res.json({ reply: 'You currently <i>don\'t</i> have anything in your cart. <br /><br /> Be sure to add any items to your cart before placing an order!'})
+                }
+    
+                const nlpAnswer = response.answer.replace('*receipt here*', answer);
+                return res.json({ reply: nlpAnswer })
             }
-    
-            const nlpAnswer = response.answer.replace('*receipt here*', answer);
-            return res.json({ reply: nlpAnswer })
+            else{
+                const answer = await placeOrder()
+                return res.json({ reply: answer })
+            }
+            
         }
     
+        //Clears the order
+        else if(intent === 'clear.order'){
+            clearOrder();
+            const answer = response.answer
+            
+            return res.json({ reply: answer })
+        }
+
+        //Tests users decision input
         else if(intent === 'answer.yes' || intent === 'answer.no' || intent === 'answer.order.that'){
             // console.log("TESTETS");
     
             if(intent === 'answer.no'){
+                setOrderConfirmation(false)
                 return;
             }
             
@@ -184,6 +204,7 @@ module.exports = (app, manager) => {
             return res.json({ reply: nlpAnswer });
         }
     
+        //Error test
         else {
             const answer = response.answer;
             res.json({ reply: answer });
