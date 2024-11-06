@@ -1,3 +1,7 @@
+const validEntrees = [
+    'Chicken Piccata', 'Cedar Plank Salmon', 
+    'Shaking Beef', 'West Coast Burger'
+]
 
 const validPizzas = [
     'Original BBQ Chicken Pizza', 'California Club', 'Wild Mushroom', 
@@ -34,7 +38,7 @@ const validSalads = [
 ]
 
 const validSangrias = [
-    'Sangria Flight', 'Red-Berry Sangria', 
+    'Flight', 'Red-Berry Sangria', 
     'Sparkling Mango Sangria', 'Strawberry Rosé Sangria'
 ]
 
@@ -54,11 +58,9 @@ const validDesserts = [
 ]
 
 
-
-
 module.exports = {
     validPizzas, validPastas, validMargaritas, 
     ValidMartinis, validMocktails, validSalads, 
     validSangrias, validCocktails, validStarters, 
-    validDesserts
+    validDesserts, validEntrees
 }

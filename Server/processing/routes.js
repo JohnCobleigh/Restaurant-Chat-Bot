@@ -1,10 +1,7 @@
-const {addToOrder, displayPartialMenu, placeOrder, removeFromOrder, displayGeneralMenu, 
+const {addToOrder, displayPartialMenu, placeOrder, removeFromOrder, 
        displayCurrentOrder, updateOrder, afterDecision, giveRecommendation, setPreviousRecommendation, 
-       conversation, previousRecommendation, displaySpecificInfo} = require('./functions')
+       conversation, previousRecommendation, displaySpecificInfo, getImage} = require('./functions')
        
-const drinkSections = ['Cocktails', 'Margaritas', 'Martinis', 'Mocktails', 'Sangrias'];
-const foodSections = ['Main Plates', 'Pastas', 'Pizzas', 'Salads', 'Starters', 'Desserts'];
-
 module.exports = (app, manager) => {
     app.get('/', async (req, res) => {
         res.send('Chatbot server is running!');
@@ -33,38 +30,19 @@ module.exports = (app, manager) => {
             }
         }
     
-    
-        // console.log(previousRecommendation)
-        // console.log(conversation)
-    
-    
         // Determines if the response given is understood to be something that exists
         if(intent === 'None'){
             return res.json({reply: 'I don\'t understand what you want.'})
         }
     
         // Following if & if-else statements call upon functions in orderVerification.js based on intent from input  
-        // TODO: Maybe put all the intent testing into a different file for a cleaner main
     
         // Display what sections of the menu there are
-        if(intent === 'menu.ask'){
-            const drinksFormatted = await displayGeneralMenu(drinkSections);
-            const foodFormatted = await displayGeneralMenu(foodSections);
-    
-            const nlpAnswer = response.answer.replace('*food sections here*', foodFormatted).replace('*drink sections here*', drinksFormatted);
-            return res.json({ reply: nlpAnswer })
-        }
-    
-        else if(intent === 'food.ask'){
-            const foodFormatted = await displayGeneralMenu(foodSections);
-            const nlpAnswer = response.answer.replace('*food sections here*', foodFormatted);
-            return res.json({ reply: nlpAnswer })
-        }
-    
-        else if(intent === 'drink.ask'){
-            const drinksFormatted = await displayGeneralMenu(drinkSections);
-            const nlpAnswer = response.answer.replace('*drink sections here*', drinksFormatted);
-            return res.json({ reply: nlpAnswer })
+        if(intent === 'menu.ask' || intent === 'food.ask' || intent === 'drink.ask'){
+            const nlpAnswer = response.answer;
+            const messages = nlpAnswer.split("...")
+
+            return res.json({ replies: messages })
         }
     
         // Display all items in a specific section
@@ -72,7 +50,7 @@ module.exports = (app, manager) => {
             const answer = await displayPartialMenu(entities)
     
             if (answer == null){
-                res.json({ reply: `Sorry, I couldn't understand which item you're looking for <b>\u2639</b>.<br /><br />Feel free to ask me what type of items we serve!` })
+                return res.json({ reply: `Sorry, I couldn't understand which item you're looking for <b>\u2639</b>.<br /><br />Feel free to ask me what type of items we serve!` })
             }
     
             // pulling item type from input entities
@@ -80,7 +58,9 @@ module.exports = (app, manager) => {
             const item = itemEntity.option;
     
             const nlpAnswer = response.answer.replace('*items here*', answer).replace('%item%', item)
-            return res.json({ reply: nlpAnswer })
+            const messages = nlpAnswer.split("...")
+
+            return res.json({ replies: messages })
         }
     
         // Display specific info about an item
@@ -95,9 +75,17 @@ module.exports = (app, manager) => {
             const item = itemEntity.sourceText + " " + itemEntity.option;
     
             const nlpAnswer = response.answer.replace('*info here*', answer).replace('%item%', item)
-            return res.json({ reply: nlpAnswer })
+            const messages = nlpAnswer.split("...")
+
+            if (intent === 'show.description'){
+                const url = await getImage(entities)
+                return res.json ({ replies: messages, imageURL: url }) 
+            }
+
+            return res.json({ replies: messages })
         }
     
+        // Provide recommendation if user asks
         else if(intent === 'recommend'){
             const answer = await giveRecommendation(entities)
     
@@ -149,13 +137,21 @@ module.exports = (app, manager) => {
         else if(intent === 'current.order'){
             const answer = await displayCurrentOrder()
     
-            if(answer == null)
+            /*if(answer == null)
             {
                 return res.json({ reply: 'You currently <i>don\'t</i> have anything in your cart. <br /><br /> Let me know if you have questions about our menu!'})
+            }*/
+
+            if(answer == null)
+            {
+                return res.json({ replies: ['You currently <i>don\'t</i> have anything in your cart.',
+                                            'Let me know if you have questions about our menu!'] })
             }
     
             const nlpAnswer = response.answer.replace('*current order here*', answer)
-            return res.json({ reply: nlpAnswer })
+            const messages = nlpAnswer.split("...")
+
+            return res.json({ replies: messages })
         }
     
         // Finalizing order
@@ -171,9 +167,8 @@ module.exports = (app, manager) => {
             return res.json({ reply: nlpAnswer })
         }
     
+        // Handle yes/no responses
         else if(intent === 'answer.yes' || intent === 'answer.no' || intent === 'answer.order.that'){
-            // console.log("TESTETS");
-    
             if(intent === 'answer.no'){
                 return;
             }

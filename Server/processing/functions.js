@@ -156,45 +156,135 @@ async function addToOrder(entities){
 }
 
 async function removeFromOrder(entities){
-    // storing items **currently** being removed
-    let tempNames = [];
-    let tempModifiers = [];
+    let collection = '';
+    let orderDetails = '';
+    let modify = '';
+    let ingredients = [];
 
-    // basically same logic as adding to order
-    for (e of entities){
-        if (e.entity === 'add.to.order'){
-            const index = names.indexOf(e.sourceText);
-
-            if (index > -1){
-                tempNames.push(names[index])
-                tempModifiers.push(modifiers[index])
-
-                names.splice(index, 1)
-                calories.splice(index, 1)
-                modifiers.splice(index, 1)
-                prices.splice(index, 1)
-            }
-
-            // if item isn't in current order, ignore it for now
-            else if (index < 0){
-                continue;
-            }
-
-            //console.log(names)
+    let tempNames = []
+    let tempTypes = []
+    let tempCalories = []
+    let tempModifiers = []
+    let tempPrices = []
+    let tempQuantities = []
+    
+    // use same logic as addToOrder to gather what items & quantities user wants to remove
+    for (let e of entities){
+        console.log(e);
+        const option = e.option;                // pulling item type from optionEntity object (ex. pizza, pasta, mocktail)
+        const sourceText = e.sourceText         // pulling specific name from optionEntity object (ex. carne asada, pacific thyme)
+    
+        let item = ''
+            
+        // handles any 'add.to.order' entities, each of which contains the specific name
+        if (e.entity == 'add.to.order'){
+            tempTypes.push(option)
+    
+            // search for specific food or drink in collection
+            collection = itemCollectionMap[option.toLowerCase()]                                                // matching item type to Mongoose schema/MongoDB collection (see item.js and server.js)
+            sourceText.replace(/[^\w\s]/gi, '')                                                                 // remove punctuation and other special chars
+            item = await collection.findOne({ name: { $regex: new RegExp(`^${sourceText}$`, "i") } }).exec()    // grabbing the MongoDB document
+    
+            if (!item)
+                return res.json({ reply: `We do not serve a ${sourceText}.`})
+    
+    
+            // push same info to temp arrays for items being **currently** ordered
+            tempNames.push(item.name)
+            tempCalories.push(item.calories)
+            tempPrices.push(item.price)
+            tempModifiers.push('')      // push empty string as default
+            tempQuantities.push(1)      // push quantity of 1 as default
+    
+            continue;
         }
-    }   
+    
+        // handles any 'modify' entities (look towards end of training.js)
+        if (e.entity == 'modify'){
+            if (option == 'positive'){
+                modify = 'with'
+            }
+            else if(option == 'negative'){
+                modify = 'without'
+            }
+            else{
+                modify = ''
+            }
+            continue;
+        }
+    
+        // handles any 'ingredients' entities (above 'modify' entites in training.js)
+        if (e.entity == 'ingredients'){
+            ingredients.push(option)
+    
+            // since the 'modify' & 'ingredients' entities are returned consecutively after each 'add.to.order' entity
+            // immediately concat the two strings & assign it to current index of tempModifiers (i.e. current item that is being added)
+            let fullModify = modify.concat(" ", ingredients) 
+            tempModifiers[tempModifiers.length - 1] = fullModify
+    
+            modify = '';
+            ingredients = [];
+            continue;
+        }
+    
+        // 'number' entities always appear last in nlp.js array (automatically recognized, no training needed)
+        // 'number' entities will appear in the same order as they appear in input (ex. two hawaiian, 1 thai chicken, and 4 pacific thymes --> 2, 1, 4)
+        // so just assign them one by one in tempQuantities array (all quantities were set to 1 beforehand in 'add.to.order' if-statement)
+        let index = 0
+        for (let en of entities){
+            if (en.entity === 'number'){
+                let quantity = en.resolution.value;
+                if (index < tempQuantities.length){
+                    tempQuantities[index] = quantity
+                    index++
+                }
+            }
+        }
+    }
+
+    let tempIndex = 0
+    while (tempIndex < tempNames.length){
+        let orderIndex = names.indexOf(tempNames[tempIndex])
+
+        // for each item in user input, see if it exists in their cart & has the same modifier
+        if (orderIndex > -1 && tempModifiers[tempIndex] == modifiers[orderIndex]){
+            quantities[orderIndex] -= tempQuantities[tempIndex]
+
+            // if the quantity is <= 0 after subtracting, remove it entirely from the overall order
+            if (quantities[orderIndex] <= 0){
+                names.splice(orderIndex, 1)
+                calories.splice(orderIndex, 1)
+                modifiers.splice(orderIndex, 1)
+                prices.splice(orderIndex, 1)
+                quantities.splice(orderIndex, 1) 
+            }
+        }
+        // if the item does not exist in their cart or modifiers don't match up, remove it from the temp arrays
+        // used for displaying which items were actually reduced/removed from the cart
+        else {
+            tempNames.splice(tempIndex, 1)
+            tempCalories.splice(tempIndex, 1)
+            tempModifiers.splice(tempIndex, 1)
+            tempPrices.splice(tempIndex, 1)
+            tempQuantities.splice(tempIndex, 1) 
+
+            continue
+        }
+
+        tempIndex++
+    }
 
     orderDetails = tempNames.map((name, index) => {
         const modifier = tempModifiers[index] ? tempModifiers[index] : '';
 
         if (tempNames.length == 1 || (index == tempNames.length - 2 && tempNames.length == 2))
-            return `<b>${name}</b>${modifier}`
+            return `${tempQuantities[index]}x <b>${name}</b> ${modifier}`
 
         if (index == tempNames.length - 1 && tempNames.length > 1) {
-            return `and <b>${name}</b>${modifier}`;
+            return `and ${tempQuantities[index]}x <b>${name}</b> ${modifier}`;
         }
 
-        return ` <b>${name}</b>${modifier},`
+        return ` ${tempQuantities[index]}x <b>${name}</b> ${modifier},`
     }).join(' ');
 
     // if user didn't remove an item in their current order, return null
@@ -223,7 +313,7 @@ async function displayCurrentOrder(){
             Total calories: ${calTotal}<br /><br />
             Subtotal: $${subtotal}<br />
             Tax: $${(subtotal * 0.0825).toFixed(2)}<br />
-            Total: <b>$${(subtotal + subtotal * 0.0825).toFixed(2)}</b><br /><br />`; 
+            Total: <b>$${(subtotal + subtotal * 0.0825).toFixed(2)}`; 
 }
 
 async function placeOrder(){
@@ -298,24 +388,18 @@ async function displayPartialMenu(entities){
     const collection = itemCollectionMap[item.toLowerCase()]
 
     if (!collection){
-        return res.json({ reply: `We do not serve any ${item}s.`})
+        return null;
     }
 
     const items = await collection.find({}).exec(); // finds all documents for a specific item
     if (items.length === 0) {
-        return res.json({ reply: `No ${item}s found.` });
+        return null;
     }
     
     // create array of item names and prices
     const itemNames = items.map(i => `\u2022 <b>${i.name}</b> [cal.${i.calories}] [$${i.price}]`).join('<br />');
 
-    return `<br /><br />${itemNames}`;
-}
-
-async function displayGeneralMenu(sections){
-    const head = sections.slice(0, -1).join(', ');
-    const last = sections[sections.length - 1];
-    return `${head}, and ${last}`;
+    return `${itemNames}`;
 }
 
 async function displaySpecificInfo(entities, intent) {
@@ -333,7 +417,7 @@ async function displaySpecificInfo(entities, intent) {
     const item = await collection.findOne({ name: { $regex: new RegExp(`^${sourceText}$`, "i") } }).exec();
 
     if (intent == 'show.description')
-        return `${item.description}<br /><br />`;
+        return `${item.description}`;
 
     else if (intent == 'show.calories')
         return `<b>${item.calories}</b>`;
@@ -348,6 +432,27 @@ async function displaySpecificInfo(entities, intent) {
     } 
 
     return null
+}
+
+async function getImage(entities){
+    const optionEntity = entities.find(e => e.entity === 'add.to.order');   
+
+    if (optionEntity == undefined || optionEntity == null){
+        return null
+    } 
+
+    const option = optionEntity.option;                              
+    const sourceText = optionEntity.sourceText                            
+    const collection = itemCollectionMap[option.toLowerCase()] 
+
+    sourceText.replace(/[^\w\s]/gi, '') // remove punctuation and other special chars
+    const item = await collection.findOne({ name: { $regex: new RegExp(`^${sourceText}$`, "i") } }).exec();
+
+    if (!item || !item.image || item.image == "" || item.image == " "){
+        return null
+    }
+
+    return item.image
 }
 
 async function updateOrder(entities){
@@ -488,5 +593,5 @@ function setPreviousRecommendation(newValue){
 }
 
 module.exports = {addToOrder, checkIngredients, checkModify, displayPartialMenu, placeOrder, removeFromOrder, 
-                  displayGeneralMenu, displayCurrentOrder, updateOrder, afterDecision, giveRecommendation, 
-                  setPreviousRecommendation, conversation, previousRecommendation, displaySpecificInfo}
+                  displayCurrentOrder, updateOrder, afterDecision, giveRecommendation, 
+                  setPreviousRecommendation, conversation, previousRecommendation, displaySpecificInfo, getImage}
