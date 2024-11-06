@@ -64,6 +64,8 @@ function Chatbot() {
 
   return (
     <div className="chatbot-container">
+      {/* Logo */}
+      <img src="./src/assets/cpk_logo.png" alt="CPK Logo" className="chatbot-logo" />
       {/* Chatbot header */}
       <div className="chatbot-header">CPK-Bot</div>
 

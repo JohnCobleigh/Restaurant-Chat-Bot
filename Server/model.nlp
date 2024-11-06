@@ -58,6 +58,30 @@
             "intent": "menu.ask",
             "domain": "default"
           },
+          "do,food,kind,of,serv,what,you": {
+            "intent": "food.ask",
+            "domain": "default"
+          },
+          "do,food,have,of,type,what,you": {
+            "intent": "food.ask",
+            "domain": "default"
+          },
+          "do,food,have,what,you": {
+            "intent": "food.ask",
+            "domain": "default"
+          },
+          "do,drink,kind,of,serv,what,you": {
+            "intent": "drink.ask",
+            "domain": "default"
+          },
+          "do,drink,have,of,type,what,you": {
+            "intent": "drink.ask",
+            "domain": "default"
+          },
+          "do,drink,have,what,you": {
+            "intent": "drink.ask",
+            "domain": "default"
+          },
           "%item%,me,show,the": {
             "intent": "item.show.all",
             "domain": "default"
@@ -86,12 +110,24 @@
             "intent": "show.ingredients",
             "domain": "default"
           },
-          "%item%,on,the,what": {
-            "intent": "show.ingredients",
+          "%item%,describ,me,the,to": {
+            "intent": "show.description",
             "domain": "default"
           },
-          "%item%,can,me,on,show,the,what,you": {
-            "intent": "show.ingredients",
+          "%item%,can,describ,the,you": {
+            "intent": "show.description",
+            "domain": "default"
+          },
+          "%item%,a,can,descript,for,give,me,the,you": {
+            "intent": "show.description",
+            "domain": "default"
+          },
+          "%item%,calori,doe,have,how,mani,the": {
+            "intent": "show.calories",
+            "domain": "default"
+          },
+          "%item%,are,calori,how,in,mani,the": {
+            "intent": "show.calories",
             "domain": "default"
           },
           "%ingredients%,%modify%,%order%,give,me": {
@@ -106,7 +142,15 @@
             "intent": "add.to.order",
             "domain": "default"
           },
-          "%ingredients%,%modify%,%order%,a,and,get,it,let,me,on": {
+          "%order%,a,get,let,me": {
+            "intent": "add.to.order",
+            "domain": "default"
+          },
+          "%order%,a,and,get,let,me": {
+            "intent": "add.to.order",
+            "domain": "default"
+          },
+          "%ingredients%,%modify%,%order%,a,and,get,let,me": {
             "intent": "add.to.order",
             "domain": "default"
           },
@@ -118,23 +162,19 @@
             "intent": "add.to.order",
             "domain": "default"
           },
-          "%order%,can,i,order,the": {
-            "intent": "add.to.order",
-            "domain": "default"
-          },
           "%order%,a,and,can,get,i": {
             "intent": "add.to.order",
             "domain": "default"
           },
-          "%ingredients%,%modify%,%order%,and,can,i,order,the": {
-            "intent": "add.to.order",
-            "domain": "default"
-          },
-          "%ingredients%,%modify%,%order%,a,and,give,me": {
+          "%order%,can,i,order,the": {
             "intent": "add.to.order",
             "domain": "default"
           },
           "%order%,can,from,i,my,order,remov": {
+            "intent": "remove.from.order",
+            "domain": "default"
+          },
+          "%order%,can,i,remov": {
             "intent": "remove.from.order",
             "domain": "default"
           },
@@ -150,28 +190,28 @@
             "intent": "remove.from.order",
             "domain": "default"
           },
-          "%order%,about,can,me,tell,the,you": {
-            "intent": "describe.order",
+          "%item%,a,can,get,i,instead,of,the": {
+            "intent": "update.order",
             "domain": "default"
           },
-          "%order%,about,me,tell,the": {
-            "intent": "describe.order",
+          "in,is,my,order,what": {
+            "intent": "current.order",
             "domain": "default"
           },
-          "%order%,is,the,what": {
-            "intent": "describe.order",
+          "cart,in,is,my,what": {
+            "intent": "current.order",
             "domain": "default"
           },
-          "%order%,about,i,know,the,to,want": {
-            "intent": "describe.order",
+          "current,do,have,i,what": {
+            "intent": "current.order",
             "domain": "default"
           },
-          "%order%,about,befor,heard,it,ive,me,never,of,tell": {
-            "intent": "describe.order",
+          "me,my,ncow,order,right,show": {
+            "intent": "current.order",
             "domain": "default"
           },
-          "%order%,decrib,for,me,the": {
-            "intent": "describe.order",
+          "cart,me,my,show": {
+            "intent": "current.order",
             "domain": "default"
           },
           "all,i,is,order,that,to,want": {
@@ -201,11 +241,16 @@
         },
         "intentDict": {
           "menu.ask": "default",
+          "food.ask": "default",
+          "drink.ask": "default",
           "item.show.all": "default",
           "show.ingredients": "default",
+          "show.description": "default",
+          "show.calories": "default",
           "add.to.order": "default",
           "remove.from.order": "default",
-          "describe.order": "default",
+          "update.order": "default",
+          "current.order": "default",
           "place.order": "default"
         },
         "sentences": [
@@ -238,6 +283,36 @@
             "domain": "default",
             "utterance": "Give me the menu",
             "intent": "menu.ask"
+          },
+          {
+            "domain": "default",
+            "utterance": "What kind of food do you serve?",
+            "intent": "food.ask"
+          },
+          {
+            "domain": "default",
+            "utterance": "What type of food do you have?",
+            "intent": "food.ask"
+          },
+          {
+            "domain": "default",
+            "utterance": "What foods do you have?",
+            "intent": "food.ask"
+          },
+          {
+            "domain": "default",
+            "utterance": "What kind of drinks do you serve?",
+            "intent": "drink.ask"
+          },
+          {
+            "domain": "default",
+            "utterance": "What type of drinks do you have?",
+            "intent": "drink.ask"
+          },
+          {
+            "domain": "default",
+            "utterance": "What drinks do you have?",
+            "intent": "drink.ask"
           },
           {
             "domain": "default",
@@ -276,13 +351,28 @@
           },
           {
             "domain": "default",
-            "utterance": "whats on the %item%",
-            "intent": "show.ingredients"
+            "utterance": "Describe the %item% to me",
+            "intent": "show.description"
           },
           {
             "domain": "default",
-            "utterance": "can you show me whats on the %item%",
-            "intent": "show.ingredients"
+            "utterance": "Can you describe the %item%",
+            "intent": "show.description"
+          },
+          {
+            "domain": "default",
+            "utterance": "Can you give me a description for the %item%",
+            "intent": "show.description"
+          },
+          {
+            "domain": "default",
+            "utterance": "how many calories does the %item% have",
+            "intent": "show.calories"
+          },
+          {
+            "domain": "default",
+            "utterance": "how many calories are in the %item%",
+            "intent": "show.calories"
           },
           {
             "domain": "default",
@@ -301,7 +391,17 @@
           },
           {
             "domain": "default",
-            "utterance": "let me get a %order%, and %modify% %ingredients% on it",
+            "utterance": "let me get a %order%",
+            "intent": "add.to.order"
+          },
+          {
+            "domain": "default",
+            "utterance": "let me get a %order% and %order%",
+            "intent": "add.to.order"
+          },
+          {
+            "domain": "default",
+            "utterance": "let me get a %order%, and %modify% %ingredients%",
             "intent": "add.to.order"
           },
           {
@@ -316,32 +416,22 @@
           },
           {
             "domain": "default",
+            "utterance": "can i get a %order% and %order%",
+            "intent": "add.to.order"
+          },
+          {
+            "domain": "default",
             "utterance": "can i order the %order%",
             "intent": "add.to.order"
           },
           {
             "domain": "default",
-            "utterance": "can i get a %order%, %order%, and %order%",
-            "intent": "add.to.order"
-          },
-          {
-            "domain": "default",
-            "utterance": "can i order the %order% and the %order% %modify% %ingredients%",
-            "intent": "add.to.order"
-          },
-          {
-            "domain": "default",
-            "utterance": "Give me %order% %modify% %ingredients%, a %order% %modify% %ingredients%, and a %order% %modify% %ingredients%",
-            "intent": "add.to.order"
-          },
-          {
-            "domain": "default",
-            "utterance": "let me get a %order%, and %modify% %ingredients% on it, a %order%, and a %order% %modify% %ingredients%",
-            "intent": "add.to.order"
-          },
-          {
-            "domain": "default",
             "utterance": "can i remove %order% from my order",
+            "intent": "remove.from.order"
+          },
+          {
+            "domain": "default",
+            "utterance": "can i remove %order%",
             "intent": "remove.from.order"
           },
           {
@@ -361,33 +451,33 @@
           },
           {
             "domain": "default",
-            "utterance": "can you tell me about the %order%",
-            "intent": "describe.order"
+            "utterance": "can i get a %item% instead of the %item%",
+            "intent": "update.order"
           },
           {
             "domain": "default",
-            "utterance": "tell me about the %order%",
-            "intent": "describe.order"
+            "utterance": "what is in my order",
+            "intent": "current.order"
           },
           {
             "domain": "default",
-            "utterance": "what is the %order%",
-            "intent": "describe.order"
+            "utterance": "what's in my cart",
+            "intent": "current.order"
           },
           {
             "domain": "default",
-            "utterance": "i want to know about the %order%",
-            "intent": "describe.order"
+            "utterance": "what do i currently have",
+            "intent": "current.order"
           },
           {
             "domain": "default",
-            "utterance": "ive never heard of %order% before, tell me about it",
-            "intent": "describe.order"
+            "utterance": "show me my order right ncow",
+            "intent": "current.order"
           },
           {
             "domain": "default",
-            "utterance": "decribe the %order% for me",
-            "intent": "describe.order"
+            "utterance": "show me my cart",
+            "intent": "current.order"
           },
           {
             "domain": "default",
@@ -449,6 +539,9 @@
               "show": 1,
               "me": 1,
               "give": 1,
+              "food": 1,
+              "type": 1,
+              "drink": 1,
               "%item%": 1,
               "choic": 1,
               "list": 1,
@@ -456,21 +549,27 @@
               "doe": 1,
               "ingredi": 1,
               "in": 1,
+              "describ": 1,
+              "to": 1,
               "can": 1,
+              "a": 1,
+              "descript": 1,
+              "for": 1,
+              "how": 1,
+              "mani": 1,
+              "calori": 1,
+              "are": 1,
               "%order%": 1,
               "%modify%": 1,
               "%ingredients%": 1,
               "i": 1,
               "want": 1,
-              "a": 1,
               "and": 1,
               "order": 1,
               "let": 1,
               "get": 1,
-              "it": 1,
               "add": 1,
               "%ingredient%": 1,
-              "to": 1,
               "my": 1,
               "remov": 1,
               "from": 1,
@@ -479,18 +578,15 @@
               "chang": 1,
               "mind": 1,
               "dont": 1,
-              "tell": 1,
-              "about": 1,
-              "know": 1,
-              "ive": 1,
-              "never": 1,
-              "heard": 1,
-              "befor": 1,
-              "decrib": 1,
-              "for": 1,
+              "instead": 1,
+              "cart": 1,
+              "current": 1,
+              "right": 1,
+              "ncow": 1,
               "that": 1,
               "will": 1,
               "be": 1,
+              "it": 1,
               "would": 1,
               "like": 1,
               "checkout": 1,
@@ -498,11 +594,16 @@
             },
             "intents": {
               "menu.ask": 1,
+              "food.ask": 1,
+              "drink.ask": 1,
               "item.show.all": 1,
               "show.ingredients": 1,
+              "show.description": 1,
+              "show.calories": 1,
               "add.to.order": 1,
               "remove.from.order": 1,
-              "describe.order": 1,
+              "update.order": 1,
+              "current.order": 1,
               "place.order": 1
             },
             "intentFeatures": {
@@ -522,6 +623,28 @@
                 "show": 1,
                 "me": 1,
                 "give": 1
+              },
+              "food.ask": {
+                "what": 1,
+                "kind": 1,
+                "of": 1,
+                "food": 1,
+                "do": 1,
+                "you": 1,
+                "serv": 1,
+                "type": 1,
+                "have": 1
+              },
+              "drink.ask": {
+                "what": 1,
+                "kind": 1,
+                "of": 1,
+                "drink": 1,
+                "do": 1,
+                "you": 1,
+                "serv": 1,
+                "type": 1,
+                "have": 1
               },
               "item.show.all": {
                 "show": 1,
@@ -544,12 +667,31 @@
                 "have": 1,
                 "ingredi": 1,
                 "is": 1,
-                "in": 1,
-                "on": 1,
+                "in": 1
+              },
+              "show.description": {
+                "describ": 1,
+                "the": 1,
+                "%item%": 1,
+                "to": 1,
+                "me": 1,
                 "can": 1,
                 "you": 1,
-                "show": 1,
-                "me": 1
+                "give": 1,
+                "a": 1,
+                "descript": 1,
+                "for": 1
+              },
+              "show.calories": {
+                "how": 1,
+                "mani": 1,
+                "calori": 1,
+                "doe": 1,
+                "the": 1,
+                "%item%": 1,
+                "have": 1,
+                "are": 1,
+                "in": 1
               },
               "add.to.order": {
                 "give": 1,
@@ -564,8 +706,6 @@
                 "order": 1,
                 "let": 1,
                 "get": 1,
-                "on": 1,
-                "it": 1,
                 "can": 1,
                 "you": 1,
                 "add": 1,
@@ -590,28 +730,31 @@
                 "mind": 1,
                 "dont": 1
               },
-              "describe.order": {
+              "update.order": {
                 "can": 1,
-                "you": 1,
-                "tell": 1,
-                "me": 1,
-                "about": 1,
-                "the": 1,
-                "%order%": 1,
+                "i": 1,
+                "get": 1,
+                "a": 1,
+                "%item%": 1,
+                "instead": 1,
+                "of": 1,
+                "the": 1
+              },
+              "current.order": {
                 "what": 1,
                 "is": 1,
+                "in": 1,
+                "my": 1,
+                "order": 1,
+                "cart": 1,
+                "do": 1,
                 "i": 1,
-                "want": 1,
-                "to": 1,
-                "know": 1,
-                "ive": 1,
-                "never": 1,
-                "heard": 1,
-                "of": 1,
-                "befor": 1,
-                "it": 1,
-                "decrib": 1,
-                "for": 1
+                "current": 1,
+                "have": 1,
+                "show": 1,
+                "me": 1,
+                "right": 1,
+                "ncow": 1
               },
               "place.order": {
                 "that": 1,
@@ -636,27 +779,29 @@
             "featuresToIntent": {
               "what": [
                 "menu.ask",
+                "food.ask",
+                "drink.ask",
                 "item.show.all",
                 "show.ingredients",
-                "describe.order"
+                "current.order"
               ],
               "is": [
                 "menu.ask",
                 "show.ingredients",
-                "describe.order",
+                "current.order",
                 "place.order"
               ],
               "on": [
-                "menu.ask",
-                "show.ingredients",
-                "add.to.order"
+                "menu.ask"
               ],
               "the": [
                 "menu.ask",
                 "item.show.all",
                 "show.ingredients",
+                "show.description",
+                "show.calories",
                 "add.to.order",
-                "describe.order"
+                "update.order"
               ],
               "menu": [
                 "menu.ask"
@@ -666,51 +811,79 @@
               ],
               "do": [
                 "menu.ask",
+                "food.ask",
+                "drink.ask",
                 "item.show.all",
-                "remove.from.order"
+                "remove.from.order",
+                "current.order"
               ],
               "you": [
                 "menu.ask",
+                "food.ask",
+                "drink.ask",
                 "item.show.all",
-                "show.ingredients",
-                "add.to.order",
-                "describe.order"
+                "show.description",
+                "add.to.order"
               ],
               "have": [
                 "menu.ask",
+                "food.ask",
+                "drink.ask",
                 "item.show.all",
-                "show.ingredients"
+                "show.ingredients",
+                "show.calories",
+                "current.order"
               ],
               "kind": [
-                "menu.ask"
+                "menu.ask",
+                "food.ask",
+                "drink.ask"
               ],
               "of": [
                 "menu.ask",
-                "describe.order"
+                "food.ask",
+                "drink.ask",
+                "update.order"
               ],
               "serv": [
-                "menu.ask"
+                "menu.ask",
+                "food.ask",
+                "drink.ask"
               ],
               "show": [
                 "menu.ask",
                 "item.show.all",
-                "show.ingredients"
+                "current.order"
               ],
               "me": [
                 "menu.ask",
                 "item.show.all",
-                "show.ingredients",
+                "show.description",
                 "add.to.order",
-                "describe.order",
+                "current.order",
                 "place.order"
               ],
               "give": [
                 "menu.ask",
+                "show.description",
                 "add.to.order"
+              ],
+              "food": [
+                "food.ask"
+              ],
+              "type": [
+                "food.ask",
+                "drink.ask"
+              ],
+              "drink": [
+                "drink.ask"
               ],
               "%item%": [
                 "item.show.all",
-                "show.ingredients"
+                "show.ingredients",
+                "show.description",
+                "show.calories",
+                "update.order"
               ],
               "choic": [
                 "item.show.all"
@@ -723,24 +896,58 @@
                 "place.order"
               ],
               "doe": [
-                "show.ingredients"
+                "show.ingredients",
+                "show.calories"
               ],
               "ingredi": [
                 "show.ingredients"
               ],
               "in": [
-                "show.ingredients"
+                "show.ingredients",
+                "show.calories",
+                "current.order"
+              ],
+              "describ": [
+                "show.description"
+              ],
+              "to": [
+                "show.description",
+                "add.to.order",
+                "place.order"
               ],
               "can": [
-                "show.ingredients",
+                "show.description",
                 "add.to.order",
                 "remove.from.order",
-                "describe.order"
+                "update.order"
+              ],
+              "a": [
+                "show.description",
+                "add.to.order",
+                "update.order"
+              ],
+              "descript": [
+                "show.description"
+              ],
+              "for": [
+                "show.description",
+                "place.order"
+              ],
+              "how": [
+                "show.calories"
+              ],
+              "mani": [
+                "show.calories"
+              ],
+              "calori": [
+                "show.calories"
+              ],
+              "are": [
+                "show.calories"
               ],
               "%order%": [
                 "add.to.order",
-                "remove.from.order",
-                "describe.order"
+                "remove.from.order"
               ],
               "%modify%": [
                 "add.to.order"
@@ -751,17 +958,14 @@
               "i": [
                 "add.to.order",
                 "remove.from.order",
-                "describe.order",
+                "update.order",
+                "current.order",
                 "place.order"
               ],
               "want": [
                 "add.to.order",
                 "remove.from.order",
-                "describe.order",
                 "place.order"
-              ],
-              "a": [
-                "add.to.order"
               ],
               "and": [
                 "add.to.order"
@@ -769,6 +973,7 @@
               "order": [
                 "add.to.order",
                 "remove.from.order",
+                "current.order",
                 "place.order"
               ],
               "let": [
@@ -776,12 +981,8 @@
                 "place.order"
               ],
               "get": [
-                "add.to.order"
-              ],
-              "it": [
                 "add.to.order",
-                "describe.order",
-                "place.order"
+                "update.order"
               ],
               "add": [
                 "add.to.order"
@@ -789,14 +990,10 @@
               "%ingredient%": [
                 "add.to.order"
               ],
-              "to": [
-                "add.to.order",
-                "describe.order",
-                "place.order"
-              ],
               "my": [
                 "add.to.order",
-                "remove.from.order"
+                "remove.from.order",
+                "current.order"
               ],
               "remov": [
                 "remove.from.order"
@@ -819,33 +1016,20 @@
               "dont": [
                 "remove.from.order"
               ],
-              "tell": [
-                "describe.order"
+              "instead": [
+                "update.order"
               ],
-              "about": [
-                "describe.order"
+              "cart": [
+                "current.order"
               ],
-              "know": [
-                "describe.order"
+              "current": [
+                "current.order"
               ],
-              "ive": [
-                "describe.order"
+              "right": [
+                "current.order"
               ],
-              "never": [
-                "describe.order"
-              ],
-              "heard": [
-                "describe.order"
-              ],
-              "befor": [
-                "describe.order"
-              ],
-              "decrib": [
-                "describe.order"
-              ],
-              "for": [
-                "describe.order",
-                "place.order"
+              "ncow": [
+                "current.order"
               ],
               "that": [
                 "place.order"
@@ -854,6 +1038,9 @@
                 "place.order"
               ],
               "be": [
+                "place.order"
+              ],
+              "it": [
                 "place.order"
               ],
               "would": [
@@ -897,6 +1084,9 @@
                 "show",
                 "me",
                 "give",
+                "food",
+                "type",
+                "drink",
                 "%item%",
                 "choic",
                 "list",
@@ -904,21 +1094,27 @@
                 "doe",
                 "ingredi",
                 "in",
+                "describ",
+                "to",
                 "can",
+                "a",
+                "descript",
+                "for",
+                "how",
+                "mani",
+                "calori",
+                "are",
                 "%order%",
                 "%modify%",
                 "%ingredients%",
                 "i",
                 "want",
-                "a",
                 "and",
                 "order",
                 "let",
                 "get",
-                "it",
                 "add",
                 "%ingredient%",
-                "to",
                 "my",
                 "remov",
                 "from",
@@ -927,18 +1123,15 @@
                 "chang",
                 "mind",
                 "dont",
-                "tell",
-                "about",
-                "know",
-                "ive",
-                "never",
-                "heard",
-                "befor",
-                "decrib",
-                "for",
+                "instead",
+                "cart",
+                "current",
+                "right",
+                "ncow",
                 "that",
                 "will",
                 "be",
+                "it",
                 "would",
                 "like",
                 "checkout",
@@ -946,461 +1139,858 @@
               ],
               "intents": [
                 "menu.ask",
+                "food.ask",
+                "drink.ask",
                 "item.show.all",
                 "show.ingredients",
+                "show.description",
+                "show.calories",
                 "add.to.order",
                 "remove.from.order",
-                "describe.order",
+                "update.order",
+                "current.order",
                 "place.order"
               ],
               "perceptrons": [
                 [
-                  1.1589568853378296,
-                  -0.013975458219647408,
-                  1.2862437963485718,
-                  1.7055168151855469,
-                  9.076964378356934,
-                  6.466302394866943,
-                  2.749269485473633,
-                  1.2255377769470215,
-                  1.6205542087554932,
-                  0.5431709289550781,
-                  0.5343795418739319,
-                  0.5431709289550781,
-                  1.5909780263900757,
-                  0.8467808365821838,
-                  1.5916447639465332,
-                  -7.81910514831543,
-                  -0.9736336469650269,
-                  -0.22430932521820068,
-                  -0.2975132465362549,
-                  -0.7200250029563904,
-                  -0.21771647036075592,
-                  -0.3235841393470764,
-                  -1.907637357711792,
-                  -3.912581443786621,
-                  -0.5926100015640259,
-                  -0.5515415668487549,
-                  -0.5226624011993408,
-                  -0.30130594968795776,
-                  -0.27981817722320557,
-                  -0.23585286736488342,
-                  -0.25320714712142944,
-                  -0.9753307700157166,
-                  -0.08822086453437805,
-                  -0.2935139536857605,
-                  -0.01979783922433853,
-                  -0.01979783922433853,
-                  -0.1302148401737213,
-                  -0.01979783922433853,
+                  0.7275851368904114,
+                  -0.036024030297994614,
+                  1.5554686784744263,
+                  2.944671869277954,
+                  8.7040433883667,
+                  10.343221664428711,
+                  1.2251806259155273,
+                  1.7292239665985107,
+                  -0.12121691554784775,
+                  0.40628817677497864,
+                  -0.9312227368354797,
+                  0.40628817677497864,
+                  1.1741746664047241,
+                  0.9948142170906067,
+                  1.2881038188934326,
+                  -4.091925621032715,
+                  -1.2467145919799805,
+                  -3.9666850566864014,
+                  -5.45973014831543,
+                  -0.08897671848535538,
+                  -0.3266776502132416,
+                  -0.3266776502132416,
+                  -0.8767189383506775,
+                  -0.26242563128471375,
+                  -1.1026418209075928,
+                  -0.3109658360481262,
+                  -0.2825663983821869,
+                  -0.8436577320098877,
+                  -0.6409599781036377,
+                  -0.41967207193374634,
+                  -0.6877801418304443,
+                  -0.005255195312201977,
+                  -0.005255195312201977,
+                  -0.005255195312201977,
+                  -0.005255195312201977,
+                  -1.3144500255584717,
+                  -0.7687718868255615,
+                  -0.7687718868255615,
+                  -1.3485716581344604,
+                  0,
+                  -0.10097546875476837,
+                  -0.9010530710220337,
+                  -0.7669124603271484,
+                  -0.12211784720420837,
                   0,
                   0,
-                  -0.23175938427448273,
-                  -0.23175938427448273,
+                  -1.4824451208114624,
                   0,
                   0,
                   0,
-                  -0.6349127292633057,
-                  -0.6349127292633057,
                   0,
-                  -0.00439570052549243,
-                  -0.00439570052549243,
-                  -0.00439570052549243,
-                  -0.00439570052549243,
-                  -0.2086435705423355,
-                  -0.5997470617294312,
-                  -0.7477139830589294,
-                  -0.15530607104301453,
-                  -0.15530607104301453,
-                  -0.0766749382019043,
-                  -0.0766749382019043,
-                  -0.9354043006896973,
-                  -0.5633312463760376,
-                  1.0640769957459173
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1.051661729812622,
+                  -0.942004919052124,
+                  -0.20343086123466492,
+                  -0.20343086123466492,
+                  -0.39426806569099426,
+                  -0.07281738519668579,
+                  -0.07281738519668579,
+                  -0.07281738519668579,
+                  0,
+                  0,
+                  -0.627796471118927,
+                  -0.3119819760322571,
+                  0.37635529855871036
                 ],
                 [
-                  -5.884207725524902,
-                  -1.7703291177749634,
-                  -5.473053932189941,
-                  -2.1376543045043945,
-                  -3.3340189456939697,
-                  -3.2694661617279053,
-                  5.33150053024292,
-                  1.699215292930603,
-                  1.6505670547485352,
-                  -0.3517690896987915,
-                  -0.3639352321624756,
-                  -0.3517690896987915,
-                  3.4347500801086426,
-                  1.5352973937988281,
-                  -0.12216632813215256,
-                  10.968177795410156,
-                  0.06744460761547089,
-                  2.543583393096924,
-                  2.432403326034546,
-                  -5.07532262802124,
-                  -1.4219499826431274,
-                  -1.659148931503296,
-                  -4.623971462249756,
-                  -1.5489920377731323,
-                  -0.35691967606544495,
-                  -0.18143239617347717,
-                  -1.1420758962631226,
-                  -1.1394788026809692,
-                  -0.21539394557476044,
-                  -0.05333616957068443,
-                  -0.2958188056945801,
-                  -1.0086687803268433,
+                  0.37232160568237305,
+                  -0.22136998176574707,
+                  -0.11178049445152283,
+                  -0.1866750568151474,
+                  -0.11178049445152283,
+                  -2.8654491901397705,
+                  0.5761269927024841,
+                  1.2358237504959106,
+                  0.45060646533966064,
+                  0.18907971680164337,
+                  0.15317247807979584,
+                  0.18907971680164337,
+                  -0.012073065154254436,
+                  -0.03683420643210411,
+                  -0.0015066434862092137,
+                  11.535604476928711,
+                  -0.03430702164769173,
+                  -4.729758262634277,
+                  -2.6427395343780518,
+                  -1.0327366590499878,
                   0,
-                  -0.09576662629842758,
-                  -0.12227170169353485,
-                  -0.12227170169353485,
-                  -0.2764166593551636,
-                  -0.12227170169353485,
-                  -0.003818364115431905,
                   0,
-                  -0.9917429685592651,
-                  -0.9917429685592651,
+                  -0.036993358284235,
+                  -0.002135918941348791,
+                  -0.14157484471797943,
+                  0,
+                  -0.10312113910913467,
+                  -0.10312113910913467,
+                  -0.10489702969789505,
+                  0,
+                  -0.0007886910461820662,
                   0,
                   0,
                   0,
-                  -0.15506677329540253,
-                  -0.15506677329540253,
                   0,
-                  -0.002980954246595502,
-                  -0.002980954246595502,
-                  -0.002980954246595502,
-                  -0.002980954246595502,
+                  -0.22171083092689514,
+                  -0.10638060420751572,
+                  -0.0015066434862092137,
+                  -0.7740897536277771,
+                  -0.08862268924713135,
                   0,
-                  -0.5542764663696289,
-                  -0.8363221287727356,
-                  -0.08971067517995834,
-                  -0.08971067517995834,
-                  -0.0012985632056370378,
-                  -0.0012985632056370378,
-                  -1.011265754699707,
-                  -0.6293613910675049,
-                  0.48356229988456445
+                  -0.19037534296512604,
+                  -0.008347352035343647,
+                  -0.0007409271202050149,
+                  -0.10312113910913467,
+                  -0.10312113910913467,
+                  -0.2632616460323334,
+                  0,
+                  0,
+                  -0.08862268924713135,
+                  -0.08862268924713135,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -0.056752368807792664,
+                  -0.6601068377494812,
+                  0,
+                  0,
+                  -0.02834448404610157,
+                  -0.01158580370247364,
+                  -0.01158580370247364,
+                  -0.01158580370247364,
+                  0,
+                  0,
+                  -0.006888652220368385,
+                  -0.01494837086647749,
+                  0.03849536093253737
                 ],
                 [
-                  5.834208011627197,
-                  -0.6476134061813354,
-                  4.190581321716309,
-                  1.187803864479065,
-                  -8.018453598022461,
-                  -0.6945042014122009,
-                  -6.748030662536621,
-                  -0.9644642472267151,
-                  -1.1939446926116943,
-                  -0.14426426589488983,
-                  -0.14426426589488983,
-                  -0.14426426589488983,
-                  -1.6232190132141113,
-                  -2.6369130611419678,
-                  -0.08293399959802628,
-                  6.269626617431641,
-                  -2.0218186378479004,
-                  -2.4505321979522705,
-                  -2.4505321979522705,
-                  5.357729434967041,
-                  0.03675128147006035,
-                  4.833791255950928,
-                  5.218026638031006,
-                  -3.7065999507904053,
-                  -0.6152454018592834,
-                  -0.5317379236221313,
-                  -0.6526414155960083,
-                  -0.10305242240428925,
-                  -0.4065825343132019,
-                  -0.3710533678531647,
-                  -0.5744472146034241,
-                  -0.10109606385231018,
-                  -0.1268061399459839,
-                  -0.1499820053577423,
-                  -0.03707403317093849,
-                  -0.03707403317093849,
-                  -0.0703963190317154,
-                  -0.03707403317093849,
-                  -0.009255776181817055,
+                  0.3825603127479553,
+                  -0.30769985914230347,
+                  -0.03625186160206795,
+                  -0.423723965883255,
+                  -0.03625186160206795,
+                  -3.1979188919067383,
+                  0.7619394063949585,
+                  1.4562711715698242,
+                  0.4996846318244934,
+                  0.2061791867017746,
+                  0.14578936994075775,
+                  0.2061791867017746,
+                  -0.04487975686788559,
+                  -0.13062942028045654,
+                  -0.012502196244895458,
+                  -3.8250069618225098,
+                  -0.059226587414741516,
+                  11.257035255432129,
+                  -2.947744131088257,
+                  -0.8485115766525269,
+                  -0.015443188138306141,
+                  -0.015443188138306141,
+                  -0.17663922905921936,
+                  -0.04766463115811348,
+                  -0.24359507858753204,
+                  -0.003087326418608427,
+                  -0.12979531288146973,
+                  -0.152549147605896,
+                  -0.17924147844314575,
                   0,
                   0,
                   0,
                   0,
                   0,
                   0,
-                  -0.41836968064308167,
-                  -0.48343247175216675,
-                  -0.014785267412662506,
+                  -0.44974231719970703,
+                  -0.1859074831008911,
+                  -0.045367076992988586,
+                  -0.8851559162139893,
+                  -0.19458399713039398,
+                  -0.031546853482723236,
+                  -0.2918233573436737,
+                  -0.011382220312952995,
+                  -0.011382220312952995,
+                  -0.12979531288146973,
+                  -0.12979531288146973,
+                  -0.4444473087787628,
+                  -0.0020731729455292225,
+                  0,
+                  -0.17154589295387268,
+                  -0.17154589295387268,
                   0,
                   0,
                   0,
                   0,
-                  -0.0580487921833992,
-                  -0.06922446191310883,
-                  -0.11783845722675323,
-                  -0.04285717383027077,
-                  -0.04285717383027077,
+                  -0.09882420301437378,
+                  -0.6345211863517761,
                   0,
                   0,
-                  -0.009274770505726337,
-                  -0.057424914091825485,
-                  -3.192934525490491
+                  -0.011860732920467854,
+                  -0.00499551510438323,
+                  -0.00499551510438323,
+                  -0.00499551510438323,
+                  0,
+                  0,
+                  0,
+                  -0.004713382571935654,
+                  -0.12757307548707378
                 ],
                 [
-                  -1.7577708959579468,
-                  -2.7472498416900635,
-                  1.1147855520248413,
-                  -1.7676942348480225,
-                  -2.5146231651306152,
+                  -2.395368814468384,
+                  -2.1308517456054688,
                   0,
-                  -3.085817575454712,
-                  -0.6092226505279541,
+                  -2.939819574356079,
+                  -2.3693158626556396,
+                  -2.313093662261963,
+                  4.106049060821533,
+                  1.528383493423462,
+                  0.04463503882288933,
+                  -0.5883111357688904,
+                  -1.2333028316497803,
+                  -0.5883111357688904,
+                  5.542098522186279,
+                  0.9205590486526489,
+                  -1.5177395343780518,
+                  -2.2029898166656494,
+                  -0.5925165414810181,
+                  -2.1936182975769043,
+                  11.505656242370605,
+                  0.977469265460968,
+                  3.409823417663574,
+                  3.409823417663574,
+                  -5.113483428955078,
+                  -1.408188819885254,
+                  -3.0148825645446777,
+                  -5.258033275604248,
+                  -3.1706602573394775,
+                  -3.802445650100708,
+                  -1.6372137069702148,
+                  -1.511382818222046,
+                  -1.511382818222046,
+                  -1.2124820947647095,
+                  -1.2124820947647095,
+                  -1.2124820947647095,
+                  -0.8824477195739746,
+                  -0.5554720163345337,
+                  -0.07417520135641098,
+                  -0.016163291409611702,
+                  -1.2435340881347656,
+                  -0.43776294589042664,
+                  -0.01139592844992876,
+                  -0.8627325296401978,
+                  -0.02950853295624256,
+                  0,
+                  -0.05151938647031784,
+                  -0.05151938647031784,
+                  -3.122626781463623,
+                  -0.004156849347054958,
+                  0,
+                  -0.41497108340263367,
+                  -0.41497108340263367,
                   0,
                   0,
-                  -0.1415056586265564,
-                  0,
-                  -0.13062408566474915,
-                  -0.24177199602127075,
-                  4.146994113922119,
-                  -0.13062408566474915,
                   0,
                   0,
-                  -1.1462905406951904,
+                  -2.257235050201416,
+                  -0.7816950082778931,
+                  -0.7238210439682007,
+                  -0.7238210439682007,
+                  -0.03657354414463043,
+                  -0.014991475269198418,
+                  -0.014991475269198418,
+                  -0.014991475269198418,
                   0,
                   0,
-                  0,
-                  2.5678117275238037,
-                  5.787467002868652,
-                  2.4784934520721436,
-                  0.9408057928085327,
-                  2.80322527885437,
-                  0.23609107732772827,
-                  3.179093837738037,
-                  -2.1313352584838867,
-                  3.573927164077759,
-                  0.8748072385787964,
-                  0.5746463537216187,
-                  1.030780553817749,
-                  1.5329657793045044,
-                  1.5329657793045044,
-                  -1.8664469718933105,
-                  -4.594229698181152,
-                  -6.111403942108154,
-                  -4.578690052032471,
-                  -3.085817575454712,
-                  -3.085817575454712,
-                  -1.5493220090866089,
-                  -1.5493220090866089,
-                  -1.5493220090866089,
-                  -2.325305938720703,
-                  -3.9797701835632324,
-                  -1.6504243612289429,
-                  -0.1415056586265564,
-                  -0.1415056586265564,
-                  -0.1415056586265564,
-                  -0.1415056586265564,
-                  -2.0898799896240234,
-                  -2.0945708751678467,
-                  -1.253197193145752,
-                  -0.10211112350225449,
-                  -0.10211112350225449,
-                  -0.6004672050476074,
-                  -0.6004672050476074,
-                  -0.9995653033256531,
-                  -0.002345259301364422,
-                  0.42292891295034774
+                  -0.02950853295624256,
+                  -0.017320243641734123,
+                  -1.030521245551853
                 ],
                 [
-                  -1.2453571557998657,
-                  -1.2320574522018433,
+                  4.4543681144714355,
+                  1.526733636856079,
+                  -3.197369337081909,
+                  2.9769275188446045,
+                  -3.197369337081909,
+                  -0.24361552298069,
+                  -3.3129994869232178,
+                  -3.563992738723755,
+                  0.8293307423591614,
+                  -0.006604502908885479,
+                  -0.4382176399230957,
+                  -0.006604502908885479,
+                  -1.6418753862380981,
+                  -2.9507009983062744,
+                  -0.28041601181030273,
+                  -0.10891643911600113,
+                  -0.04633667320013046,
+                  -0.012228203006088734,
+                  4.1742844581604,
+                  -0.8565628528594971,
+                  -2.2937703132629395,
+                  -2.2937703132629395,
+                  4.116628646850586,
+                  0.4352496564388275,
+                  3.655848264694214,
+                  -1.4627909660339355,
+                  -0.8156490921974182,
+                  -1.4615846872329712,
+                  -0.7790847420692444,
+                  -0.28041601181030273,
+                  -0.28041601181030273,
+                  -3.1818809509277344,
+                  -3.1818809509277344,
+                  -3.1818809509277344,
+                  -0.3086611032485962,
+                  -0.10593315213918686,
+                  -0.007292242720723152,
+                  -0.007292242720723152,
+                  -1.2321895360946655,
+                  -0.027912897989153862,
+                  -0.007292242720723152,
+                  -2.385712146759033,
                   0,
-                  -3.7545595169067383,
+                  -0.3505059480667114,
                   0,
-                  -0.3491988182067871,
-                  1.9359710216522217,
-                  -1.2808088064193726,
-                  -0.5316764712333679,
-                  -0.11456872522830963,
-                  -0.356017529964447,
-                  -0.11456872522830963,
                   0,
-                  -1.8389688730239868,
-                  -0.5782825946807861,
-                  -0.3132132291793823,
-                  -0.13910046219825745,
+                  -4.708186626434326,
+                  -0.008493440225720406,
                   0,
-                  -0.5005764365196228,
+                  -0.007763064466416836,
+                  -0.007763064466416836,
+                  -0.003506877226755023,
+                  -0.003506877226755023,
+                  -0.003506877226755023,
+                  -0.3505059480667114,
+                  -2.3806204795837402,
+                  -0.6915996074676514,
                   0,
                   0,
                   0,
-                  -2.086287021636963,
-                  4.8298540115356445,
-                  -2.0312933921813965,
-                  -1.783429741859436,
-                  -0.42797601222991943,
-                  1.3456114530563354,
-                  -2.8106441497802734,
-                  -1.3241957426071167,
-                  -0.9784421324729919,
                   0,
-                  -1.3523430824279785,
-                  -0.28561362624168396,
-                  -0.20144608616828918,
-                  -0.20144608616828918,
-                  -2.1275501251220703,
-                  2.410107374191284,
-                  8.05370044708252,
-                  1.0826438665390015,
-                  2.600066661834717,
-                  2.600066661834717,
-                  1.575330138206482,
-                  1.575330138206482,
-                  1.575330138206482,
-                  -0.9414599537849426,
-                  -1.9153013229370117,
-                  -0.7538914680480957,
-                  -0.22365447878837585,
-                  -0.22365447878837585,
-                  -0.22365447878837585,
-                  -0.22365447878837585,
-                  -0.3192250728607178,
-                  -0.3192250728607178,
-                  -1.0574392080307007,
-                  -0.05626343935728073,
-                  -0.05626343935728073,
-                  -0.2357524037361145,
-                  -0.2357524037361145,
-                  -0.2357524037361145,
-                  -0.34468311071395874,
-                  1.402125352419552
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -2.5402581491189267
                 ],
                 [
-                  2.525730609893799,
-                  3.6146228313446045,
-                  -3.2166736125946045,
-                  4.020450592041016,
-                  -4.518892765045166,
-                  -0.43814903497695923,
-                  -1.0474869012832642,
-                  1.4919214248657227,
-                  -0.7169632911682129,
-                  -0.28913795948028564,
-                  0.47193241119384766,
-                  -0.28913795948028564,
-                  -1.5068180561065674,
-                  0.4452674686908722,
-                  -1.4917174577713013,
-                  -4.718494892120361,
+                  -1.4491981267929077,
+                  -0.25979024171829224,
+                  -0.1269078403711319,
+                  1.0364221334457397,
+                  -1.9795069694519043,
+                  -0.16673623025417328,
+                  -1.151978850364685,
+                  2.857234239578247,
+                  -1.6024529933929443,
+                  -0.09221303462982178,
+                  -1.1649469137191772,
+                  -0.09221303462982178,
+                  -3.3296236991882324,
+                  1.3111602067947388,
+                  1.1524895429611206,
+                  -0.056424785405397415,
+                  -0.0026470476295799017,
+                  -0.008374755270779133,
+                  2.509340524673462,
+                  -0.4743102192878723,
+                  -1.1430267095565796,
+                  -1.1430267095565796,
+                  -0.4810326099395752,
                   0,
-                  -0.32494983077049255,
-                  -0.6370055675506592,
-                  -0.5680249929428101,
-                  -0.1634937822818756,
-                  -3.017019748687744,
-                  -1.5067121982574463,
-                  6.545909881591797,
-                  -1.8100289106369019,
-                  -1.5779951810836792,
-                  -2.905116558074951,
-                  0.7623785138130188,
-                  -1.3534998893737793,
-                  -0.6966224312782288,
-                  -3.7272720336914062,
-                  -0.37152427434921265,
-                  -0.5070486664772034,
-                  0.4947090148925781,
-                  -0.14652322232723236,
-                  -0.14652322232723236,
-                  1.701950192451477,
-                  -0.722703218460083,
-                  -4.1206488609313965,
-                  -0.04542240872979164,
-                  -0.5831074118614197,
-                  -0.5831074118614197,
-                  -0.4185555875301361,
-                  -0.4185555875301361,
-                  -0.4185555875301361,
-                  1.6101949214935303,
-                  4.0970330238342285,
-                  2.486839771270752,
-                  0.7611179351806641,
-                  0.7611179351806641,
-                  0.7611179351806641,
-                  0.7611179351806641,
-                  3.0840697288513184,
-                  2.613454818725586,
-                  -1.0783135890960693,
-                  -0.13738983869552612,
-                  -0.13738983869552612,
-                  -0.11530245840549469,
-                  -0.11530245840549469,
-                  -0.4761805534362793,
-                  -0.5703460574150085,
-                  -2.4243326069623503
+                  -0.7060748934745789,
+                  7.079993724822998,
+                  3.852330446243286,
+                  2.3291878700256348,
+                  0.03384476900100708,
+                  2.69974946975708,
+                  1.8694363832473755,
+                  -1.0938912630081177,
+                  -1.0938912630081177,
+                  -1.0938912630081177,
+                  -0.47017571330070496,
+                  -2.094210386276245,
+                  -1.2843798398971558,
+                  -0.3441338539123535,
+                  -1.8685263395309448,
+                  -0.03971779718995094,
+                  -0.3185003101825714,
+                  -1.3858107328414917,
+                  -0.3779742419719696,
+                  -1.442734718322754,
+                  -0.9045736789703369,
+                  -0.9045736789703369,
+                  -0.9815579056739807,
+                  -0.01634012907743454,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1.0135020017623901,
+                  -0.04459336772561073,
+                  0,
+                  -0.0004156701033934951,
+                  -0.0004156701033934951,
+                  -0.8305879831314087,
+                  0,
+                  0,
+                  0,
+                  -0.10206179320812225,
+                  -0.10206179320812225,
+                  -0.2612849175930023,
+                  -0.8305879831314087,
+                  -1.5169478788375208
                 ],
                 [
-                  -0.9374979734420776,
-                  0.779985785484314,
-                  -0.8425431847572327,
-                  -2.694859504699707,
-                  -1.2614020109176636,
-                  -0.4983673095703125,
-                  -0.8618463277816772,
-                  -0.6781579256057739,
-                  -0.3739968538284302,
-                  -0.13644468784332275,
-                  -0.5219730138778687,
-                  -0.13644468784332275,
-                  -1.0531115531921387,
-                  0.9033247828483582,
-                  -0.7554662227630615,
-                  -1.0035924911499023,
-                  -0.04543018341064453,
-                  -0.3462704122066498,
-                  0.6948705911636353,
+                  -2.427342653274536,
+                  -0.5469569563865662,
+                  -0.180911585688591,
+                  0.14651094377040863,
+                  -0.4474518299102783,
+                  -0.003725607180967927,
+                  -0.24442575871944427,
+                  -0.3275260329246521,
+                  0.924719512462616,
+                  0,
+                  -0.2702133357524872,
+                  0,
+                  -0.48024630546569824,
+                  -0.8868531584739685,
+                  -0.11633235961198807,
                   0,
                   0,
-                  -0.002221073489636183,
-                  -0.7110504508018494,
-                  -3.2621610164642334,
-                  -1.2404139041900635,
-                  -1.1503416299819946,
-                  0.5102188587188721,
-                  -0.12800656259059906,
-                  -1.1870415210723877,
-                  -0.8867229223251343,
-                  0.387254923582077,
-                  4.117708206176758,
-                  -0.7391365170478821,
-                  0.8160849809646606,
-                  -0.050570156425237656,
-                  -0.050570156425237656,
-                  1.8781964778900146,
-                  -0.598965585231781,
-                  -0.28734666109085083,
-                  -0.232149139046669,
-                  -0.21104392409324646,
-                  -0.21104392409324646,
-                  -0.19958141446113586,
-                  -0.19958141446113586,
-                  -0.19958141446113586,
-                  -0.3269261121749878,
-                  -0.7185653448104858,
-                  -0.3091905415058136,
-                  -0.3269261121749878,
-                  -0.3269261121749878,
-                  -0.3269261121749878,
-                  -0.3269261121749878,
                   0,
-                  -0.8976823687553406,
-                  6.8133225440979,
-                  1.6534333229064941,
-                  1.6534333229064941,
-                  1.316915512084961,
-                  1.316915512084961,
-                  5.913834571838379,
-                  4.11878776550293,
-                  3.3499844062781885
+                  0.5351278185844421,
+                  -0.12634912133216858,
+                  -0.5165126323699951,
+                  -0.5165126323699951,
+                  1.195929765701294,
+                  -0.3647279739379883,
+                  0.8207014203071594,
+                  -0.1195981502532959,
+                  -0.07696620374917984,
+                  -0.5628857016563416,
+                  -0.42297330498695374,
+                  0,
+                  -0.004671609960496426,
+                  3.9505114555358887,
+                  3.9505114555358887,
+                  3.9505114555358887,
+                  1.3054332733154297,
+                  -0.36428114771842957,
+                  -0.11681240051984787,
+                  -0.09305854886770248,
+                  -0.501120924949646,
+                  -0.03590107336640358,
+                  -0.07877689599990845,
+                  -0.25048601627349854,
+                  -0.04612582176923752,
+                  -0.33544087409973145,
+                  -0.00808726530522108,
+                  -0.00808726530522108,
+                  -0.22376519441604614,
+                  -0.02319258637726307,
+                  -0.00039174308767542243,
+                  -0.002863650443032384,
+                  -0.002863650443032384,
+                  0,
+                  0,
+                  0,
+                  -0.2702133357524872,
+                  -0.10348512977361679,
+                  -0.0023467170540243387,
+                  0,
+                  0,
+                  -0.08775317668914795,
+                  -0.03285832330584526,
+                  -0.03285832330584526,
+                  -0.03285832330584526,
+                  -0.002268335549160838,
+                  -0.002268335549160838,
+                  -0.009839138016104698,
+                  -0.040019791573286057,
+                  -0.3717667097803058
+                ],
+                [
+                  -0.10328728705644608,
+                  -0.8872973918914795,
+                  -0.010645124129951,
+                  1.5468796491622925,
+                  -3.6956536769866943,
+                  0,
+                  -3.182771921157837,
+                  -0.37540677189826965,
+                  0,
+                  0,
+                  -2.36029052734375,
+                  0,
+                  -0.5576255917549133,
+                  -0.819996178150177,
+                  3.5982820987701416,
+                  0,
+                  0,
+                  0,
+                  -3.854121446609497,
+                  0,
+                  0,
+                  -0.7841739654541016,
+                  0,
+                  0,
+                  -0.049409154802560806,
+                  -0.05138492211699486,
+                  0.12050865590572357,
+                  0.2799261808395386,
+                  2.9058666229248047,
+                  -1.3676352500915527,
+                  -1.5813162326812744,
+                  0,
+                  0,
+                  0,
+                  0,
+                  9.364790916442871,
+                  1.3449029922485352,
+                  0.3758038282394409,
+                  0.5762947797775269,
+                  -0.05761973559856415,
+                  -0.6769970059394836,
+                  2.3477847576141357,
+                  0.8970910310745239,
+                  1.813981056213379,
+                  0.99162358045578,
+                  0.99162358045578,
+                  -3.647160053253174,
+                  -9.788561820983887,
+                  -2.114992618560791,
+                  -3.182771921157837,
+                  -3.182771921157837,
+                  -1.9693955183029175,
+                  -1.9693955183029175,
+                  -1.9693955183029175,
+                  -2.36029052734375,
+                  -0.0545114241540432,
+                  0,
+                  -0.21266774833202362,
+                  -0.21266774833202362,
+                  -1.0355215072631836,
+                  -0.01337137445807457,
+                  -0.01337137445807457,
+                  -0.01337137445807457,
+                  -0.015602638944983482,
+                  -0.015602638944983482,
+                  -0.7081001996994019,
+                  -0.15412838757038116,
+                  -0.25207452198208036
+                ],
+                [
+                  -1.3496967554092407,
+                  -0.9383696913719177,
+                  0,
+                  -3.261766195297241,
+                  -0.014397978782653809,
+                  -0.07407472282648087,
+                  1.263730525970459,
+                  -0.49506524205207825,
+                  -0.8862926959991455,
+                  -0.04282296076416969,
+                  -0.4684793949127197,
+                  -0.04282296076416969,
+                  -0.46654805541038513,
+                  -1.4920471906661987,
+                  -0.6124783754348755,
+                  -0.01970607414841652,
+                  0,
+                  -0.0006464537582360208,
+                  -0.5281214714050293,
+                  0,
+                  -0.00089180440409109,
+                  -0.5383505821228027,
+                  0,
+                  0,
+                  -0.34496450424194336,
+                  -0.07391586899757385,
+                  -1.3616385459899902,
+                  -0.506156325340271,
+                  -3.89707350730896,
+                  0,
+                  -0.008048892952501774,
+                  0,
+                  0,
+                  0,
+                  0,
+                  5.2784223556518555,
+                  -2.0999298095703125,
+                  -1.8014498949050903,
+                  0.5100276470184326,
+                  1.9457745552062988,
+                  -1.5797871351242065,
+                  -2.8006935119628906,
+                  -0.2451389580965042,
+                  -2.395951986312866,
+                  -0.23375840485095978,
+                  -0.23375840485095978,
+                  1.5347496271133423,
+                  8.28084659576416,
+                  1.2642011642456055,
+                  2.2818801403045654,
+                  2.2818801403045654,
+                  1.4308571815490723,
+                  1.4308571815490723,
+                  1.4308571815490723,
+                  -0.33926355838775635,
+                  -0.43491050601005554,
+                  -0.7944198846817017,
+                  -0.14759787917137146,
+                  -0.14759787917137146,
+                  -0.7655553221702576,
+                  -0.06619919091463089,
+                  -0.06619919091463089,
+                  -0.06619919091463089,
+                  -0.3732645511627197,
+                  -0.3732645511627197,
+                  -0.43424633145332336,
+                  -0.05974884703755379,
+                  0.7241811858180413
+                ],
+                [
+                  -0.8753795623779297,
+                  -0.3478967547416687,
+                  -0.08004656434059143,
+                  1.2441946268081665,
+                  -0.2206181436777115,
+                  -0.0650043785572052,
+                  -0.31025832891464233,
+                  -1.3265619277954102,
+                  -0.4613545536994934,
+                  -0.16134175658226013,
+                  4.142860412597656,
+                  -0.16134175658226013,
+                  -0.3938758075237274,
+                  -1.144216537475586,
+                  -0.4521039128303528,
+                  -0.07425710558891296,
+                  -0.040795691311359406,
+                  -0.0646543800830841,
+                  1.537266492843628,
+                  0,
+                  -0.7175703048706055,
+                  -0.8205232620239258,
+                  -0.3124443292617798,
+                  -0.07813670486211777,
+                  -0.4172530174255371,
+                  -0.7713981866836548,
+                  -0.335115522146225,
+                  0.5529026985168457,
+                  0.9587788581848145,
+                  -0.377541720867157,
+                  -0.3844335079193115,
+                  -0.29998987913131714,
+                  -0.29998987913131714,
+                  -0.29998987913131714,
+                  -0.22091682255268097,
+                  -2.997856378555298,
+                  -0.15894705057144165,
+                  -0.1357637643814087,
+                  1.2029248476028442,
+                  -0.1907213032245636,
+                  -0.9646111130714417,
+                  -0.18462911248207092,
+                  -0.13691022992134094,
+                  1.5267692804336548,
+                  -0.008579978719353676,
+                  -0.008579978719353676,
+                  -0.12444841116666794,
+                  -0.000024970049707917497,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  4.363193988800049,
+                  -0.038006436079740524,
+                  -0.046486783772706985,
+                  -0.015238394029438496,
+                  -0.015238394029438496,
+                  -0.14271605014801025,
+                  -0.015563798137009144,
+                  -0.015563798137009144,
+                  -0.015563798137009144,
+                  -0.10885307937860489,
+                  -0.10885307937860489,
+                  -0.13044431805610657,
+                  -0.019102012738585472,
+                  -1.2433074158195627
+                ],
+                [
+                  2.8407275676727295,
+                  0.8329277634620667,
+                  -0.7320360541343689,
+                  -3.8516008853912354,
+                  -1.5268326997756958,
+                  -1.4978140592575073,
+                  1.444606065750122,
+                  -4.776338577270508,
+                  1.8455944061279297,
+                  -0.4450059235095978,
+                  -1.0269232988357544,
+                  -0.4450059235095978,
+                  3.452335834503174,
+                  1.8894426822662354,
+                  -0.15092237293720245,
+                  -1.4969761371612549,
+                  -0.5174564123153687,
+                  -1.4425584077835083,
+                  -2.4876859188079834,
+                  -0.11787843704223633,
+                  0,
+                  -0.820586085319519,
+                  -0.09484095871448517,
+                  -0.018003812059760094,
+                  2.2928051948547363,
+                  0,
+                  -1.2584911584854126,
+                  -2.240907907485962,
+                  -0.3792237341403961,
+                  0,
+                  -0.2606376111507416,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -3.4877569675445557,
+                  -0.4326600134372711,
+                  -0.28213974833488464,
+                  1.9808357954025269,
+                  -1.7268730401992798,
+                  -0.18427343666553497,
+                  2.322877883911133,
+                  -0.8733900189399719,
+                  -0.042635850608348846,
+                  -0.1035991832613945,
+                  -0.1035991832613945,
+                  5.516433238983154,
+                  -2.071927785873413,
+                  -2.071927785873413,
+                  0,
+                  0,
+                  -0.8597229719161987,
+                  -0.8597229719161987,
+                  -0.8597229719161987,
+                  0,
+                  3.0506250858306885,
+                  6.05272102355957,
+                  0.5840708613395691,
+                  0.5840708613395691,
+                  -1.4290215969085693,
+                  -0.12266607582569122,
+                  -0.12266607582569122,
+                  -0.12266607582569122,
+                  -0.18428181111812592,
+                  -0.18428181111812592,
+                  -1.0940879583358765,
+                  -0.3858596384525299,
+                  0.09995341938017713
+                ],
+                [
+                  -1.6280882358551025,
+                  0.661312997341156,
+                  -0.2705458700656891,
+                  -2.7320938110351562,
+                  -0.9244944453239441,
+                  -0.3600824177265167,
+                  -1.202785849571228,
+                  -0.6900918483734131,
+                  -0.6699927449226379,
+                  -0.2084101289510727,
+                  -0.2570856213569641,
+                  -0.2084101289510727,
+                  -1.3986802101135254,
+                  0.5182936787605286,
+                  -0.5980466604232788,
+                  -0.12997901439666748,
+                  -0.02760438807308674,
+                  -0.020627295598387718,
+                  -1.6454572677612305,
+                  0,
+                  -0.1749098002910614,
+                  1.0703909397125244,
+                  0,
+                  0,
+                  -0.36861902475357056,
+                  -1.0332469940185547,
+                  1.429753303527832,
+                  -0.8079178333282471,
+                  -2.1763908863067627,
+                  -0.04748459532856941,
+                  -0.3257751762866974,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -3.540579080581665,
+                  -0.6401064395904541,
+                  -0.5797109603881836,
+                  0.6440179347991943,
+                  0.4514184594154358,
+                  -0.6431552767753601,
+                  0.16409620642662048,
+                  4.044938087463379,
+                  -1.6698627471923828,
+                  -0.016889946535229683,
+                  -0.016889946535229683,
+                  -1.6499366760253906,
+                  -0.504023551940918,
+                  -0.1649230420589447,
+                  -0.2480970174074173,
+                  -0.2480970174074173,
+                  -0.18539974093437195,
+                  -0.18539974093437195,
+                  -0.18539974093437195,
+                  0,
+                  -0.4658752381801605,
+                  -0.31254011392593384,
+                  -0.3311563730239868,
+                  -0.3311563730239868,
+                  7.042878150939941,
+                  1.4789276123046875,
+                  1.4789276123046875,
+                  1.4789276123046875,
+                  1.2668864727020264,
+                  1.2668864727020264,
+                  6.866786479949951,
+                  4.294960975646973,
+                  2.8248175594084537
                 ]
               ]
             }
@@ -1436,6 +2026,30 @@
       ],
       [
         "en",
+        "What kind of food do you serve?"
+      ],
+      [
+        "en",
+        "What type of food do you have?"
+      ],
+      [
+        "en",
+        "What foods do you have?"
+      ],
+      [
+        "en",
+        "What kind of drinks do you serve?"
+      ],
+      [
+        "en",
+        "What type of drinks do you have?"
+      ],
+      [
+        "en",
+        "What drinks do you have?"
+      ],
+      [
+        "en",
         "Show me the %item%"
       ],
       [
@@ -1464,11 +2078,23 @@
       ],
       [
         "en",
-        "whats on the %item%"
+        "Describe the %item% to me"
       ],
       [
         "en",
-        "can you show me whats on the %item%"
+        "Can you describe the %item%"
+      ],
+      [
+        "en",
+        "Can you give me a description for the %item%"
+      ],
+      [
+        "en",
+        "how many calories does the %item% have"
+      ],
+      [
+        "en",
+        "how many calories are in the %item%"
       ],
       [
         "en",
@@ -1484,7 +2110,15 @@
       ],
       [
         "en",
-        "let me get a %order%, and %modify% %ingredients% on it"
+        "let me get a %order%"
+      ],
+      [
+        "en",
+        "let me get a %order% and %order%"
+      ],
+      [
+        "en",
+        "let me get a %order%, and %modify% %ingredients%"
       ],
       [
         "en",
@@ -1496,27 +2130,19 @@
       ],
       [
         "en",
+        "can i get a %order% and %order%"
+      ],
+      [
+        "en",
         "can i order the %order%"
       ],
       [
         "en",
-        "can i get a %order%, %order%, and %order%"
-      ],
-      [
-        "en",
-        "can i order the %order% and the %order% %modify% %ingredients%"
-      ],
-      [
-        "en",
-        "Give me %order% %modify% %ingredients%, a %order% %modify% %ingredients%, and a %order% %modify% %ingredients%"
-      ],
-      [
-        "en",
-        "let me get a %order%, and %modify% %ingredients% on it, a %order%, and a %order% %modify% %ingredients%"
-      ],
-      [
-        "en",
         "can i remove %order% from my order"
+      ],
+      [
+        "en",
+        "can i remove %order%"
       ],
       [
         "en",
@@ -1532,27 +2158,27 @@
       ],
       [
         "en",
-        "can you tell me about the %order%"
+        "can i get a %item% instead of the %item%"
       ],
       [
         "en",
-        "tell me about the %order%"
+        "what is in my order"
       ],
       [
         "en",
-        "what is the %order%"
+        "what's in my cart"
       ],
       [
         "en",
-        "i want to know about the %order%"
+        "what do i currently have"
       ],
       [
         "en",
-        "ive never heard of %order% before, tell me about it"
+        "show me my order right ncow"
       ],
       [
         "en",
-        "decribe the %order% for me"
+        "show me my cart"
       ],
       [
         "en",
@@ -1833,11 +2459,9 @@
               ]
             },
             {
-              "option": "jalapenio",
+              "option": "jalapeno",
               "texts": [
-                "jalapenio",
-                "jalapenio's",
-                "jalapenios"
+                "jalapenos"
               ]
             },
             {
@@ -1865,7 +2489,6 @@
             {
               "option": "negative",
               "texts": [
-                "remove",
                 "take off",
                 "no",
                 "without"
@@ -1890,6 +2513,22 @@
             "answer": "Our menu includes *food sections here* as well as *drink sections here*"
           }
         ],
+        "food.ask": [
+          {
+            "answer": "For food, we serve *food sections here*. Let me know you have any further questions."
+          },
+          {
+            "answer": "Our kitchen makes both classic and original *food sections here*. You can ask me about any specifics!"
+          }
+        ],
+        "drink.ask": [
+          {
+            "answer": "For drinks, we serve *drink sections here*. Let me know you have any further questions."
+          },
+          {
+            "answer": "Our bar makes *drink sections here*. You can ask me about any specifics!"
+          }
+        ],
         "item.show.all": [
           {
             "answer": "Here are our %item%s: *items here*"
@@ -1909,15 +2548,31 @@
             "answer": "The %item% includes: *ingredients here*"
           }
         ],
+        "show.description": [
+          {
+            "answer": "*description here* I can add this to your order if you'd like!"
+          },
+          {
+            "answer": "*description here* Let me know if you want to order this!"
+          }
+        ],
+        "show.calories": [
+          {
+            "answer": "Our %item% has *calories here* calories."
+          },
+          {
+            "answer": "There are *calories here* calories in the %item%."
+          }
+        ],
         "add.to.order": [
           {
-            "answer": "I've added a %order% to your order"
+            "answer": "I've added a %order% to your order. Can I get you anything else?"
           },
           {
-            "answer": "A %order% has been added to your order"
+            "answer": "A %order% has been added to your order. Anything else?"
           },
           {
-            "answer": "Adding a %order% to your order"
+            "answer": "Adding a %order% to your order. Let me know if there's anything else you would like."
           }
         ],
         "remove.from.order": [
@@ -1931,12 +2586,20 @@
             "answer": "Removing a %order% from your order"
           }
         ],
-        "describe.order": [
+        "update.order": [
           {
-            "answer": "Of course, the %order% is *description here*"
+            "answer": "Replacing your *first item here* with the *second item here*"
+          }
+        ],
+        "current.order": [
+          {
+            "answer": "Here's what's currently in your order: *current order here* Let me know if you want to add anything else!"
           },
           {
-            "answer": "Our %order% is *description here*"
+            "answer": "Here's what you've ordered so far: *current order here* You can still add any items you want."
+          },
+          {
+            "answer": "Your current order: *current order here* Let me know if I change anything for you."
           }
         ],
         "place.order": [
@@ -1976,6 +2639,22 @@
         "locales": {}
       }
     },
+    "show.description": {
+      "item": {
+        "intent": "show.description",
+        "entity": "item",
+        "mandatory": false,
+        "locales": {}
+      }
+    },
+    "show.calories": {
+      "item": {
+        "intent": "show.calories",
+        "entity": "item",
+        "mandatory": false,
+        "locales": {}
+      }
+    },
     "add.to.order": {
       "order": {
         "intent": "add.to.order",
@@ -2010,10 +2689,10 @@
         "locales": {}
       }
     },
-    "describe.order": {
-      "order": {
-        "intent": "describe.order",
-        "entity": "order",
+    "update.order": {
+      "item": {
+        "intent": "update.order",
+        "entity": "item",
         "mandatory": false,
         "locales": {}
       }
