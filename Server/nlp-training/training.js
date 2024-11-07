@@ -185,12 +185,27 @@ module.exports = (manager) => {
     manager.addDocument('en', 'what do i currently have', 'current.order');
     manager.addDocument('en', 'show me my order right now', 'current.order');
     manager.addDocument('en', 'show me my cart', 'current.order');
+    manager.addDocument('en', 'can i see my order', 'current.order');
+    manager.addDocument('en', 'can i see my cart', 'current.order');
 
     manager.addAnswer('en', 'current.order', 'Here\'s what\'s currently in your order: *current order here* ... Let me know if you want to add anything else!');
     manager.addAnswer('en', 'current.order', 'Here\'s what you\'ve ordered so far: *current order here* ... You can still add any items you want.');
-    manager.addAnswer('en', 'current.order', 'Your current order: *current order here* ... Let me know if I change anything for you.');
+    manager.addAnswer('en', 'current.order', 'Your current order: *current order here* ... Let me know if I can change anything for you.');
     /* *********************************************************************** */
 
+    
+    /* *********************************************************************** */
+    // Clear the whole cart
+    manager.addDocument('en', 'can you clear my curent order', 'clear.order');
+    manager.addDocument('en', 'can you empty my cart', 'clear.order');
+    manager.addDocument('en', 'can you clear my cart', 'clear.order');
+    manager.addDocument('en', 'remove everything in my cart please', 'clear.order');
+    manager.addDocument('en', 'clear my order', 'clear.order');
+    manager.addDocument('en', 'empty my cart', 'clear.order');
+    
+    manager.addAnswer('en', 'clear.order', 'I\'ve emptied your cart');
+    /* *********************************************************************** */
+    
     
     /* *********************************************************************** */
     // Checking out
@@ -235,7 +250,7 @@ module.exports = (manager) => {
     manager.addDocument('en', 'i want that', 'answer.order.that')
     manager.addDocument('en', 'get that for me', 'answer.order.that')
     manager.addDocument('en', 'add that to my order', 'answer.order.that')
-    manager.addDocument('en', 'can i order that %modify% %ingredients%', 'answer.order.that')
+    // manager.addDocument('en', 'can i order that %modify% %ingredients%', 'answer.order.that')
 
     manager.addAnswer('en', 'answer.order.that', 'Sure! I\'ve just added it to your order. Anything else?')
 
@@ -268,13 +283,107 @@ module.exports = (manager) => {
     manager.addNamedEntityText('add.to.order', 'starter', ['en'], validStarters);
     manager.addNamedEntityText('add.to.order', 'dessert', ['en'], validDesserts);
 
-    //Ingredient types
-    manager.addNamedEntityText('ingredients', 'olives', ['en'], ['olives', "olive's"]);
-    manager.addNamedEntityText('ingredients', 'peppers', ['en'], ['peppers']);
-    manager.addNamedEntityText('ingredients', 'pepperoni', ['en'], ['pepperonis', "pepperoni's", 'pepperoni']);
-    manager.addNamedEntityText('ingredients', 'basil', ['en'], ['basil', 'fresh basil']);
-    manager.addNamedEntityText('ingredients', 'jalapeno', ['en'], ['jalapenos']);
-    manager.addNamedEntityText('ingredients', 'tomato', ['en'], ['tomato', "tomato's"]);
+
+    
+
+
+    // //Ingredient types
+    // manager.addNamedEntityText('ingredients', 'olives', ['en'], ['olives', "olive's"]);
+    // manager.addNamedEntityText('ingredients', 'peppers', ['en'], ['peppers']);
+    // manager.addNamedEntityText('ingredients', 'pepperoni', ['en'], ['pepperonis', "pepperoni's", 'pepperoni']);
+    // manager.addNamedEntityText('ingredients', 'basil', ['en'], ['basil', 'fresh basil']);
+    // manager.addNamedEntityText('ingredients', 'jalapeno', ['en'], ['jalapenos']);
+    // manager.addNamedEntityText('ingredients', 'tomato', ['en'], ['tomato', "tomato's"]);
+
+    
+    // Cheeses
+    manager.addNamedEntityText('ingredients', 'gouda', ['en'], ['gouda', 'gouda cheese', 'goudas']);
+    manager.addNamedEntityText('ingredients', 'mozzarella', ['en'], ['mozzarella', 'mozzarella cheese', 'mozzarellas']);
+    manager.addNamedEntityText('ingredients', 'parmesan', ['en'], ['parmesan', 'parmesan cheese', 'parmesans', 'parm']);
+    manager.addNamedEntityText('ingredients', 'romano', ['en'], ['romano', 'romano cheese', 'romanos']);
+    manager.addNamedEntityText('ingredients', 'queso quesadilla', ['en'], ['queso quesadilla', 'quesadilla cheese', 'quesos']);
+    manager.addNamedEntityText('ingredients', 'burrata', ['en'], ['burrata', 'burrata cheese', 'burratas']);
+    manager.addNamedEntityText('ingredients', 'monterey jack', ['en'], ['monterey jack', 'jack cheese', 'monterey jack cheese', 'monterey jacks']);
+    manager.addNamedEntityText('ingredients', 'gorgonzola', ['en'], ['gorgonzola', 'gorgonzola cheese', 'gorgonzolas']);
+    
+    // Meats
+    manager.addNamedEntityText('ingredients', 'applewood smoked bacon', ['en'], ['applewood smoked bacon', 'bacon', 'bacons']);
+    manager.addNamedEntityText('ingredients', 'pepperoni', ['en'], ['pepperoni', 'pepperonis']);
+    manager.addNamedEntityText('ingredients', 'spicy Italian sausage', ['en'], ['spicy Italian sausage', 'Italian sausage', 'sausage', 'sausages']);
+    manager.addNamedEntityText('ingredients', 'capicola ham', ['en'], ['capicola ham', 'ham', 'capicolas', 'hams']);
+    manager.addNamedEntityText('ingredients', 'applewood smoked ham', ['en'], ['applewood smoked ham', 'ham', 'hams']);
+    manager.addNamedEntityText('ingredients', 'marinated steak', ['en'], ['marinated steak', 'steak', 'steaks']);
+    manager.addNamedEntityText('ingredients', 'turkey', ['en'], ['turkey', 'turkeys']);
+    manager.addNamedEntityText('ingredients', 'salami', ['en'], ['salami', 'salamis']);
+    manager.addNamedEntityText('ingredients', 'shrimp', ['en'], ['shrimp', 'shrimps']);
+    manager.addNamedEntityText('ingredients', 'andouille sausage', ['en'], ['andouille sausage', 'andouille sausages', 'sausage', 'sausages']);
+    manager.addNamedEntityText('ingredients', 'tasso ham', ['en'], ['tasso ham', 'ham', 'tassos']);
+    manager.addNamedEntityText('ingredients', 'beef', ['en'], ['beef', 'beefs']);
+    manager.addNamedEntityText('ingredients', 'pork', ['en'], ['pork', 'porks']);
+    
+    // Vegetables and Herbs
+    manager.addNamedEntityText('ingredients', 'red onions', ['en'], ['red onion', 'red onions', 'onions']);
+    manager.addNamedEntityText('ingredients', 'cremini mushrooms', ['en'], ['cremini mushroom', 'cremini mushrooms', 'mushroom', 'mushrooms']);
+    manager.addNamedEntityText('ingredients', 'scallions', ['en'], ['scallion', 'scallions', 'green onion', 'green onions', 'spring onion', 'spring onions']);
+    manager.addNamedEntityText('ingredients', 'broccolini', ['en'], ['broccolini', 'broccolinis', 'broccoli']);
+    manager.addNamedEntityText('ingredients', 'zucchini', ['en'], ['zucchini', 'zucchinis', 'courgette', 'courgettes']);
+    manager.addNamedEntityText('ingredients', 'cherry tomatoes', ['en'], ['cherry tomato', 'cherry tomatoes', 'tomato', 'tomatoes']);
+    manager.addNamedEntityText('ingredients', 'basil', ['en'], ['basil', 'fresh basil', 'basils']);
+    manager.addNamedEntityText('ingredients', 'arugula', ['en'], ['arugula', 'arugulas', 'rocket', 'rockets']);
+    manager.addNamedEntityText('ingredients', 'lettuce', ['en'], ['lettuce']);  // "Lettuce" doesn't usually pluralize
+    manager.addNamedEntityText('ingredients', 'green peppers', ['en'], ['green pepper', 'green peppers', 'bell pepper', 'bell peppers', 'pepper', 'peppers']);
+    manager.addNamedEntityText('ingredients', 'olives', ['en'], ['olive', 'olives', 'black olive', 'black olives']);
+    manager.addNamedEntityText('ingredients', 'avocado', ['en'], ['avocado', 'avocados']);
+    manager.addNamedEntityText('ingredients', 'carrots', ['en'], ['carrot', 'carrots']);
+    manager.addNamedEntityText('ingredients', 'bean sprouts', ['en'], ['bean sprout', 'bean sprouts', 'sprout', 'sprouts']);
+    manager.addNamedEntityText('ingredients', 'corn', ['en'], ['corn', 'corns']);
+    manager.addNamedEntityText('ingredients', 'poblanos', ['en'], ['poblano', 'poblanos', 'poblano pepper', 'poblano peppers']);
+    manager.addNamedEntityText('ingredients', 'yellow onions', ['en'], ['yellow onion', 'yellow onions', 'onion', 'onions']);
+    manager.addNamedEntityText('ingredients', 'jicama', ['en'], ['jicama', 'jicamas']);
+    manager.addNamedEntityText('ingredients', 'cilantro', ['en'], ['cilantro', 'fresh cilantro']);
+    manager.addNamedEntityText('ingredients', 'lime', ['en'], ['lime', 'limes']);
+    manager.addNamedEntityText('ingredients', 'romaine lettuce', ['en'], ['romaine lettuce', 'lettuce']);
+    manager.addNamedEntityText('ingredients', 'spinach', ['en'], ['spinach', 'spinaches']);
+    manager.addNamedEntityText('ingredients', 'red cabbage', ['en'], ['red cabbage', 'cabbage']);
+    manager.addNamedEntityText('ingredients', 'cucumber', ['en'], ['cucumber', 'cucumbers']);
+    manager.addNamedEntityText('ingredients', 'serrano peppers', ['en'], ['serrano pepper', 'serrano peppers']);
+    manager.addNamedEntityText('ingredients', 'red chilies', ['en'], ['red chili', 'red chilies', 'chili', 'chilies']);
+    manager.addNamedEntityText('ingredients', 'lemon', ['en'], ['lemon', 'lemons']);
+    manager.addNamedEntityText('ingredients', 'parsley', ['en'], ['parsley', 'fresh parsley']);
+    
+    // Sauces and Seasonings
+    manager.addNamedEntityText('ingredients', 'virgin olive oil', ['en'], ['virgin olive oil', 'olive oil', 'oils']);
+    manager.addNamedEntityText('ingredients', 'garlic', ['en'], ['garlic', 'fresh garlic', 'garlics']);
+    manager.addNamedEntityText('ingredients', 'greek oregano', ['en'], ['greek oregano', 'oregano', 'oreganos']);
+    manager.addNamedEntityText('ingredients', 'neapolitan pizza sauce', ['en'], ['neapolitan pizza sauce', 'pizza sauce', 'tomato sauce', 'sauces']);
+    manager.addNamedEntityText('ingredients', 'spicy marinara', ['en'], ['spicy marinara', 'marinara sauce', 'spicy sauce', 'marinaras']);
+    manager.addNamedEntityText('ingredients', 'jalapeño lime sauce', ['en'], ['jalapeño lime sauce', 'lime sauce', 'jalapeño sauce', 'sauce']);
+    manager.addNamedEntityText('ingredients', 'cajun sauce', ['en'], ['cajun sauce', 'cajun', 'sauce']);
+    
+    // Toppings and Extras
+    manager.addNamedEntityText('ingredients', 'chopped egg', ['en'], ['chopped egg', 'egg', 'eggs']);
+    manager.addNamedEntityText('ingredients', 'tortilla strips', ['en'], ['tortilla strip', 'tortilla strips']);
+    manager.addNamedEntityText('ingredients', 'wonton strips', ['en'], ['wonton strip', 'wonton strips']);
+    manager.addNamedEntityText('ingredients', 'garlic butter croutons', ['en'], ['garlic butter crouton', 'garlic butter croutons', 'croutons']);
+    manager.addNamedEntityText('ingredients', 'roasted peanuts', ['en'], ['roasted peanut', 'roasted peanuts', 'peanut', 'peanuts']);
+    
+    // Dressings and Vinaigrettes
+    manager.addNamedEntityText('ingredients', 'mustard herb vinaigrette', ['en'], ['mustard herb vinaigrette', 'herb vinaigrette', 'vinaigrette']);
+    manager.addNamedEntityText('ingredients', 'thai peanut dressing', ['en'], ['thai peanut dressing', 'peanut dressing', 'dressing']);
+    manager.addNamedEntityText('ingredients', 'chili lime vinaigrette', ['en'], ['chili lime vinaigrette', 'lime vinaigrette', 'vinaigrette']);
+    
+    // Pasta Types
+    manager.addNamedEntityText('ingredients', 'spinach fettuccine', ['en'], ['spinach fettuccine', 'fettuccine']);
+    manager.addNamedEntityText('ingredients', 'spaghetti', ['en'], ['spaghetti', 'spaghettis']);
+    manager.addNamedEntityText('ingredients', 'ziti', ['en'], ['ziti', 'zitis']);
+
+
+
+
+
+
+
+
 
     //Recognizes when user wants to add or remove ingredient from an item
     manager.addNamedEntityText('modify', 'positive', ['en'], ['add', 'extra', 'put some', 'with']);

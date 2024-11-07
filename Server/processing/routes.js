@@ -1,6 +1,6 @@
-const {addToOrder, displayPartialMenu, placeOrder, removeFromOrder, 
-       displayCurrentOrder, updateOrder, afterDecision, giveRecommendation, setPreviousRecommendation, 
-       conversation, previousRecommendation, displaySpecificInfo, getImage} = require('./functions')
+const {addToOrder, displayPartialMenu, placeOrder, removeFromOrder, displayCurrentOrder, updateOrder,
+       afterDecision, giveRecommendation, clearOrder, setOrderConfirmation, getOrderConfirmation,
+       setPreviousRecommendation, conversation, previousRecommendation, displaySpecificInfo, getImage, setTempReceipt} = require('./functions')
        
 module.exports = (app, manager) => {
     app.get('/', async (req, res) => {
@@ -16,7 +16,7 @@ module.exports = (app, manager) => {
         const intent  = response.intent;
         const entities = response.entities;
     
-        // console.log(response)
+        console.log(response)
         // console.log(intent)
         // console.log(entities)
         
@@ -156,27 +156,42 @@ module.exports = (app, manager) => {
     
         // Finalizing order
         else if(intent === 'place.order'){
+            await setOrderConfirmation(false)
             const answer = await placeOrder()
     
             if(answer == null)
             {
                 return res.json({ reply: 'You currently <i>don\'t</i> have anything in your cart. <br /><br /> Be sure to add any items to your cart before placing an order!'})
             }
-    
+            
             const nlpAnswer = response.answer.replace('*receipt here*', answer);
-            return res.json({ reply: nlpAnswer })
+            return res.json({ reply: nlpAnswer }) 
         }
+
+        else if(intent === 'clear.order'){
+            clearOrder();
+            const answer = response.answer
+            
+            return res.json({ reply: answer })
+        }
+
     
         // Handle yes/no responses
         else if(intent === 'answer.yes' || intent === 'answer.no' || intent === 'answer.order.that'){
             if(intent === 'answer.no'){
-                return;
+                setTempReceipt()
+                setOrderConfirmation(false)
+                const tempReply = `Would you like to add something else to your order?`
+                console.log(tempReply)
+                return res.json({ reply: tempReply });
             }
             
             const answer = await afterDecision(response)
             const nlpAnswer = response.answer
-            console.log(answer)
-            return res.json({ reply: nlpAnswer });
+            console.log("ASDSAD", answer, "DSAAS")
+
+            
+            return res.json({ reply: answer });
         }
     
         else {

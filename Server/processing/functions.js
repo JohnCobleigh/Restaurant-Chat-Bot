@@ -25,6 +25,8 @@ let quantities = []
 let conversation = []
 
 var previousRecommendation = null
+var orderConfirmation = false
+var tempReceipt = null
 
 async function addToOrder(entities){
     let collection = '';
@@ -322,6 +324,8 @@ async function placeOrder(){
         return null;
     }
 
+
+
     // created new document to store in MongoDB using Mongoose schema
     const receipt = new Order({names: names, calories: calories, modifiers: modifiers, prices: prices})
     await receipt.save();
@@ -329,22 +333,24 @@ async function placeOrder(){
     let calTotal = calories.map((cal, index) => cal * quantities[index]).reduce((partialSum, a) => partialSum + a, 0);
     let subtotal = prices.map((price, index) => price * quantities[index]).reduce((partialSum, a) => partialSum + a, 0);
 
-    // reset order-related arrays
-    names.length = 0;
-    calories.length = 0;
-    modifiers.length = 0;
-    prices.length = 0;  
-
     const receiptDetails = receipt.names.map((name, index) => {
         const modifier = receipt.modifiers[index] ? receipt.modifiers[index] : '';
         return `\u2022 ${quantities[index]}x <b>${name}</b> ${modifier} [cal.${receipt.calories[index]}] [$${receipt.prices[index]}]`;
     }).join('<br /><br />');
 
-    return `<br /><br />${receiptDetails}<br /><br />
+
+    tempReceipt = `<br /><br />${receiptDetails}<br /><br />
             Total calories: ${calTotal}<br /><br />
             Subtotal: $${subtotal}<br />
             Tax: $${(subtotal * 0.0825).toFixed(2)}<br />
-            Total: <b>$${(subtotal + subtotal * 0.0825).toFixed(2)}</b>`;
+            Total: <b>$${(subtotal + subtotal * 0.0825).toFixed(2)}</b>`;  
+
+    console.log(tempReceipt)
+
+    orderConfirmation = true
+    return `Are you sure? ${tempReceipt}`
+    
+    
 }
 
 function checkIngredients(entities){
@@ -532,6 +538,12 @@ async function afterDecision(response){
         afterDecisionDescription(response)
     else if(previousResponseIntent === 'recommend')
         afterDecisionRecommendation(response)
+    else if(previousResponseIntent === 'place.order')
+        console.log(orderConfirmation)
+        if(!orderConfirmation)
+            placeOrder()
+        else
+            return placeOrderResponse()
 }
 
 async function giveRecommendation(entities){
@@ -550,15 +562,33 @@ async function giveRecommendation(entities){
     // console.log(items)
 
     if (items.length > 0) {
-        const randomItem = items[Math.floor(Math.random() * items.length)];
-        previousRecommendation = randomItem
-        //console.log(randomItem);
-        return `<b>${randomItem.name}</b>`;
+        var randomItem = null
+        if(previousRecommendation){
+            do{
+                randomItem = items[Math.floor(Math.random() * items.length)];
+                console.log(previousRecommendation.name, " ", randomItem.name)
+            }while(previousRecommendation.name === randomItem.name)
+
+            previousRecommendation = randomItem
+            //console.log(randomItem);
+            return `<b>${randomItem.name}</b>`;
+        } else {
+            randomItem = items[Math.floor(Math.random() * items.length)];
+            previousRecommendation = randomItem
+            return `<b>${randomItem.name}</b>`;
+        }
     } else {
         //console.log("No items found with recommendation set to true.");
         // return 'Error finding item,  none in array, add some favorites to type';
         return null;
     }
+}
+
+async function clearOrder(){
+    names = []
+    calories = []
+    modifiers = []
+    prices = []
 }
 
 async function afterDecisionDescription(response){
@@ -592,6 +622,30 @@ function setPreviousRecommendation(newValue){
     previousRecommendation = newValue
 }
 
+function setOrderConfirmation(value){
+    orderConfirmnation = value
+}
+
+function getOrderConfirmation(){
+    return orderConfirmation
+}
+
+function placeOrderResponse(){
+    console.log("TEST")
+    console.log(tempReceipt)
+    
+    names.length = 0;
+    calories.length = 0;
+    modifiers.length = 0;
+    prices.length = 0;  
+
+    return tempReceipt
+}
+
+function setTempReceipt(){
+    tempReceipt = null
+}
+
 module.exports = {addToOrder, checkIngredients, checkModify, displayPartialMenu, placeOrder, removeFromOrder, 
-                  displayCurrentOrder, updateOrder, afterDecision, giveRecommendation, 
-                  setPreviousRecommendation, conversation, previousRecommendation, displaySpecificInfo, getImage}
+                  displayCurrentOrder, updateOrder, afterDecision, giveRecommendation, clearOrder, setOrderConfirmation, getOrderConfirmation,
+                  setPreviousRecommendation, conversation, previousRecommendation, displaySpecificInfo, getImage, placeOrderResponse, setTempReceipt}

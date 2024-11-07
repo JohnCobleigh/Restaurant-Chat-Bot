@@ -4,7 +4,7 @@ const validEntrees = [
 ]
 
 const validPizzas = [
-    'Original BBQ Chicken Pizza', 'California Club', 'Wild Mushroom', 
+    'Original BBQ Chicken ', 'California Club', 'Wild Mushroom', 
     'Thai Chicken', 'Mushroom Pepperoni Sausage', 'California Veggie', 
     'Hawaiian', 'Neapolitan Burrata', 'The Works', 'Five Cheese + Fresh Tomato', 
     'Margherita', 'Pepperoni', 'Sicilian', 'Spicy Chipotle Chicken', 'Carne Asada'
@@ -17,14 +17,14 @@ const validPastas = [
 ]
 
 const validMargaritas = [
-    'Fresh Agave Lime Margarita', "Skinny & Spicy ‘Rita",
-    'Strawberry Lime Margarita', "Golden Cadillac ‘Rita",
-    'Platinum Margarita'
+    'Fresh Agave Lime', "Skinny & Spicy ‘Rita",
+    'Strawberry Lime', "Golden Cadillac ‘Rita",
+    'Platinum'
 ]
 
 const ValidMartinis = [
-    'French Martini', 'Blueberry Lemon Drop Martini',
-    'Cosmopolitan Martini', 'Espresso Martini'
+    'French', 'Blueberry Lemon Drop',
+    'Cosmopolitan', 'Espresso'
 ]
 
 const validMocktails = [
@@ -34,12 +34,12 @@ const validMocktails = [
 
 const validSalads = [
     'California Cobb', 'Thai Crunch', 'Banh Mi Power Bowl', 'Classic Caesar',
-    'The Original BBQ Chicken Chopped Salad', 'Italian Chopped'
+    'The Original BBQ Chicken Chopped', 'Italian Chopped'
 ]
 
 const validSangrias = [
-    'Flight', 'Red-Berry Sangria', 
-    'Sparkling Mango Sangria', 'Strawberry Rosé Sangria'
+    'Flight', 'Red-Berry', 
+    'Sparkling Mango', 'Strawberry Rosé'
 ]
 
 const validCocktails = [
