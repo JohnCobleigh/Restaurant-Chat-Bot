@@ -4,6 +4,10 @@ import { AiOutlineAudio } from 'react-icons/ai'; // Importing the microphone ico
 import { GoArrowUp } from 'react-icons/go'; // Importing the arrow icon for the send button
 import './App.css'; // Importing the CSS file for styling
 
+// Check if the browser supports the SpeechRecognition API
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = SpeechRecognition ? new SpeechRecognition() : null; // Initialize SpeechRecognition
+
 // The main Chatbot component
 function Chatbot() {
   // useState hook to manage the list of messages and the user's input
@@ -62,6 +66,32 @@ function Chatbot() {
     }
   };
 
+  // Function to start listening for audio input
+  const startListening = () => {
+    if (!recognition) {
+      console.warn("SpeechRecognition not supported in this browser."); // Warn if SpeechRecognition is not supported
+      return;
+    }
+    recognition.start(); // Start the SpeechRecognition
+  };
+
+  // Configure the SpeechRecognition
+  if (recognition) {
+    recognition.continuous = false; // Stop automatically
+    recognition.interimResults = false; 
+
+    // Event listener for when a result is captured
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript; // Get the recognized text
+      setUserInput(transcript); // Set the userInput state with the transcribed text
+    };
+
+    // Error handling for speech recognition
+    recognition.onerror = (event) => {
+      console.error("Speech recognition error:", event.error); // Log recognition errors
+    };
+  }
+
   return (
     <div className="chatbot-container">
       {/* Logo */}
@@ -86,8 +116,8 @@ function Chatbot() {
 
       {/* Input field for typing and sending messages */}
       <div className="chatbot-input">
-        {/* Audio button for future audio input feature */}
-        <div className="audio-button" onClick={() => console.log('Microphone clicked!')}>
+        {/* Audio button for speech input */}
+        <div className="audio-button" onClick={startListening}>
           <AiOutlineAudio size={20} /> {/* Microphone icon */}
         </div>
         <input
