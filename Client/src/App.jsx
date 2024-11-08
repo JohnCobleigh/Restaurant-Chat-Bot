@@ -9,6 +9,7 @@ function Chatbot() {
   // useState hook to manage the list of messages and the user's input
   const [messages, setMessages] = useState([]); // Stores the history of chat messages
   const [userInput, setUserInput] = useState(''); // Stores the current input from the user
+  const [imageURL, setImageURL] = useState(null) // Stores any image URL passed from backend
   const messagesEndRef = useRef(null); // Reference to the bottom of the messages list
 
   useEffect(() => {
@@ -39,15 +40,25 @@ function Chatbot() {
     const newMessages = [...messages, { sender: 'user', text: userInput }];
     setMessages(newMessages); // Update state with the new message
 
-    //axios.post('/api/', { message: userInput })                                         // uncomment for local run
+    // axios.post('/api/', { message: userInput })                                         // uncomment for local run
     axios.post(`${import.meta.env.VITE_SERVER_URL}/`, { message: userInput })         // uncomment for deploying
       .then(response => {
-        const botResponse = response.data.reply;  // Backend response
-        setMessages([...newMessages, { sender: 'bot', text: botResponse }]);  // Update chat with bot's reply
+        const botResponse = response.data.replies || [response.data.reply];   // Backend response
+        const botMessages = botResponse.map(reply => ({ sender: 'bot', text: reply}));
+        
+        setMessages([...newMessages, ...botMessages]);  // Update chat with bot's reply
+
+        if (response.data.imageURL){
+          setImageURL(response.data.imageURL);
+        }
+        else {
+          setImageURL(null);
+        }
       })
       .catch(error => {
         console.error("Error communicating with backend:", error);
         setMessages([...newMessages, { sender: 'bot', text: "Sorry, I couldn't process your request." }]);
+        setImageURL(null)
       });
 
     // Clear the input field after sending the message
@@ -80,6 +91,14 @@ function Chatbot() {
             )}
           </div>
         ))}
+
+        {/* Render image if imageURL is present */}
+        {imageURL && (
+          <div className="chatbot-image">
+            <img src={imageURL} alt="Description" />
+          </div>
+        )}
+
         {/* Ref element to scroll to */}
         <div ref={messagesEndRef} />
       </div>
