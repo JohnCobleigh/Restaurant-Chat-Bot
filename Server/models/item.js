@@ -8,7 +8,9 @@ const itemSchema = new mongoose.Schema({
     calories: Number,
     description: String,
     ingredients: [String],
-    price: Number
+    price: Number,
+    favorite: Boolean,
+    image: String
 });
 
 const MainPlate = mongoose.models.MainPlate || mongoose.model('MainPlate', itemSchema, 'main_plates');
