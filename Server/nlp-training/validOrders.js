@@ -6,7 +6,7 @@ const validEntrees = [
 const validPizzas = [
     'Original BBQ Chicken ', 'California Club', 'Wild Mushroom', 
     'Thai Chicken', 'Mushroom Pepperoni Sausage', 'California Veggie', 
-    'Hawaiian', 'Neapolitan Burrata', 'The Works', 'Five Cheese + Fresh Tomato', 
+    'Hawaiian', 'Neapolitan Burrata', 'The Works', 
     'Margherita', 'Pepperoni', 'Sicilian', 'Spicy Chipotle Chicken', 'Carne Asada'
 ]
 
@@ -49,7 +49,7 @@ const validCocktails = [
 
 const validStarters = [
     'Dynamite Shrimp', 'Mexican Street Corn', 'Spinach Artichoke Dip',
-    'White Corn Guacamole + Chips', 'Avocado Club Egg Rolls', 'Szechwan Chicken Dumplings'
+    'Avocado Club Egg Rolls', 'Szechwan Chicken Dumplings'
 ]
 
 const validDesserts = [

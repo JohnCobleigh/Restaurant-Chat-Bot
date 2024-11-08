@@ -78,7 +78,7 @@ module.exports = (manager) => {
     manager.addDocument('en', 'Can you give me a description for the %item%', 'show.description');
     manager.addDocument('en', 'tell me about the %item%', 'show.description');
     manager.addDocument('en', 'Can you tell me about the %item%', 'show.description');
-    manager.addDocument('en', '%item%', 'show.description');
+    // manager.addDocument('en', '%item%', 'show.description');
     manager.addDocument('en', 'Can you tell me about the %order%', 'show.description');
 
     manager.addAnswer('en', 'show.description', '*info here* ... I can add this to your order if you\'d like!');
@@ -131,13 +131,24 @@ module.exports = (manager) => {
     manager.addDocument('en', 'let me get a %order%, and %modify% %ingredients%', 'add.to.order');
     manager.addDocument('en', 'can you add a %order% %modify% %ingredient% to my order', 'add.to.order');
     manager.addDocument('en', 'can i get a %order%', 'add.to.order');
-    manager.addDocument('en', 'can i get a %order% and %order%', 'add.to.order');
+    // manager.addDocument('en', 'can i get a %order% and %order%', 'add.to.order');
     manager.addDocument('en', 'can i order the %order%', 'add.to.order');
-    manager.addDocument('en', 'can i order a %order% %item%', 'add.to.order');
+    // manager.addDocument('en', 'can i order a %order% %item%', 'add.to.order');
     manager.addDocument('en', 'add a %order% to my order', 'add.to.order');
     manager.addDocument('en', 'can i get a %order% %item%', 'add.to.order');
-    manager.addDocument('en', 'can i order %number% %order%', 'add.to.order');
+    // manager.addDocument('en', 'can i order %number% %order%', 'add.to.order');
+    // manager.addDocument('en', 'one %order%, please', 'add.to.order');
+    manager.addDocument('en', 'ill take a %order% please', 'add.to.order');
+    manager.addDocument('en', 'ill take a %order% %modify% %ingredient%', 'add.to.order');
+    // manager.addDocument('en', 'I\'ll take a %order%', 'add.to.order');
+    // manager.addDocument('en', '%order%', 'add.to.order');
+    // manager.addDocument('en', 'can i have a %order% %item% and a %order% %item%', 'add.to.order');
+    manager.addDocument('en', 'can i have a %order% and a %order%', 'add.to.order');
+    // manager.addDocument('en', 'ill take a %order% %item% and a %order% %item%', 'add.to.order');
+    manager.addDocument('en', 'ill take the %order% and a %order%', 'add.to.order');
+    manager.addDocument('en', 'id like a %order%', 'add.to.order');
 
+    
     manager.addAnswer('en', 'add.to.order', 'I\'ve added %order% to your order. Can I get you anything else?');
     manager.addAnswer('en', 'add.to.order', '%order% has been added to your order. Anything else?');
     manager.addAnswer('en', 'add.to.order', 'Adding %order% to your order. Let me know if there\'s anything else you would like.');
@@ -166,10 +177,8 @@ module.exports = (manager) => {
     // Replacing/changing an item or ingredient in current order
     manager.addDocument('en', 'can i get a %item% %switch% the %item%', 'update.order');
     manager.addDocument('en', 'can i %switch% the %item% for the %item%', 'update.order');
-    manager.addDocument('en', 'can i %switch% the %item% with a %item%', 'update.order');
     manager.addDocument('en', 'would it be okay to %switch% the %item% to a %item%', 'update.order');
     manager.addDocument('en', 'could you %switch% the %item% to a %item%', 'update.order');
-    manager.addDocument('en', 'i’d prefer a %item% %switch% the %item%, can you make that change', 'update.order')
     
 
     manager.addAnswer('en', 'update.order', 'Replacing your *first item here* with the *second item here*');
@@ -228,8 +237,6 @@ module.exports = (manager) => {
     manager.addDocument('en', 'yea', 'answer.yes')
     manager.addDocument('en', 'sure', 'answer.yes')
     manager.addDocument('en', 'ok', 'answer.yes')
-    manager.addDocument('en', 'uh-huh', 'answer.yes')
-    manager.addDocument('en', 'uh huh', 'answer.yes')
     manager.addDocument('en', 'i do', 'answer.yes')
 
     manager.addAnswer('en', 'answer.yes', 'Got it!')
@@ -259,7 +266,7 @@ module.exports = (manager) => {
     // Recognizing specified items in input and considering different spellings and synomyms
     //Food types
     manager.addNamedEntityText('item', 'entree', ['en'], ['plate', 'plates', 'entree', 'entrees', 'main plates', 'main plate']);
-    manager.addNamedEntityText('item', 'pizza', ['en'], ['pizza', 'pizzas', 'pie', 'pies']);
+    manager.addNamedEntityText('item', 'pizza', ['en'], ['pizza', 'pizzas']);
     manager.addNamedEntityText('item', 'pasta', ['en'], ['pasta', 'pastas']);
     manager.addNamedEntityText('item', 'salad', ['en'], ['salad', 'salads']);
     manager.addNamedEntityText('item', 'starter', ['en'], ['starter', 'starters', 'appetizer', 'appetizers', 'app', 'apps']);
@@ -315,33 +322,34 @@ module.exports = (manager) => {
     manager.addNamedEntityText('ingredients', 'marinated steak', ['en'], ['marinated steak', 'steak', 'steaks']);
     manager.addNamedEntityText('ingredients', 'turkey', ['en'], ['turkey', 'turkeys']);
     manager.addNamedEntityText('ingredients', 'salami', ['en'], ['salami', 'salamis']);
-    manager.addNamedEntityText('ingredients', 'shrimp', ['en'], ['shrimp', 'shrimps']);
+    // manager.addNamedEntityText('ingredients', 'shrimp', ['en'], ['shrimp', 'shrimps']);
     manager.addNamedEntityText('ingredients', 'andouille sausage', ['en'], ['andouille sausage', 'andouille sausages', 'sausage', 'sausages']);
     manager.addNamedEntityText('ingredients', 'tasso ham', ['en'], ['tasso ham', 'ham', 'tassos']);
     manager.addNamedEntityText('ingredients', 'beef', ['en'], ['beef', 'beefs']);
     manager.addNamedEntityText('ingredients', 'pork', ['en'], ['pork', 'porks']);
+    manager.addNamedEntityText('ingredients', 'chicken', ['en'], ['chicken']);
     
     // Vegetables and Herbs
     manager.addNamedEntityText('ingredients', 'red onions', ['en'], ['red onion', 'red onions', 'onions']);
-    manager.addNamedEntityText('ingredients', 'cremini mushrooms', ['en'], ['cremini mushroom', 'cremini mushrooms', 'mushroom', 'mushrooms']);
+    // manager.addNamedEntityText('ingredients', 'cremini mushrooms', ['en'], ['cremini mushroom', 'cremini mushrooms', 'mushroom', 'mushrooms']);
     manager.addNamedEntityText('ingredients', 'scallions', ['en'], ['scallion', 'scallions', 'green onion', 'green onions', 'spring onion', 'spring onions']);
     manager.addNamedEntityText('ingredients', 'broccolini', ['en'], ['broccolini', 'broccolinis', 'broccoli']);
-    manager.addNamedEntityText('ingredients', 'zucchini', ['en'], ['zucchini', 'zucchinis', 'courgette', 'courgettes']);
-    manager.addNamedEntityText('ingredients', 'cherry tomatoes', ['en'], ['cherry tomato', 'cherry tomatoes', 'tomato', 'tomatoes']);
-    manager.addNamedEntityText('ingredients', 'basil', ['en'], ['basil', 'fresh basil', 'basils']);
+    // manager.addNamedEntityText('ingredients', 'zucchini', ['en'], ['zucchini', 'zucchinis', 'courgette', 'courgettes']);
+    // manager.addNamedEntityText('ingredients', 'cherry tomatoes', ['en'], ['cherry tomato', 'cherry tomatoes', 'tomato', 'tomatoes']);
+    // manager.addNamedEntityText('ingredients', 'basil', ['en'], ['basil', 'fresh basil', 'basils']);
     manager.addNamedEntityText('ingredients', 'arugula', ['en'], ['arugula', 'arugulas', 'rocket', 'rockets']);
     manager.addNamedEntityText('ingredients', 'lettuce', ['en'], ['lettuce']);  // "Lettuce" doesn't usually pluralize
     manager.addNamedEntityText('ingredients', 'green peppers', ['en'], ['green pepper', 'green peppers', 'bell pepper', 'bell peppers', 'pepper', 'peppers']);
     manager.addNamedEntityText('ingredients', 'olives', ['en'], ['olive', 'olives', 'black olive', 'black olives']);
-    manager.addNamedEntityText('ingredients', 'avocado', ['en'], ['avocado', 'avocados']);
+    // manager.addNamedEntityText('ingredients', 'avocado', ['en'], ['avocado', 'avocados']);
     manager.addNamedEntityText('ingredients', 'carrots', ['en'], ['carrot', 'carrots']);
     manager.addNamedEntityText('ingredients', 'bean sprouts', ['en'], ['bean sprout', 'bean sprouts', 'sprout', 'sprouts']);
-    manager.addNamedEntityText('ingredients', 'corn', ['en'], ['corn', 'corns']);
+    // manager.addNamedEntityText('ingredients', 'corn', ['en'], ['corn', 'corns']);
     manager.addNamedEntityText('ingredients', 'poblanos', ['en'], ['poblano', 'poblanos', 'poblano pepper', 'poblano peppers']);
     manager.addNamedEntityText('ingredients', 'yellow onions', ['en'], ['yellow onion', 'yellow onions', 'onion', 'onions']);
     manager.addNamedEntityText('ingredients', 'jicama', ['en'], ['jicama', 'jicamas']);
     manager.addNamedEntityText('ingredients', 'cilantro', ['en'], ['cilantro', 'fresh cilantro']);
-    manager.addNamedEntityText('ingredients', 'lime', ['en'], ['lime', 'limes']);
+    // manager.addNamedEntityText('ingredients', 'lime', ['en'], ['lime', 'limes']);
     manager.addNamedEntityText('ingredients', 'romaine lettuce', ['en'], ['romaine lettuce', 'lettuce']);
     manager.addNamedEntityText('ingredients', 'spinach', ['en'], ['spinach', 'spinaches']);
     manager.addNamedEntityText('ingredients', 'red cabbage', ['en'], ['red cabbage', 'cabbage']);
@@ -374,7 +382,7 @@ module.exports = (manager) => {
     
     // Pasta Types
     manager.addNamedEntityText('ingredients', 'spinach fettuccine', ['en'], ['spinach fettuccine', 'fettuccine']);
-    manager.addNamedEntityText('ingredients', 'spaghetti', ['en'], ['spaghetti', 'spaghettis']);
+    // manager.addNamedEntityText('ingredients', 'spaghetti', ['en'], ['spaghetti', 'spaghettis']);
     manager.addNamedEntityText('ingredients', 'ziti', ['en'], ['ziti', 'zitis']);
 
 

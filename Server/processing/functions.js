@@ -318,7 +318,7 @@ async function displayCurrentOrder(){
             Total: <b>$${(subtotal + subtotal * 0.0825).toFixed(2)}`; 
 }
 
-async function placeOrder(){
+async function placeOrder(response){
     // return null if order-related arrays are empty (only checking names array assuming each array is updated properly)
     if (names.length == 0){
         return null;
@@ -345,10 +345,11 @@ async function placeOrder(){
             Tax: $${(subtotal * 0.0825).toFixed(2)}<br />
             Total: <b>$${(subtotal + subtotal * 0.0825).toFixed(2)}</b>`;  
 
-    console.log(tempReceipt)
+    const nlpAnswer = response.answer.replace('*receipt here*', tempReceipt);
+    console.log(nlpAnswer)
 
     orderConfirmation = true
-    return `Are you sure? ${tempReceipt}`
+    return `Are you sure? ${nlpAnswer}`
     
     
 }

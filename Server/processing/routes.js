@@ -29,6 +29,10 @@ module.exports = (app, manager) => {
                 setPreviousRecommendation(null)
             }
         }
+
+        if(getOrderConfirmation() && intent != 'answer.yes'){
+            setOrderConfirmation(false)
+        }
     
         // Determines if the response given is understood to be something that exists
         if(intent === 'None'){
@@ -157,15 +161,15 @@ module.exports = (app, manager) => {
         // Finalizing order
         else if(intent === 'place.order'){
             await setOrderConfirmation(false)
-            const answer = await placeOrder()
+            const answer = await placeOrder(response)
     
             if(answer == null)
             {
                 return res.json({ reply: 'You currently <i>don\'t</i> have anything in your cart. <br /><br /> Be sure to add any items to your cart before placing an order!'})
             }
             
-            const nlpAnswer = response.answer.replace('*receipt here*', answer);
-            return res.json({ reply: nlpAnswer }) 
+            // const nlpAnswer = response.answer.replace('*receipt here*', "");
+            return res.json({ reply: answer }) 
         }
 
         else if(intent === 'clear.order'){
