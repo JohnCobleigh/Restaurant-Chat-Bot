@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { useState, useEffect, useRef } from 'react'; // Importing React, useState, useEffect, and useRef hooks
-import './App.css'; // Importing the CSS file for styling
-import { GoArrowUp } from 'react-icons/go'; // Importing the arrow icon for the send button
+import { useEffect, useRef, useState } from 'react'; // Importing React, useState, useEffect, and useRef hooks
 import { AiOutlineAudio } from 'react-icons/ai'; // Importing the microphone icon for audio input
+import { GoArrowUp } from 'react-icons/go'; // Importing the arrow icon for the send button
+import './App.css'; // Importing the CSS file for styling
 
 // The main Chatbot component
 function Chatbot() {
@@ -75,7 +75,7 @@ function Chatbot() {
 
   return (
     <div className="chatbot-container">
-      {/*Logo*/}
+      {/* Logo */}
       <img src="./src/assets/cpk_logo.png" alt="CPK Logo" className="chatbot-logo" />
       {/* Chatbot header */}
       <div className="chatbot-header">CPK-Bot</div>
