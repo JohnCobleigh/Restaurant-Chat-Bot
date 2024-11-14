@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 const training = require('./nlp-training/training.js')
 
 app.use(cors({
-    origin: ['https://cpkbot-frontend.onrender.com', 'http://localhost:10000']
+    origin: ['https://cpkbot-frontend.onrender.com', 'http://localhost:5000', 'http://localhost:10000']
 }));
 
 // Connecting to database, MUST specify database name

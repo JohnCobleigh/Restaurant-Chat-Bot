@@ -44,7 +44,7 @@ function Chatbot() {
     const newMessages = [...messages, { sender: 'user', text: userInput }];
     setMessages(newMessages); // Update state with the new message
 
-    // axios.post('/api/', { message: userInput })                                         // uncomment for local run
+    //axios.post('/api/', { message: userInput })                                         // uncomment for local run
     axios.post(`${import.meta.env.VITE_SERVER_URL}/`, { message: userInput })         // uncomment for deploying
       .then(response => {
         const botResponse = response.data.replies || [response.data.reply];   // Backend response
@@ -106,7 +106,7 @@ function Chatbot() {
   return (
     <div className="chatbot-container">
       {/* Logo */}
-      <img src="./src/assets/cpk_logo.png" alt="CPK Logo" className="chatbot-logo" />
+      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/83/California_Pizza_Kitchen_Logo.svg/2880px-California_Pizza_Kitchen_Logo.svg.png" alt="CPK Logo" className="chatbot-logo" />
       {/* Chatbot header */}
       <div className="chatbot-header">CPK-Bot</div>
 

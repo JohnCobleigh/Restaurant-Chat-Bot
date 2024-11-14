@@ -6,8 +6,7 @@ const {
 
 module.exports = (manager) => {
     /* *********************************************************************** */
-    // Asking for general menu info
-    // display both food and drink sections
+    // Asking for general menu info; display both food and drink sections
     manager.addDocument('en', 'What is on the menu?', 'menu.ask');
     manager.addDocument('en', 'What items do you have?', 'menu.ask');
     manager.addDocument('en', 'What kind of items do you serve?', 'menu.ask');
@@ -78,8 +77,8 @@ module.exports = (manager) => {
     manager.addDocument('en', 'Can you give me a description for the %item%', 'show.description');
     manager.addDocument('en', 'tell me about the %item%', 'show.description');
     manager.addDocument('en', 'Can you tell me about the %item%', 'show.description');
-    // manager.addDocument('en', '%item%', 'show.description');
     manager.addDocument('en', 'Can you tell me about the %order%', 'show.description');
+    // manager.addDocument('en', '%item%', 'show.description');
 
     manager.addAnswer('en', 'show.description', '*info here* ... I can add this to your order if you\'d like!');
     manager.addAnswer('en', 'show.description', '*info here* ... Let me know if you want to order this!');
@@ -112,7 +111,7 @@ module.exports = (manager) => {
     manager.addDocument('en', 'what %item% would you recommend', 'recommend');
     manager.addDocument('en', 'can you give me some %item% recommendations', 'recommend');
     manager.addDocument('en', 'what is your favorite %item%', 'recommend');
-    manager.addDocument('en', 'what %item% should i order', 'recommend');
+    //manager.addDocument('en', 'what %item% should i order', 'recommend');
 
     manager.addAnswer('en', 'recommend', 'I would recommend you order the *recommendation*');
     manager.addAnswer('en', 'recommend', 'You should get the *recommendation*')
@@ -123,30 +122,32 @@ module.exports = (manager) => {
     /* *********************************************************************** */
     // Adding an item to an order
     manager.addDocument('en', 'Give me %order% %modify% %ingredients%', 'add.to.order');
-    manager.addDocument('en', 'i want a %order%, %modify% %ingredients%, %ingredients%, and %ingredients%', 'add.to.order');
-    manager.addDocument('en', 'order me a %order% %modify% %ingredients% and %ingredients%', 'add.to.order');
-    manager.addDocument('en', 'let me get a %order%', 'add.to.order');
-    manager.addDocument('en', 'let me get the %order%', 'add.to.order');
-    manager.addDocument('en', 'let me get a %order% and %order%', 'add.to.order');
-    manager.addDocument('en', 'let me get a %order%, and %modify% %ingredients%', 'add.to.order');
-    manager.addDocument('en', 'can you add a %order% %modify% %ingredient% to my order', 'add.to.order');
-    manager.addDocument('en', 'can i get a %order%', 'add.to.order');
+    manager.addDocument('en', 'i want %order%, %modify% %ingredients%, %ingredients%, and %ingredients%', 'add.to.order');
+    manager.addDocument('en', 'order me %order% %modify% %ingredients% and %ingredients%', 'add.to.order');
+    manager.addDocument('en', 'let me get %order%', 'add.to.order');
+    //manager.addDocument('en', 'let me get the %order%', 'add.to.order');
+    //manager.addDocument('en', 'let me get a %order% and %order%', 'add.to.order');
+    //manager.addDocument('en', 'let me get a %order%, and %modify% %ingredients%', 'add.to.order');
+    manager.addDocument('en', 'can you add %order% %modify% %ingredient% to my order', 'add.to.order');
+    manager.addDocument('en', 'can i get %order%', 'add.to.order');
+    //manager.addDocument('en', 'can i order the %order%', 'add.to.order');
+    //manager.addDocument('en', 'can i order a %order%', 'add.to.order');
+    manager.addDocument('en', 'add %order% to my order', 'add.to.order');
+    manager.addDocument('en', 'can i add %order% to my order', 'add.to.order');
+    manager.addDocument('en', 'can i get %order% %item%', 'add.to.order');
+    manager.addDocument('en', 'ill take %order% please', 'add.to.order');
+    manager.addDocument('en', 'ill take %order% %modify% %ingredient%', 'add.to.order');
+    manager.addDocument('en', 'can i have %order% and %order%', 'add.to.order');
+    manager.addDocument('en', 'ill take %order% and %order%', 'add.to.order');
+    manager.addDocument('en', 'id like %order%', 'add.to.order');
     // manager.addDocument('en', 'can i get a %order% and %order%', 'add.to.order');
-    manager.addDocument('en', 'can i order the %order%', 'add.to.order');
     // manager.addDocument('en', 'can i order a %order% %item%', 'add.to.order');
-    manager.addDocument('en', 'add a %order% to my order', 'add.to.order');
-    manager.addDocument('en', 'can i get a %order% %item%', 'add.to.order');
     // manager.addDocument('en', 'can i order %number% %order%', 'add.to.order');
     // manager.addDocument('en', 'one %order%, please', 'add.to.order');
-    manager.addDocument('en', 'ill take a %order% please', 'add.to.order');
-    manager.addDocument('en', 'ill take a %order% %modify% %ingredient%', 'add.to.order');
     // manager.addDocument('en', 'I\'ll take a %order%', 'add.to.order');
     // manager.addDocument('en', '%order%', 'add.to.order');
     // manager.addDocument('en', 'can i have a %order% %item% and a %order% %item%', 'add.to.order');
-    manager.addDocument('en', 'can i have a %order% and a %order%', 'add.to.order');
     // manager.addDocument('en', 'ill take a %order% %item% and a %order% %item%', 'add.to.order');
-    manager.addDocument('en', 'ill take the %order% and a %order%', 'add.to.order');
-    manager.addDocument('en', 'id like a %order%', 'add.to.order');
 
     
     manager.addAnswer('en', 'add.to.order', 'I\'ve added %order% to your order. Can I get you anything else?');
@@ -165,20 +166,26 @@ module.exports = (manager) => {
     manager.addDocument('en', 'take the %order% off my order', 'remove.from.order');
     manager.addDocument('en', 'remove the %order% from my order', 'remove.from.order');
     manager.addDocument('en', 'take off the %order% from my order', 'remove.from.order');
+    manager.addDocument('en', 'can i remove all of the %order% %modify% %ingredients% from my order', 'remove.from.order')
+    manager.addDocument('en', 'i don\'t want any of the %order% %modify% %ingredients% anymore', 'remove.from.order')
+    manager.addDocument('en', 'can you remove all %order% %modify% %ingredients% from my cart', 'remove.from.order')
+    manager.addDocument('en', 'remove all %order% %modify% %ingredients% from my cart', 'remove.from.order')
 
-    manager.addAnswer('en', 'remove.from.order', 'I\'ve removed %order% from your order');
-    manager.addAnswer('en', 'remove.from.order', '%order% has been removed from your order');
-    manager.addAnswer('en', 'remove.from.order', 'Removing %order% from your order');
-    manager.addAnswer('en', 'remove.from.order', '%order% has been removed from your order');
+
+    manager.addAnswer('en', 'remove.from.order', 'I\'ve removed %order% from your order.');
+    manager.addAnswer('en', 'remove.from.order', '%order% has been removed from your order.');
+    manager.addAnswer('en', 'remove.from.order', 'Removing %order% from your order.');
+    manager.addAnswer('en', 'remove.from.order', '%order% has been removed from your order.');
     /* *********************************************************************** */
+
 
 
     /* *********************************************************************** */
     // Replacing/changing an item or ingredient in current order
-    manager.addDocument('en', 'can i get a %item% %switch% the %item%', 'update.order');
-    manager.addDocument('en', 'can i %switch% the %item% for the %item%', 'update.order');
-    manager.addDocument('en', 'would it be okay to %switch% the %item% to a %item%', 'update.order');
-    manager.addDocument('en', 'could you %switch% the %item% to a %item%', 'update.order');
+    manager.addDocument('en', 'can i get a %order% %switch% the %order%', 'update.order');
+    manager.addDocument('en', 'can i %switch% the %order% for the %order%', 'update.order');
+    manager.addDocument('en', 'would it be okay to %switch% the %order% to a %order%', 'update.order');
+    manager.addDocument('en', 'could you %switch% the %order% to a %order%', 'update.order');
     
 
     manager.addAnswer('en', 'update.order', 'Replacing your *first item here* with the *second item here*');
@@ -208,7 +215,7 @@ module.exports = (manager) => {
     manager.addDocument('en', 'can you clear my curent order', 'clear.order');
     manager.addDocument('en', 'can you empty my cart', 'clear.order');
     manager.addDocument('en', 'can you clear my cart', 'clear.order');
-    manager.addDocument('en', 'remove everything in my cart please', 'clear.order');
+    //manager.addDocument('en', 'remove everything in my cart please', 'clear.order');
     manager.addDocument('en', 'clear my order', 'clear.order');
     manager.addDocument('en', 'empty my cart', 'clear.order');
     
@@ -231,7 +238,8 @@ module.exports = (manager) => {
     /* *********************************************************************** */
 
 
-
+    /* *********************************************************************** */
+    // Replying with 'yes'
     manager.addDocument('en', 'yes', 'answer.yes');
     manager.addDocument('en', 'yeah', 'answer.yes')
     manager.addDocument('en', 'yea', 'answer.yes')
@@ -240,30 +248,66 @@ module.exports = (manager) => {
     manager.addDocument('en', 'i do', 'answer.yes')
 
     manager.addAnswer('en', 'answer.yes', 'Got it!')
+    /* *********************************************************************** */
 
 
-
+    /* *********************************************************************** */
+    // Replying with 'no'
     manager.addDocument('en', 'no', 'answer.no')
     manager.addDocument('en', 'nah', 'answer.no')
     manager.addDocument('en', 'nope', 'answer.no')
     manager.addDocument('en', 'i dont', 'answer.no')
 
     manager.addAnswer('en', 'answer.no', 'No problem. Let me know if I can help with anything else!')
+    /* *********************************************************************** */
 
 
-    
+    /* *********************************************************************** */
+    // Replying with 'yes' in the context of recommendation
     manager.addDocument('en', 'can i get that', 'answer.order.that')
     manager.addDocument('en', 'can i order that', 'answer.order.that')
     manager.addDocument('en', 'i want that', 'answer.order.that')
     manager.addDocument('en', 'get that for me', 'answer.order.that')
     manager.addDocument('en', 'add that to my order', 'answer.order.that')
-    // manager.addDocument('en', 'can i order that %modify% %ingredients%', 'answer.order.that')
 
     manager.addAnswer('en', 'answer.order.that', 'Sure! I\'ve just added it to your order. Anything else?')
+    /* *********************************************************************** */
 
 
+
+
+
+    // ****************************************************** 'modify' entity ****************************************************** //
+
+    //Recognizes when user wants to add or remove ingredient from an item
+    manager.addNamedEntityText('modify', 'positive', ['en'], ['add', 'extra', 'put some', 'with']);
+    manager.addNamedEntityText('modify', 'negative', ['en'], ['take off', 'no', 'without']);
+
+    //Needed to find out what item you want to replace and what item to replace it with
+    manager.addNamedEntityText('switch', 'replace', ['en'], ['replace', 'instead of', 'change', 'substitute', 'swap'])
+
+    // ***************************************************************************************************************************** //
+
+
+
+
+
+    // ****************************************************** 'determiner' entity ************************************************** //
+
+    manager.addNamedEntityText('determiner', 'all', ['en'], ['all', 'every', 'each', 'every single', 'any']);
+    
+    manager.addNamedEntityText('determiner', 'one', ['en'], ['a', 'an', 'the', 'single'])
+
+    // ***************************************************************************************************************************** //
+
+
+
+
+
+    // ****************************************************** item types & names ****************************************************** //
 
     // Recognizing specified items in input and considering different spellings and synomyms
+
     //Food types
     manager.addNamedEntityText('item', 'entree', ['en'], ['plate', 'plates', 'entree', 'entrees', 'main plates', 'main plate']);
     manager.addNamedEntityText('item', 'pizza', ['en'], ['pizza', 'pizzas']);
@@ -290,74 +334,70 @@ module.exports = (manager) => {
     manager.addNamedEntityText('add.to.order', 'starter', ['en'], validStarters);
     manager.addNamedEntityText('add.to.order', 'dessert', ['en'], validDesserts);
 
-
+    // ********************************************************************************************************************************* //
     
 
 
-    // //Ingredient types
-    // manager.addNamedEntityText('ingredients', 'olives', ['en'], ['olives', "olive's"]);
-    // manager.addNamedEntityText('ingredients', 'peppers', ['en'], ['peppers']);
-    // manager.addNamedEntityText('ingredients', 'pepperoni', ['en'], ['pepperonis', "pepperoni's", 'pepperoni']);
-    // manager.addNamedEntityText('ingredients', 'basil', ['en'], ['basil', 'fresh basil']);
-    // manager.addNamedEntityText('ingredients', 'jalapeno', ['en'], ['jalapenos']);
-    // manager.addNamedEntityText('ingredients', 'tomato', ['en'], ['tomato', "tomato's"]);
 
-    
+
+    // ****************************************************** Add-on ingredients below ****************************************************** //
+
     // Cheeses
-    manager.addNamedEntityText('ingredients', 'gouda', ['en'], ['gouda', 'gouda cheese', 'goudas']);
-    manager.addNamedEntityText('ingredients', 'mozzarella', ['en'], ['mozzarella', 'mozzarella cheese', 'mozzarellas']);
     manager.addNamedEntityText('ingredients', 'parmesan', ['en'], ['parmesan', 'parmesan cheese', 'parmesans', 'parm']);
-    manager.addNamedEntityText('ingredients', 'romano', ['en'], ['romano', 'romano cheese', 'romanos']);
+    //manager.addNamedEntityText('ingredients', 'gouda', ['en'], ['gouda', 'gouda cheese', 'goudas']);
+    //manager.addNamedEntityText('ingredients', 'mozzarella', ['en'], ['mozzarella', 'mozzarella cheese', 'mozzarellas']);
+    /*manager.addNamedEntityText('ingredients', 'romano', ['en'], ['romano', 'romano cheese', 'romanos']);
     manager.addNamedEntityText('ingredients', 'queso quesadilla', ['en'], ['queso quesadilla', 'quesadilla cheese', 'quesos']);
     manager.addNamedEntityText('ingredients', 'burrata', ['en'], ['burrata', 'burrata cheese', 'burratas']);
     manager.addNamedEntityText('ingredients', 'monterey jack', ['en'], ['monterey jack', 'jack cheese', 'monterey jack cheese', 'monterey jacks']);
-    manager.addNamedEntityText('ingredients', 'gorgonzola', ['en'], ['gorgonzola', 'gorgonzola cheese', 'gorgonzolas']);
+    manager.addNamedEntityText('ingredients', 'gorgonzola', ['en'], ['gorgonzola', 'gorgonzola cheese', 'gorgonzolas']);*/
     
     // Meats
     manager.addNamedEntityText('ingredients', 'applewood smoked bacon', ['en'], ['applewood smoked bacon', 'bacon', 'bacons']);
-    manager.addNamedEntityText('ingredients', 'pepperoni', ['en'], ['pepperoni', 'pepperonis']);
+    manager.addNamedEntityText('ingredients', 'pepperoni', ['en'], ['pepperonis', "pepperoni's", 'pepperoni']);
     manager.addNamedEntityText('ingredients', 'spicy Italian sausage', ['en'], ['spicy Italian sausage', 'Italian sausage', 'sausage', 'sausages']);
-    manager.addNamedEntityText('ingredients', 'capicola ham', ['en'], ['capicola ham', 'ham', 'capicolas', 'hams']);
+    /*manager.addNamedEntityText('ingredients', 'capicola ham', ['en'], ['capicola ham', 'ham', 'capicolas', 'hams']);
     manager.addNamedEntityText('ingredients', 'applewood smoked ham', ['en'], ['applewood smoked ham', 'ham', 'hams']);
     manager.addNamedEntityText('ingredients', 'marinated steak', ['en'], ['marinated steak', 'steak', 'steaks']);
     manager.addNamedEntityText('ingredients', 'turkey', ['en'], ['turkey', 'turkeys']);
     manager.addNamedEntityText('ingredients', 'salami', ['en'], ['salami', 'salamis']);
-    // manager.addNamedEntityText('ingredients', 'shrimp', ['en'], ['shrimp', 'shrimps']);
+    manager.addNamedEntityText('ingredients', 'shrimp', ['en'], ['shrimp', 'shrimps']);
     manager.addNamedEntityText('ingredients', 'andouille sausage', ['en'], ['andouille sausage', 'andouille sausages', 'sausage', 'sausages']);
     manager.addNamedEntityText('ingredients', 'tasso ham', ['en'], ['tasso ham', 'ham', 'tassos']);
     manager.addNamedEntityText('ingredients', 'beef', ['en'], ['beef', 'beefs']);
     manager.addNamedEntityText('ingredients', 'pork', ['en'], ['pork', 'porks']);
-    manager.addNamedEntityText('ingredients', 'chicken', ['en'], ['chicken']);
+    manager.addNamedEntityText('ingredients', 'chicken', ['en'], ['chicken']);*/
     
     // Vegetables and Herbs
-    manager.addNamedEntityText('ingredients', 'red onions', ['en'], ['red onion', 'red onions', 'onions']);
-    // manager.addNamedEntityText('ingredients', 'cremini mushrooms', ['en'], ['cremini mushroom', 'cremini mushrooms', 'mushroom', 'mushrooms']);
+    manager.addNamedEntityText('ingredients', 'peppers', ['en'], ['peppers']);
+    manager.addNamedEntityText('ingredients', 'basil', ['en'], ['basil', 'fresh basil']);
+    manager.addNamedEntityText('ingredients', 'jalapeno', ['en'], ['jalapenos']);
+    manager.addNamedEntityText('ingredients', 'onions', ['en'], ['red onion', 'red onions', 'onions']);
     manager.addNamedEntityText('ingredients', 'scallions', ['en'], ['scallion', 'scallions', 'green onion', 'green onions', 'spring onion', 'spring onions']);
     manager.addNamedEntityText('ingredients', 'broccolini', ['en'], ['broccolini', 'broccolinis', 'broccoli']);
-    // manager.addNamedEntityText('ingredients', 'zucchini', ['en'], ['zucchini', 'zucchinis', 'courgette', 'courgettes']);
-    // manager.addNamedEntityText('ingredients', 'cherry tomatoes', ['en'], ['cherry tomato', 'cherry tomatoes', 'tomato', 'tomatoes']);
-    // manager.addNamedEntityText('ingredients', 'basil', ['en'], ['basil', 'fresh basil', 'basils']);
     manager.addNamedEntityText('ingredients', 'arugula', ['en'], ['arugula', 'arugulas', 'rocket', 'rockets']);
     manager.addNamedEntityText('ingredients', 'lettuce', ['en'], ['lettuce']);  // "Lettuce" doesn't usually pluralize
     manager.addNamedEntityText('ingredients', 'green peppers', ['en'], ['green pepper', 'green peppers', 'bell pepper', 'bell peppers', 'pepper', 'peppers']);
     manager.addNamedEntityText('ingredients', 'olives', ['en'], ['olive', 'olives', 'black olive', 'black olives']);
-    // manager.addNamedEntityText('ingredients', 'avocado', ['en'], ['avocado', 'avocados']);
     manager.addNamedEntityText('ingredients', 'carrots', ['en'], ['carrot', 'carrots']);
     manager.addNamedEntityText('ingredients', 'bean sprouts', ['en'], ['bean sprout', 'bean sprouts', 'sprout', 'sprouts']);
-    // manager.addNamedEntityText('ingredients', 'corn', ['en'], ['corn', 'corns']);
     manager.addNamedEntityText('ingredients', 'poblanos', ['en'], ['poblano', 'poblanos', 'poblano pepper', 'poblano peppers']);
-    manager.addNamedEntityText('ingredients', 'yellow onions', ['en'], ['yellow onion', 'yellow onions', 'onion', 'onions']);
     manager.addNamedEntityText('ingredients', 'jicama', ['en'], ['jicama', 'jicamas']);
     manager.addNamedEntityText('ingredients', 'cilantro', ['en'], ['cilantro', 'fresh cilantro']);
-    // manager.addNamedEntityText('ingredients', 'lime', ['en'], ['lime', 'limes']);
-    manager.addNamedEntityText('ingredients', 'romaine lettuce', ['en'], ['romaine lettuce', 'lettuce']);
     manager.addNamedEntityText('ingredients', 'spinach', ['en'], ['spinach', 'spinaches']);
     manager.addNamedEntityText('ingredients', 'red cabbage', ['en'], ['red cabbage', 'cabbage']);
-    manager.addNamedEntityText('ingredients', 'cucumber', ['en'], ['cucumber', 'cucumbers']);
     manager.addNamedEntityText('ingredients', 'serrano peppers', ['en'], ['serrano pepper', 'serrano peppers']);
     manager.addNamedEntityText('ingredients', 'red chilies', ['en'], ['red chili', 'red chilies', 'chili', 'chilies']);
     manager.addNamedEntityText('ingredients', 'lemon', ['en'], ['lemon', 'lemons']);
     manager.addNamedEntityText('ingredients', 'parsley', ['en'], ['parsley', 'fresh parsley']);
+    manager.addNamedEntityText('ingredients', 'olives', ['en'], ['olives', "olive's"]);
+    /* manager.addNamedEntityText('ingredients', 'cremini mushrooms', ['en'], ['cremini mushroom', 'cremini mushrooms', 'mushroom', 'mushrooms']);
+    manager.addNamedEntityText('ingredients', 'zucchini', ['en'], ['zucchini', 'zucchinis', 'courgette', 'courgettes']);
+    manager.addNamedEntityText('ingredients', 'cherry tomatoes', ['en'], ['cherry tomato', 'cherry tomatoes', 'tomato', 'tomatoes']);
+    manager.addNamedEntityText('ingredients', 'avocado', ['en'], ['avocado', 'avocados']);
+    manager.addNamedEntityText('ingredients', 'corn', ['en'], ['corn', 'corns']);
+    manager.addNamedEntityText('ingredients', 'lime', ['en'], ['lime', 'limes']);
+    manager.addNamedEntityText('ingredients', 'cucumber', ['en'], ['cucumber', 'cucumbers']);*/
     
     // Sauces and Seasonings
     manager.addNamedEntityText('ingredients', 'virgin olive oil', ['en'], ['virgin olive oil', 'olive oil', 'oils']);
@@ -379,26 +419,8 @@ module.exports = (manager) => {
     manager.addNamedEntityText('ingredients', 'mustard herb vinaigrette', ['en'], ['mustard herb vinaigrette', 'herb vinaigrette', 'vinaigrette']);
     manager.addNamedEntityText('ingredients', 'thai peanut dressing', ['en'], ['thai peanut dressing', 'peanut dressing', 'dressing']);
     manager.addNamedEntityText('ingredients', 'chili lime vinaigrette', ['en'], ['chili lime vinaigrette', 'lime vinaigrette', 'vinaigrette']);
-    
-    // Pasta Types
-    manager.addNamedEntityText('ingredients', 'spinach fettuccine', ['en'], ['spinach fettuccine', 'fettuccine']);
-    // manager.addNamedEntityText('ingredients', 'spaghetti', ['en'], ['spaghetti', 'spaghettis']);
-    manager.addNamedEntityText('ingredients', 'ziti', ['en'], ['ziti', 'zitis']);
 
-
-
-
-
-
-
-
-
-    //Recognizes when user wants to add or remove ingredient from an item
-    manager.addNamedEntityText('modify', 'positive', ['en'], ['add', 'extra', 'put some', 'with']);
-    manager.addNamedEntityText('modify', 'negative', ['en'], ['take off', 'no', 'without']);
-
-    //Needed to find out what item you want to replace and what item to replace it with
-    manager.addNamedEntityText('switch', 'replace', ['en'], ['replace', 'instead of', 'change', 'substitute', 'swap'])
+    // ************************************************************************************************************************************** //
 
     //Saves the training data, allowing the bot to respond consistently across different chats (I believe)
     manager.train().then(async() => {

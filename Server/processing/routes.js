@@ -1,6 +1,6 @@
 const {addToOrder, displayPartialMenu, placeOrder, removeFromOrder, displayCurrentOrder, updateOrder,
        afterDecision, giveRecommendation, clearOrder, setOrderConfirmation, getOrderConfirmation,
-       setPreviousRecommendation, conversation, previousRecommendation, displaySpecificInfo, getImage, setTempReceipt} = require('./functions')
+       setPreviousRecommendation, conversation, displaySpecificInfo, getImage, setTempReceipt} = require('./functions')
        
 module.exports = (app, manager) => {
     app.get('/', async (req, res) => {
@@ -16,7 +16,7 @@ module.exports = (app, manager) => {
         const intent  = response.intent;
         const entities = response.entities;
     
-        console.log(response)
+        // console.log(response)
         // console.log(intent)
         // console.log(entities)
         
@@ -130,8 +130,8 @@ module.exports = (app, manager) => {
             const nlpAnswer = response.answer.replace('%order%', answer)
             return res.json({ reply: nlpAnswer })
         }
-    
-        // Update item in current order
+
+       // Update item in current order
         else if(intent === 'update.order'){
             const answer = await updateOrder(entities)
             return res.json({ reply: answer }) 
@@ -141,11 +141,6 @@ module.exports = (app, manager) => {
         else if(intent === 'current.order'){
             const answer = await displayCurrentOrder()
     
-            /*if(answer == null)
-            {
-                return res.json({ reply: 'You currently <i>don\'t</i> have anything in your cart. <br /><br /> Let me know if you have questions about our menu!'})
-            }*/
-
             if(answer == null)
             {
                 return res.json({ replies: ['You currently <i>don\'t</i> have anything in your cart.',
