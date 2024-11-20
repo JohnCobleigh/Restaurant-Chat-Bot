@@ -16,7 +16,7 @@ module.exports = (app, manager) => {
         const intent  = response.intent;
         const entities = response.entities;
     
-        // console.log(response)
+        console.log(response)
         // console.log(intent)
         // console.log(entities)
         
@@ -189,8 +189,16 @@ module.exports = (app, manager) => {
             const nlpAnswer = response.answer
             console.log("ASDSAD", answer, "DSAAS")
 
+            const previousResponse = conversation[conversation.length - 2]
+            const previousResponseIntent = previousResponse.intent
             
-            return res.json({ reply: answer });
+            if(previousResponseIntent == 'place.order'){
+                const newAnswer = previousResponse.answer.replace('*receipt here*', answer);
+                return res.json({ reply: newAnswer });
+            }
+            else
+                return res.json({ reply: nlpAnswer });
+            
         }
     
         else {

@@ -4,7 +4,7 @@ const validEntrees = [
 ]
 
 const validPizzas = [
-    'Original BBQ Chicken ', 'California Club', 'Wild Mushroom', 
+    'Original BBQ Chicken', 'California Club', 'Wild Mushroom', 
     'Thai Chicken', 'Mushroom Pepperoni Sausage', 'California Veggie', 
     'Hawaiian', 'Neapolitan Burrata', 'The Works', 
     'Margherita', 'Pepperoni', 'Sicilian', 'Spicy Chipotle Chicken', 'Carne Asada'

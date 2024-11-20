@@ -9,9 +9,9 @@ module.exports = (manager) => {
     // Asking for general menu info; display both food and drink sections
     manager.addDocument('en', 'What is on the menu?', 'menu.ask');
     manager.addDocument('en', 'What items do you have?', 'menu.ask');
-    manager.addDocument('en', 'What kind of items do you serve?', 'menu.ask');
+    // manager.addDocument('en', 'What kind of items do you serve?', 'menu.ask');
     manager.addDocument('en', 'Show me the menu', 'menu.ask');
-    manager.addDocument('en', 'Whats on the menu', 'menu.ask');
+    // manager.addDocument('en', 'Whats on the menu', 'menu.ask');
     manager.addDocument('en', 'Give me the menu', 'menu.ask');
     manager.addDocument('en', 'What do you serve here', 'menu.ask');
 
@@ -109,6 +109,7 @@ module.exports = (manager) => {
     /* *********************************************************************** */ 
     // Asking for recommendations
     manager.addDocument('en', 'what %item% would you recommend', 'recommend');
+    manager.addDocument('en', 'what %item% do you recommend', 'recommend');
     manager.addDocument('en', 'can you give me some %item% recommendations', 'recommend');
     manager.addDocument('en', 'what is your favorite %item%', 'recommend');
     //manager.addDocument('en', 'what %item% should i order', 'recommend');
@@ -245,7 +246,6 @@ module.exports = (manager) => {
     manager.addDocument('en', 'yea', 'answer.yes')
     manager.addDocument('en', 'sure', 'answer.yes')
     manager.addDocument('en', 'ok', 'answer.yes')
-    manager.addDocument('en', 'i do', 'answer.yes')
 
     manager.addAnswer('en', 'answer.yes', 'Got it!')
     /* *********************************************************************** */
@@ -388,7 +388,7 @@ module.exports = (manager) => {
     manager.addNamedEntityText('ingredients', 'red cabbage', ['en'], ['red cabbage', 'cabbage']);
     manager.addNamedEntityText('ingredients', 'serrano peppers', ['en'], ['serrano pepper', 'serrano peppers']);
     manager.addNamedEntityText('ingredients', 'red chilies', ['en'], ['red chili', 'red chilies', 'chili', 'chilies']);
-    manager.addNamedEntityText('ingredients', 'lemon', ['en'], ['lemon', 'lemons']);
+    // manager.addNamedEntityText('ingredients', 'lemon', ['en'], ['lemon', 'lemons']);
     manager.addNamedEntityText('ingredients', 'parsley', ['en'], ['parsley', 'fresh parsley']);
     manager.addNamedEntityText('ingredients', 'olives', ['en'], ['olives', "olive's"]);
     /* manager.addNamedEntityText('ingredients', 'cremini mushrooms', ['en'], ['cremini mushroom', 'cremini mushrooms', 'mushroom', 'mushrooms']);

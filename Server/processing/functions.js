@@ -399,11 +399,11 @@ async function placeOrder(response){
             Tax: $${(subtotal * 0.0825).toFixed(2)}<br />
             Total: <b>$${(subtotal + subtotal * 0.0825).toFixed(2)}</b>`;  
 
-    const nlpAnswer = response.answer.replace('*receipt here*', tempReceipt);
+    var nlpAnswer = response.answer.replace('*receipt here*', tempReceipt);
     console.log(nlpAnswer)
 
     orderConfirmation = true
-    return `Are you sure? ${nlpAnswer}`
+    return `Are you sure? ${tempReceipt}`
     
     
 }
@@ -503,14 +503,17 @@ async function updateOrder(entities){
     } 
 
     if (switchIndex == 0){
+        
+        const itemNames = optionEntity.map(e => e.sourceText);
 
-        const option = optionEntityType.option;
-        const collection = itemCollectionMap[option.toLowerCase()] 
+        console.log(optionEntity)
+        const option = optionEntity[1].option;
+        const collection = itemCollectionMap[option.toLowerCase()]
     
         // creating array of item names (strings) based on each entity that nlp.js recognizes
-        const itemNames = optionEntity.map(e => e.sourceText);
     
         // searching array above for item that user wants instead
+        console.log(collection) 
         const item = await collection.findOne({ name: { $regex: new RegExp(`^${itemNames[1]}$`, "i") } }).exec();
         
         // seerching global array of current order item names for item that user wants to replace
@@ -525,10 +528,9 @@ async function updateOrder(entities){
         modifiers[index] = '';
         prices[index] = item.price;
 
-    return `Replacing your ${itemNames[0]} with a ${itemNames[1]}`
-
+        return `Replacing your ${itemNames[0]} with a ${itemNames[1]}`
     }
-    else if (switchIndex == 1){
+    else{
 
         const option = optionEntityType.option;                                                      
         const collection = itemCollectionMap[option.toLowerCase()] 
@@ -551,8 +553,8 @@ async function updateOrder(entities){
         return `Replacing your ${itemNames[1]} with a ${itemNames[0]}`
 
     }
-    else
-        return`Error finding switch index`
+    // else
+    //     return`Error finding switch index`
 
 }
 
