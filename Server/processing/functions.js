@@ -565,10 +565,11 @@ async function afterDecision(response){
 
     if(previousResponseIntent === 'show.description' || previousResponseIntent === 'show.calories' || previousResponseIntent === 'show.ingredients' || previousResponseIntent === 'show.price') 
         afterDecisionDescription(response)
-    else if(previousResponseIntent === 'recommend')
+    else if(previousResponseIntent === 'recommend'){
         afterDecisionRecommendation(response)
+        console.log(previousResponseIntent)
+    }
     else if(previousResponseIntent === 'place.order')
-        console.log(orderConfirmation)
         if(!orderConfirmation)
             placeOrder()
         else
